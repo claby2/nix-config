@@ -1,4 +1,4 @@
-{ pkgs, config, meta, ... }: {
+{ pkgs, config, meta, inputs, ... }: {
   imports = [ ./hardware.nix ];
 
   environment.systemPackages = with pkgs; [ git vim wget htop gnupg ];
@@ -38,7 +38,7 @@
   home-manager = {
     extraSpecialArgs = let homeDir = config.users.users.claby2.home;
     in {
-      inherit meta homeDir;
+      inherit meta inputs homeDir;
       configDir = "${homeDir}/nix-dots";
     };
     users.claby2 = import ./home.nix;
