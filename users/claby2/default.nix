@@ -1,23 +1,29 @@
-{ inputs, config, pkgs, configDir, meta, ... }: {
+{ pkgs, config, homeDir, configDir, ... }: {
   home.username = "claby2";
-  home.homeDirectory = "/home/claby2";
+  home.homeDirectory = homeDir;
+
   home.packages = with pkgs; [ ripgrep strace lsof neovim gcc nixfmt-classic ];
 
   home.file = {
     ".zshrc".source =
       config.lib.file.mkOutOfStoreSymlink "${configDir}/apps/zsh/zshrc";
-    ".zlogin".text = ''
-      cat <<EOF
-      ${builtins.readFile "${inputs.self}/hosts/onix/onix"}
-      EOF
-    '';
   };
   xdg.configFile = {
     "nvim".source =
       config.lib.file.mkOutOfStoreSymlink "${configDir}/apps/nvim";
   };
 
-  programs.git = meta.programs.git;
+  programs.git = {
+    enable = true;
+    userName = "Edward Wibowo";
+    userEmail = "wibow9770@gmail.com";
+    extraConfig = {
+      init.defaultBranch = "main";
+      credential.helper = "store";
+      commit.gpgsign = true;
+    };
+    signing = { key = "5F7198C07D80B3B6815D687B194285BC07FDC3DA"; };
+  };
 
   services.gpg-agent = {
     enable = true;

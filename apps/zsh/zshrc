@@ -39,3 +39,5 @@ bindkey '\C-x\C-e' edit-command-line
 
 # GPG
 export GPG_TTY="$(tty)"
+
+alias vim='nvim'
