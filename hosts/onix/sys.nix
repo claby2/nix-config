@@ -16,13 +16,13 @@
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry.tty;
   };
-
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     shellAliases = { vim = "nvim"; };
   };
+
   users.users = {
     root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };
     claby2 = {

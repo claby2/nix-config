@@ -19,5 +19,7 @@
     pinentry.package = pkgs.pinentry.tty;
   };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   home.stateVersion = "25.05";
 }
