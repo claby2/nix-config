@@ -2,8 +2,15 @@
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../modules/system/server.nix
+    ../../modules/homelab
 
   ];
+
+  homelab.gitea = {
+    enable = true;
+    port = 3000;
+    host = "git.onix.edwardwibowo.com";
+  };
 
   boot.loader.grub.device = "/dev/sda";
   boot.initrd.availableKernelModules =
@@ -15,6 +22,11 @@
   };
 
   networking.hostName = "onix";
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 ];
+  };
+
   programs.zsh.loginShellInit = ''
     cat <<EOF
     ${builtins.readFile "${inputs.self}/hosts/onix/onix"}

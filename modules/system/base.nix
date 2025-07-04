@@ -5,6 +5,7 @@
     vim
     wget
     htop
+    tree
 
   ];
   environment.variables.EDITOR = "vim";
