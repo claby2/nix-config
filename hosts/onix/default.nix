@@ -6,6 +6,11 @@
 
   ];
 
+  homelab.personal = {
+    enable = true;
+    host = "onix.edwardwibowo.com";
+  };
+
   homelab.gitea = {
     enable = true;
     port = 3000;
