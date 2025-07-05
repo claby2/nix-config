@@ -2,7 +2,7 @@
   home.username = "claby2";
   home.homeDirectory = homeDir;
 
-  home.packages = with pkgs; [ ripgrep strace lsof neovim gcc nixfmt-classic ];
+  home.packages = with pkgs; [ ripgrep neovim gcc nixfmt-classic ];
 
   home.file = {
     ".zshrc".source =
