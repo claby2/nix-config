@@ -26,4 +26,5 @@
     users.claby2 = import ../../users/claby2;
   };
 
+  environment.variables.TERM = "rxvt";
 }
