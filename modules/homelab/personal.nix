@@ -1,5 +1,7 @@
-{ inputs, config, lib, pkgs, ... }:
-let cfg = config.homelab.personal;
+{ inputs, config, lib, system, ... }:
+let
+  cfg = config.homelab.personal;
+  webPkg = inputs.personal-website.packages.${system}.default;
 in {
 
   options.homelab.personal = {
@@ -8,31 +10,13 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    systemd.services."personal-clone" = {
-      description = "clone personal website";
-      after = [ "network-online.target" ];
-      wants = [ "network-online.target" ];
-      script = ''
-        set -eu
-        ${pkgs.git}/bin/git init -q
-        ${pkgs.git}/bin/git remote add origin https://github.com/claby2/claby2.github.io || true
-        ${pkgs.git}/bin/git fetch --depth 1 origin gh-pages
-        ${pkgs.git}/bin/git checkout -B gh-pages FETCH_HEAD
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-        User = "claby2";
-        StateDirectory = "personal";
-        WorkingDirectory = "/var/lib/personal";
-      };
-    };
+    environment.systemPackages = [ webPkg ];
 
-    systemd.timers."personal-clone" = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "hourly";
-        Unit = "personal-clone.service";
-      };
+    system.activationScripts.deployWebsite = {
+      text = ''
+        mkdir -p /var/lib/personal
+        cp -r ${webPkg}/. /var/lib/personal/
+      '';
     };
 
     services.nginx.virtualHosts.${cfg.host} = {

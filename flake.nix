@@ -31,6 +31,7 @@
           specialArgs = {
             inherit inputs;
             meta = meta;
+            system = system;
           };
           modules = [
             ./hosts/${name}
@@ -48,6 +49,7 @@
           specialArgs = {
             inherit inputs;
             meta = meta;
+            system = system;
           };
           modules = [
             ./hosts/${name}
