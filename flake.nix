@@ -15,6 +15,11 @@
     };
 
     agenix.url = "github:ryantm/agenix";
+
+    personal-website = {
+      url = "git+ssh://git@github.com/claby2/claby2.github.io.git?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, nix-darwin, agenix, ... }:
