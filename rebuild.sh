@@ -4,7 +4,7 @@ set -e
 FLAKE_DIR="$(dirname "$0")"
 
 if command -v nixos-rebuild >/dev/null; then
-    sudo nixos-rebuild switch --flake "$FLAKE_DIR"
+    nixos-rebuild switch --flake "$FLAKE_DIR" --sudo
 elif command -v darwin-rebuild >/dev/null; then
     sudo darwin-rebuild switch --flake "$FLAKE_DIR"
 else
