@@ -9,7 +9,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     systemd.services."personal-clone" = {
-      description = "build personal website";
+      description = "clone personal website";
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
       script = ''

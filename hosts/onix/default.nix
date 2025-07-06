@@ -11,6 +11,11 @@
     host = "onix.edwardwibowo.com";
   };
 
+  homelab.amy = {
+    enable = true;
+    host = "amy.onix.edwardwibowo.com";
+  };
+
   age.secrets.freshrss = {
     file = ./secrets/freshrss.age;
     owner = "freshrss";
