@@ -11,6 +11,17 @@
     host = "onix.edwardwibowo.com";
   };
 
+  age.secrets.freshrss = {
+    file = ./secrets/freshrss.age;
+    owner = "freshrss";
+    group = "freshrss";
+  };
+  homelab.freshrss = {
+    enable = true;
+    host = "freshrss.onix.edwardwibowo.com";
+    passwordFile = config.age.secrets.freshrss.path;
+  };
+
   homelab.gitea = {
     enable = true;
     port = 3000;

@@ -3,20 +3,24 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    agenix.url = "github:ryantm/agenix";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nix-darwin, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nix-darwin, agenix, ... }:
     let
       meta = import ./meta { };
-      mkHost = name: system:
+      mkNixosHost = name: system:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -30,29 +34,33 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
             }
+            agenix.nixosModules.default
           ];
+        };
+      mkDarwinHost = name: system:
+        nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            meta = meta;
+          };
+          modules = [
+            ./hosts/${name}
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+            agenix.darwinModules.default
+          ];
+
         };
     in {
 
-      nixosConfigurations.onix = mkHost "onix" "x86_64-linux";
-      # TODO: add altaria
-      # nixosConfigurations.onix = mkHost "altaria" "x86_64-linux";
+      ## Nixos Hosts
+      nixosConfigurations.onix = mkNixosHost "onix" "x86_64-linux";
 
-      darwinConfigurations.applin = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        specialArgs = {
-          inherit inputs;
-          meta = meta;
-        };
-        modules = [
-          ./hosts/applin
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-          }
-        ];
-      };
+      ## Darwin Hosts
+      darwinConfigurations.applin = mkDarwinHost "applin" "aarch64-darwin";
     };
-
 }

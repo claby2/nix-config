@@ -1,5 +1,5 @@
 { ... }: {
-  imports = [ ./gitea.nix ./personal.nix ];
+  imports = [ ./gitea.nix ./personal.nix ./freshrss.nix ];
   services.nginx.enable = true;
   security.acme = {
     acceptTerms = true;
