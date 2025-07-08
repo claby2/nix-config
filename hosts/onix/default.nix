@@ -6,6 +6,12 @@
 
   ];
 
+  homelab.filebrowser = {
+    enable = true;
+    port = 3001;
+    host = "filebrowser.onix.edwardwibowo.com";
+  };
+
   homelab.personal = {
     enable = true;
     host = "onix.edwardwibowo.com";
