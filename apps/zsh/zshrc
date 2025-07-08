@@ -41,3 +41,5 @@ bindkey '\C-x\C-e' edit-command-line
 export GPG_TTY="$(tty)"
 
 alias vim='nvim'
+
+source <(fzf --zsh)
