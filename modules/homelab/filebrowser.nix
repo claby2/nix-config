@@ -13,6 +13,12 @@ in {
       settings.port = cfg.port;
     };
 
+    system.activationScripts.createFilebrowserDir = {
+      text = ''
+        mkdir -p /var/lib/filebrowser/data
+      '';
+    };
+
     # Seems like the freshrss service in nixpkgs does not enable SSL...
     # Forcing that here!
     services.nginx.virtualHosts.${cfg.host} = {
