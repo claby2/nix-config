@@ -9,34 +9,36 @@
   homelab.filebrowser = {
     enable = true;
     port = 3001;
-    host = "filebrowser.onix.edwardwibowo.com";
+    host = "filebrowser.edwardwibowo.com";
   };
 
   homelab.personal = {
     enable = true;
-    host = "onix.edwardwibowo.com";
+    host = "edwardwibowo.com";
   };
 
-  homelab.amy = {
-    enable = true;
-    host = "amy.onix.edwardwibowo.com";
-  };
+  # TODO: enable this
+  # homelab.amy = {
+  #   enable = true;
+  #   host = "amyqiao.com";
+  # };
 
-  age.secrets.freshrss = {
-    file = ./secrets/freshrss.age;
-    owner = "freshrss";
-    group = "freshrss";
-  };
-  homelab.freshrss = {
-    enable = true;
-    host = "freshrss.onix.edwardwibowo.com";
-    passwordFile = config.age.secrets.freshrss.path;
-  };
+  # TODO: one day i'll migrate this...
+  # age.secrets.freshrss = {
+  #   file = ./secrets/freshrss.age;
+  #   owner = "freshrss";
+  #   group = "freshrss";
+  # };
+  # homelab.freshrss = {
+  #   enable = true;
+  #   host = "freshrss.edwardwibowo.com";
+  #   passwordFile = config.age.secrets.freshrss.path;
+  # };
 
   homelab.gitea = {
     enable = true;
     port = 3000;
-    host = "git.onix.edwardwibowo.com";
+    host = "git.edwardwibowo.com";
   };
 
   boot.loader.grub.device = "/dev/sda";
