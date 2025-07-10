@@ -17,11 +17,10 @@
     host = "edwardwibowo.com";
   };
 
-  # TODO: enable this
-  # homelab.amy = {
-  #   enable = true;
-  #   host = "amyqiao.com";
-  # };
+  homelab.amy = {
+    enable = true;
+    host = "amyqiao.com";
+  };
 
   # TODO: one day i'll migrate this...
   age.secrets.freshrss = {
