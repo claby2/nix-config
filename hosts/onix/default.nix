@@ -76,7 +76,7 @@
     extraSpecialArgs = rec {
       inherit meta inputs;
       homeDir = config.users.users.claby2.home;
-      configDir = "${homeDir}/nix-dots";
+      configDir = "${homeDir}/nix-config";
     };
     users.claby2 = import ../../users/claby2;
   };
