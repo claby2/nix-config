@@ -1,4 +1,4 @@
-{ pkgs, config, modulesPath, meta, inputs, ... }: {
+{ config, meta, inputs, ... }: {
   imports = [ ../../modules/system/base.nix ];
 
   programs.zsh.loginShellInit = ''
