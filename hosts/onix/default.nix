@@ -80,13 +80,17 @@
   '';
 
   users.users = {
-    root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };
+    root = {
+      openssh.authorizedKeys.keys =
+        [ meta.sshPublicKeys.applin meta.sshPublicKeys.trubbish ];
+    };
     claby2 = {
       shell = pkgs.zsh;
       isNormalUser = true;
       home = "/home/claby2";
       extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
+      openssh.authorizedKeys.keys =
+        [ meta.sshPublicKeys.applin meta.sshPublicKeys.trubbish ];
     };
   };
 
