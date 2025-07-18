@@ -2,6 +2,7 @@
   home.username = "claby2";
   home.homeDirectory = homeDir;
 
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
     ripgrep
     neovim
