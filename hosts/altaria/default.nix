@@ -14,11 +14,6 @@
     device = "/dev/sda1";
     fsType = "xfs";
   };
-  fileSystems."/boot" = {
-    device = "/dev/sda3";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
-  };
   swapDevices = [{ device = "/dev/sda2"; }];
 
   networking.hostName = "altaria";
