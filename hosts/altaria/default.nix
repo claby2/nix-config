@@ -6,6 +6,12 @@
 
   ];
 
+  homelab.gatus = {
+    enable = true;
+    port = 3000;
+    host = "gatus.edwardwibowo.com";
+  };
+
   boot.loader.grub.device = "/dev/sda";
   boot.initrd.availableKernelModules =
     [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];

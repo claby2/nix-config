@@ -1,6 +1,12 @@
 { ... }: {
-  imports =
-    [ ./gitea.nix ./personal.nix ./freshrss.nix ./amy.nix ./filebrowser.nix ];
+  imports = [
+    ./gitea.nix
+    ./personal.nix
+    ./freshrss.nix
+    ./amy.nix
+    ./filebrowser.nix
+    ./gatus.nix
+  ];
   services.nginx.enable = true;
   security.acme = {
     acceptTerms = true;
