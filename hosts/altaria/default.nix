@@ -8,12 +8,18 @@
 
   boot.loader.grub.device = "/dev/sda";
   boot.initrd.availableKernelModules =
-    [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
-  boot.initrd.kernelModules = [ "nvme" ];
+    [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ ];
   fileSystems."/" = {
-    device = "/dev/sda3";
-    fsType = "ext4";
+    device = "/dev/sda1";
+    fsType = "xfs";
   };
+  fileSystems."/boot" = {
+    device = "/dev/sda3";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+  swapDevices = [{ device = "/dev/sda2"; }];
 
   networking.hostName = "altaria";
   networking.firewall = {
