@@ -22,7 +22,6 @@
     host = "amyqiao.com";
   };
 
-  # TODO: one day i'll migrate this...
   age.secrets.freshrss = {
     file = ./secrets/freshrss.age;
     owner = "freshrss";
@@ -30,7 +29,7 @@
   };
   homelab.freshrss = {
     enable = true;
-    host = "freshrss.onix.edwardwibowo.com";
+    host = "freshrss.edwardwibowo.com";
     passwordFile = config.age.secrets.freshrss.path;
   };
 
