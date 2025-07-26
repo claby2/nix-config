@@ -5,20 +5,20 @@ in {
     enable = lib.mkEnableOption "gatus";
     port = lib.mkOption { type = lib.types.port; };
     host = lib.mkOption { type = lib.types.str; };
+    endpoints = lib.mkOption { };
+    alerting = lib.mkOption { };
+    environmentFile = lib.mkOption { type = lib.types.nullOr lib.types.path; };
   };
 
   config = lib.mkIf cfg.enable {
     services.gatus = {
       enable = true;
+      environmentFile = cfg.environmentFile;
       settings = {
         web.port = cfg.port;
         url = cfg.host;
-        endpoints = [{
-          name = "personal";
-          url = "https://edwardwibowo.com";
-          interval = "5m";
-          conditions = [ "[STATUS] == 200" ];
-        }];
+        endpoints = cfg.endpoints;
+        alerting = cfg.alerting;
       };
     };
 

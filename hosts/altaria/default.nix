@@ -6,10 +6,24 @@
 
   ];
 
+  age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
   homelab.gatus = {
     enable = true;
     port = 3000;
     host = "gatus.edwardwibowo.com";
+    endpoints = [{
+      name = "personal";
+      url = "https://edwardwibowo.com";
+      interval = "5m";
+      conditions = [ "[STATUS] == 200" ];
+      alerts = [{
+        type = "discord";
+        send-on-resolved = true;
+        failure-threshold = 1;
+      }];
+    }];
+    environmentFile = config.age.secrets.gatus-environment.path;
+    alerting.discord.webhook-url = "$DISCORD_WEBHOOK_URL";
   };
 
   boot.loader.grub.device = "/dev/sda";
