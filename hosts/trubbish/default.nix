@@ -33,11 +33,13 @@
 
   time.timeZone = "America/New_York";
 
-  # programs.zsh.loginShellInit = ''
-  #   cat <<EOF
-  #   ${builtins.readFile "${inputs.self}/hosts/onix/onix"}
-  #   EOF
-  # '';
+  powerManagement.enable = true;
+
+  programs.zsh.loginShellInit = ''
+    cat <<EOF
+    ${builtins.readFile "${inputs.self}/hosts/trubbish/trubbish"}
+    EOF
+  '';
   users.users = {
     root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };
     claby2 = {
