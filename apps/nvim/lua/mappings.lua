@@ -64,3 +64,8 @@ map("n", "<leader>v", function()
 	local new_config = not vim.diagnostic.config().virtual_lines
 	vim.diagnostic.config({ virtual_lines = new_config })
 end)
+
+-- Leetcode
+map("n", "<leader>lc", "<cmd>Leet console<cr>", { desc = "Leetcode console" })
+map("n", "<leader>ls", "<cmd>Leet submit<cr>", { desc = "Leetcode submit" })
+map("n", "<leader>lr", "<cmd>Leet run<cr>", { desc = "Leetcode run" })
