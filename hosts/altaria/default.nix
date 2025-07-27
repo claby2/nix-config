@@ -1,4 +1,4 @@
-{ pkgs, config, modulesPath, meta, inputs, ... }: {
+{ pkgs, config, modulesPath, meta, inputs, homelab, ... }: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../modules/system/server.nix
@@ -7,23 +7,36 @@
   ];
 
   age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
-  homelab.gatus = {
+  homelab.gatus = let mkEndpoint = homelab.mkGatusEndpoint;
+  in {
     enable = true;
     port = 3000;
     host = "gatus.edwardwibowo.com";
-    endpoints = [{
-      name = "personal";
-      url = "https://edwardwibowo.com";
-      interval = "5m";
-      conditions = [ "[STATUS] == 200" ];
-      alerts = [{
-        type = "discord";
+    endpoints = [
+      (mkEndpoint "personal" "https://edwardwibowo.com")
+      (mkEndpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
+      (mkEndpoint "freshrss" "https://freshrss.edwardwibowo.com")
+      (mkEndpoint "git" "https://git.edwardwibowo.com")
+      {
+        name = "onix ssh";
+        url = "ssh://onix.edwardwibowo.com:22";
+        ssh = {
+          username = "";
+          password = "";
+        };
+        interval = "5m";
+        conditions = [ "[CONNECTED] == true" "[STATUS] == 0" ];
+        alerts = [{ type = "discord"; }];
+      }
+    ];
+    environmentFile = config.age.secrets.gatus-environment.path;
+    alerting.discord = {
+      webhook-url = "$DISCORD_WEBHOOK_URL";
+      default-alert = {
         send-on-resolved = true;
         failure-threshold = 1;
-      }];
-    }];
-    environmentFile = config.age.secrets.gatus-environment.path;
-    alerting.discord.webhook-url = "$DISCORD_WEBHOOK_URL";
+      };
+    };
   };
 
   boot.loader.grub.device = "/dev/sda";
