@@ -19,7 +19,6 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    pinentryPackage = pkgs.pinentry.tty;
   };
 
   environment.variables.HOSTCLASS = lib.mkDefault "base";

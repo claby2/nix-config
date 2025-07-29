@@ -9,5 +9,7 @@
     settings.AllowAgentForwarding = true;
   };
 
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry.tty;
+
   environment.variables.HOSTCLASS = lib.mkAfter "server";
 }
