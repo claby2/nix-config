@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, configDir, ... }: {
   home.packages = with pkgs; [
     # Terminal & Shell
     alacritty
@@ -16,5 +16,9 @@
 
   # Desktop-specific configurations can go here
   # e.g., waybar config, alacritty config, etc.
+  xdg.configFile = {
+    "hypr".source =
+      config.lib.file.mkOutOfStoreSymlink "${configDir}/apps/hypr";
+  };
 }
 
