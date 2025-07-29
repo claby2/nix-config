@@ -1,4 +1,6 @@
-{ pkgs, config, homeDir, configDir, lib, enableGUI ? false, ... }: {
+{ pkgs, config, homeDir, configDir, lib, ... }@args:
+let enableGUI = args.enableGUI or false;
+in {
   imports = lib.optionals enableGUI [ ./desktop.nix ];
   home.username = "claby2";
   home.homeDirectory = homeDir;

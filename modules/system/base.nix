@@ -16,10 +16,5 @@
     enableSyntaxHighlighting = true;
   };
 
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
   environment.variables.HOSTCLASS = lib.mkDefault "base";
 }

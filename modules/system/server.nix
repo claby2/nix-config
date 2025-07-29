@@ -9,7 +9,11 @@
     settings.AllowAgentForwarding = true;
   };
 
-  programs.gnupg.agent.pinentryPackage = pkgs.pinentry.tty;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry.tty;
+  };
 
   environment.variables.HOSTCLASS = lib.mkAfter "server";
 }

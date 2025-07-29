@@ -1,12 +1,8 @@
 { pkgs, lib, ... }: {
   imports = [ ./base.nix ];
 
-  # Essential system packages for wireless
-  environment.systemPackages = with pkgs; [
-    wpa_supplicant
-  ];
+  environment.systemPackages = with pkgs; [ wpa_supplicant ];
 
-  # Wayland compositor and session management
   programs.uwsm = {
     enable = true;
     waylandCompositors.hyprland = {
@@ -16,16 +12,19 @@
   };
   programs.hyprland.enable = true;
 
-  # Audio system
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry.tty;
+  };
+
   services.pipewire = {
     enable = true;
     pulse.enable = true;
   };
 
-  # Input device management
   services.libinput.enable = true;
 
-  # Enable networking for wireless
   networking.wireless.enable = true;
 
   environment.variables.HOSTCLASS = lib.mkAfter "desktop";
