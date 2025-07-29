@@ -29,7 +29,6 @@
 
   # Networking
   networking.hostName = "trubbish";
-  networking.networkmanager.enable = true;
 
 
   # User configuration
