@@ -50,6 +50,7 @@
       inherit meta inputs;
       homeDir = config.users.users.claby2.home;
       configDir = "${homeDir}/nix-config";
+      enableGUI = true;  # Enable GUI applications for desktop
     };
     users.claby2 = import ../../users/claby2;
   };

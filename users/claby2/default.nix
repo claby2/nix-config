@@ -1,9 +1,5 @@
-{ pkgs, config, homeDir, configDir, lib, ... }:
-let
-  # Check if this is a desktop system
-  isDesktop = builtins.getEnv "HOSTCLASS" == "desktop";
-in {
-  imports = lib.optionals isDesktop [ ./desktop.nix ];
+{ pkgs, config, homeDir, configDir, lib, enableGUI ? false, ... }: {
+  imports = lib.optionals enableGUI [ ./desktop.nix ];
   home.username = "claby2";
   home.homeDirectory = homeDir;
 
