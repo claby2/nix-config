@@ -14,6 +14,9 @@ in {
     fzf
     jq
     tokei
+    nodePackages.prettier
+    claude-code
+    uv
   ];
 
   home.file = {

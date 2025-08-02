@@ -16,5 +16,7 @@
     enableSyntaxHighlighting = true;
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   environment.variables.HOSTCLASS = lib.mkDefault "base";
 }
