@@ -53,6 +53,34 @@
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 80 443 ];
+    allowedUDPPorts = [ 51820 ];
+  };
+
+  # WireGuard VPN Server Configuration
+  age.secrets.wireguard-private-key.file = ./secrets/wireguard-private-key.age;
+  networking.nat = {
+    enable = true;
+    externalInterface = "enp1s0";
+    internalInterfaces = [ "wg0" ];
+  };
+
+  networking.wireguard.enable = true;
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "10.100.0.1/24" ];
+    listenPort = 51820;
+    postSetup = ''
+      ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s 10.100.0.0/24 -o enp1s0 -j MASQUERADE
+    '';
+    postShutdown = ''
+      ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o enp1s0 -j MASQUERADE
+    '';
+    privateKeyFile = config.age.secrets.wireguard-private-key.path;
+
+    peers = [{
+      name = "applin";
+      publicKey = "SPdR+2bdWecL5wF/oPuppZnMOG34Rd6/QPpDZEWEch0=";
+      allowedIPs = [ "10.100.0.2/32" ];
+    }];
   };
 
   programs.zsh.loginShellInit = ''

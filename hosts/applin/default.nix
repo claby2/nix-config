@@ -27,4 +27,21 @@
   };
 
   environment.variables.TERM = "rxvt";
+
+  # WireGuard VPN Client Configuration
+  age.secrets.wireguard-private-key.file = ./secrets/wireguard-private-key.age;
+  networking.wireguard.enabe = true;
+  networking.wireguard.interfaces.wg0 = {
+    ips = [ "10.100.0.2/24" ];
+    listenPort = 51820;
+    privateKeyFile = config.age.secrets.wireguard-private-key.path;
+
+    peers = [{
+      # altaria server
+      publicKey = "2Z+9N8m6HvFatS68CqvGYxmKcv7VuTRFvakt8kRAmTU=";
+      allowedIPs = [ "0.0.0.0/0" ];
+      endpoint = "altaria.edwardwibowo.com:51820";
+      persistentKeepalive = 25;
+    }];
+  };
 }
