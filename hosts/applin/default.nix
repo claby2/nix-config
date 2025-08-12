@@ -17,6 +17,21 @@
     name = "claby2";
   };
 
+  age.secrets.wireguard-private-key.file = ./secrets/wireguard-private-key.age;
+  networking.wg-quick.interfaces = {
+    wg0 = {
+      address = [ "10.100.0.2/24" ];
+      dns = [ "10.100.0.1" ];
+      privateKeyFile = config.age.secrets.wireguard-private-key.path;
+      peers = [{
+        publicKey = "qIFR2OBIDgCsVa8vdKHNUGoYfKvDphyacvSS5ZQznCI=";
+        allowedIPs = [ "0.0.0.0/0" "::/0" ];
+        endpoint = "altaria.edwardwibowo.com:51820";
+        persistentKeepalive = 25;
+      }];
+    };
+  };
+
   home-manager = {
     extraSpecialArgs = rec {
       inherit meta inputs;

@@ -81,14 +81,10 @@
         ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s 10.100.0.0/24 -o eth0 -j MASQUERADE
       '';
 
-      peers = [
-        # Placeholder for peers - add client configurations here
-        # Example:
-        # {
-        #   publicKey = "client_public_key_here";
-        #   allowedIPs = [ "10.100.0.2/32" ];
-        # }
-      ];
+      peers = [{
+        publicKey = "sUFchlmFijFH7UCdqlVuKJyeh4iKRKLDbuQvu2+QrmM=";
+        allowedIPs = [ "10.100.0.2/32" ];
+      }];
     };
   };
 
