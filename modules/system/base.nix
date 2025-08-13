@@ -1,13 +1,7 @@
 # Essential stuff that every *system* should have configured!
-{ inputs, pkgs, lib, ... }:
-let
-  rev =
-    builtins.toString (inputs.self.rev or inputs.self.dirtyRev or "unknown");
-in {
-  environment.etc."nixos-build-info".text = ''
-    ${rev}
-  '';
-
+{ inputs, pkgs, lib, ... }: {
+  system.configurationRevision =
+    inputs.self.rev or inputs.self.dirtyRev or "unknown";
   environment.systemPackages = with pkgs; [
     git
     vim
