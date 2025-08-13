@@ -57,8 +57,11 @@ check_git_status() {
     fi
 
     branch=$($ssh_prefix git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "unknown")
+    local timestamp
+    timestamp=$($ssh_prefix git log -1 --format="%ci" 2>/dev/null || echo "unknown")
     echo "Branch: $branch"
     echo "Commit: $head"
+    echo "Last commit: $timestamp"
 
     if [ -z "$ssh_prefix" ]; then
         $ssh_prefix git fetch --quiet 2>/dev/null || true
