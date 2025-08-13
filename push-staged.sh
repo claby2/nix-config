@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # push-staged.sh - Sync staged git changes to remote NixOS/nix-darwin hosts
 #

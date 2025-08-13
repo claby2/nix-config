@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # check-sync.sh - Verify nix-config repository synchronization across hosts
 #
