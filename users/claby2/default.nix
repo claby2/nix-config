@@ -6,6 +6,7 @@ in {
   home.homeDirectory = homeDir;
 
   home.packages = with pkgs; [
+    gnupg
     ripgrep
     neovim
     gcc
