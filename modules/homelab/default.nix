@@ -7,7 +7,18 @@
     ./filebrowser.nix
     ./gatus.nix
   ];
-  services.nginx.enable = true;
+  services.nginx = {
+    enable = true;
+    # Default virtual host that catches all unmatched requests
+    # Returns 444 to drop connections without sending a response
+    virtualHosts."_" = {
+      default = true;
+      rejectSSL = true;
+      locations."/" = {
+        return = "444";
+      };
+    };
+  };
   security.acme = {
     acceptTerms = true;
     defaults.email = "wibow9770@gmail.com";
