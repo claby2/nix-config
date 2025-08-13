@@ -1,6 +1,8 @@
 { config, meta, inputs, ... }: {
   imports = [ ../../modules/system/base.nix ];
 
+  services.tailscale.enable = true;
+
   programs.zsh.loginShellInit = ''
     cat <<EOF
     ${builtins.readFile "${inputs.self}/hosts/applin/applin"}

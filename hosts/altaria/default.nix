@@ -6,6 +6,9 @@
 
   ];
 
+  services.tailscale.enable = true;
+  services.tailscale.useRoutingFeatures = "server";
+
   age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
   homelab.gatus = let mkEndpoint = homelab.mkGatusEndpoint;
   in {

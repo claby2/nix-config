@@ -6,6 +6,8 @@
 
   ];
 
+  services.tailscale.enable = true;
+
   homelab.filebrowser = {
     enable = true;
     port = 3001;
