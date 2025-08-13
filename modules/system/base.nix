@@ -2,7 +2,7 @@
 { inputs, pkgs, lib, ... }:
 let
   rev =
-    builtins.toString (inputs.self.dirty or inputs.self.dirtyRev or "unknown");
+    builtins.toString (inputs.self.rev or inputs.self.dirtyRev or "unknown");
 in {
   environment.etc."nixos-build-info".text = ''
     ${rev}
