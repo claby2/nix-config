@@ -69,11 +69,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755143678,
-        "narHash": "sha256-JiLLmgHad6brwBjI+5aNMj9mJi2L0/mRR/QjiDxO2SE=",
+        "lastModified": 1755180142,
+        "narHash": "sha256-J5l/CYfnmebo3RssHRHHdd6u2XNRYdqm7txKIjl4+tg=",
         "owner": "claby2",
         "repo": "hladmin",
-        "rev": "8efb3262a9c8d7028a0d479bf63cb43b041261c1",
+        "rev": "652d7c434d4c44cc0e66e2c6259ebbd455a6b04a",
         "type": "github"
       },
       "original": {
