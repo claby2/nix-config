@@ -9,6 +9,7 @@
     htop
     tree
     inputs.agenix.packages."${system}".default
+    inputs.hladmin.packages."${system}".default
   ];
   environment.variables.EDITOR = "vim";
 

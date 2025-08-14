@@ -18,6 +18,7 @@ in {
     nodePackages.prettier
     claude-code
     uv
+    delta
   ];
 
   home.file = {
