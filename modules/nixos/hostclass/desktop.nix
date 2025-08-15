@@ -1,8 +1,6 @@
 { pkgs, lib, config, ... }:
 let cfg = config.hostclass.desktop;
 in {
-  imports = [ ./base.nix ];
-
   options.hostclass.desktop = {
     enable = lib.mkEnableOption "desktop hostclass";
   };

@@ -1,8 +1,6 @@
 { pkgs, lib, config, ... }:
 let cfg = config.hostclass.server;
 in {
-  imports = [ ./base.nix ];
-
   options.hostclass.server = {
     enable = lib.mkEnableOption "server hostclass";
   };
