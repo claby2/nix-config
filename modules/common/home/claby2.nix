@@ -9,7 +9,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home-manager.users.claby2 = {
+    home-manager.users.claby2 = { config, ... }: {
       home.username = "claby2";
       home.homeDirectory = cfg.homeDirectory;
 
@@ -45,9 +45,9 @@ in {
       xdg.configFile = {
         "nvim".source = config.lib.file.mkOutOfStoreSymlink
           "${cfg.nixConfigDirectory}/apps/nvim";
-        "hypr".source = lib.mkIf cfg.enableLinuxDesktop
-          (config.lib.file.mkOutOfStoreSymlink
-            "${cfg.nixConfigDirectory}/apps/hypr");
+      } // lib.optionalAttrs cfg.enableLinuxDesktop {
+        "hypr".source = config.lib.file.mkOutOfStoreSymlink
+          "${cfg.nixConfigDirectory}/apps/hypr";
       };
 
       programs.git = {

@@ -41,15 +41,11 @@
     };
   };
 
-  # Home manager configuration
-  home-manager = {
-    extraSpecialArgs = rec {
-      inherit meta inputs;
-      homeDir = config.users.users.claby2.home;
-      configDir = "${homeDir}/nix-config";
-      enableGUI = true; # Enable GUI applications for desktop
-    };
-    users.claby2 = import ../../users/claby2;
+  home.claby2 = rec {
+    enable = true;
+    homeDirectory = config.users.users.claby2.home;
+    nixConfigDirectory = "${homeDirectory}/nix-config";
+    enableLinuxDesktop = true;
   };
 
   system.stateVersion = "23.11";
