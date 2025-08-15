@@ -19,6 +19,8 @@ in {
     claude-code
     uv
     delta
+    pyright
+    patdiff
   ];
 
   home.file = {
