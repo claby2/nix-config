@@ -1,5 +1,5 @@
 { config, meta, inputs, ... }: {
-  imports = [ ../../modules/system/base.nix ];
+  hostclass.base.enable = true;
 
   services.tailscale.enable = true;
 

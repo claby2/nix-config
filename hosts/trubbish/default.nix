@@ -1,13 +1,12 @@
 { pkgs, config, modulesPath, meta, inputs, ... }: {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ../../modules/system/desktop.nix
-  ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  hostclass.desktop.enable = true;
 
   # Boot configuration
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = [ "ufshcd_pci" "xhci_pci" "uas" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules =
+    [ "ufshcd_pci" "xhci_pci" "uas" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -24,13 +23,11 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
-  swapDevices = [
-    { device = "/dev/disk/by-uuid/a70859c3-3cea-4f8a-882e-16a5d0c468c8"; }
-  ];
+  swapDevices =
+    [{ device = "/dev/disk/by-uuid/a70859c3-3cea-4f8a-882e-16a5d0c468c8"; }];
 
   # Networking
   networking.hostName = "trubbish";
-
 
   # User configuration
   users.users = {
@@ -50,10 +47,11 @@
       inherit meta inputs;
       homeDir = config.users.users.claby2.home;
       configDir = "${homeDir}/nix-config";
-      enableGUI = true;  # Enable GUI applications for desktop
+      enableGUI = true; # Enable GUI applications for desktop
     };
     users.claby2 = import ../../users/claby2;
   };
 
   system.stateVersion = "23.11";
 }
+

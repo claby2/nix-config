@@ -1,10 +1,6 @@
 { pkgs, config, modulesPath, meta, inputs, ... }: {
-  imports = [
-    (modulesPath + "/profiles/qemu-guest.nix")
-    ../../modules/system/server.nix
-    ../../modules/homelab
-
-  ];
+  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  hostclass.server.enable = true;
 
   services.tailscale.enable = true;
 

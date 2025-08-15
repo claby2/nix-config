@@ -39,6 +39,7 @@
             system = system;
           };
           modules = [
+            ./modules
             ./hosts/${name}
             home-manager.nixosModules.home-manager
             {
@@ -57,6 +58,7 @@
             system = system;
           };
           modules = [
+            ./modules
             ./hosts/${name}
             home-manager.darwinModules.home-manager
             {
