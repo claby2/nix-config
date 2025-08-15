@@ -1,4 +1,6 @@
 # Essential stuff that every *system* should have configured!
+# Ideally, no system should *actually* have base as its hostclass. This
+# hostclass mostly serves as a module that other hostclasses inherit from.
 { inputs, pkgs, lib, config, ... }:
 let cfg = config.hostclass.base;
 in {
@@ -12,6 +14,10 @@ in {
     system.configurationRevision =
       inputs.self.rev or inputs.self.dirtyRev or "unknown";
 
+    nixpkgs.config.allowUnfree = true;
+
+    # === ENVIRONMENT
+    environment.variables.HOSTCLASS = lib.mkDefault "base";
     environment.systemPackages = with pkgs; [
       git
       vim
@@ -23,14 +29,10 @@ in {
     ];
     environment.variables.EDITOR = "vim";
 
+    # === PROGRAMS
     programs.zsh = {
       enable = true;
       enableCompletion = true;
-      enableSyntaxHighlighting = true;
     };
-
-    nixpkgs.config.allowUnfree = true;
-
-    environment.variables.HOSTCLASS = lib.mkDefault "base";
   };
 }

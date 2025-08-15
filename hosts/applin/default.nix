@@ -1,5 +1,5 @@
-{ config, meta, inputs, ... }: {
-  hostclass.base.enable = true;
+{ config, inputs, ... }: {
+  hostclass.mac.enable = true;
 
   services.tailscale.enable = true;
 
@@ -19,13 +19,10 @@
     name = "claby2";
   };
 
-  home-manager = {
-    extraSpecialArgs = rec {
-      inherit meta inputs;
-      homeDir = config.users.users.claby2.home;
-      configDir = "${homeDir}/nix-config";
-    };
-    users.claby2 = import ../../users/claby2;
+  home.claby2 = rec {
+    enable = true;
+    homeDirectory = config.users.users.claby2.home;
+    nixConfigDirectory = "${homeDirectory}/nix-config";
   };
 
   environment.variables.TERM = "rxvt";

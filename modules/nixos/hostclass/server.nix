@@ -8,21 +8,23 @@ in {
   config = lib.mkIf cfg.enable {
     hostclass.base.enable = true;
 
+    # === ENVIRONMENT
+    environment.variables.HOSTCLASS = lib.mkAfter "server";
     environment.systemPackages = with pkgs; [ strace lsof ];
 
-    services.openssh = {
-      enable = true;
-      settings.PasswordAuthentication = false;
-      settings.AllowAgentForwarding = true;
-    };
-
+    # === PROGRAMS
     programs.gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
       pinentryPackage = pkgs.pinentry.tty;
     };
 
-    environment.variables.HOSTCLASS = lib.mkAfter "server";
+    # === SERVICES
+    services.openssh = {
+      enable = true;
+      settings.PasswordAuthentication = false;
+      settings.AllowAgentForwarding = true;
+    };
   };
 
 }
