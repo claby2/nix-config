@@ -1,6 +1,9 @@
 { pkgs, config, modulesPath, meta, inputs, ... }: {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
-  hostclass.server.enable = true;
+  hostclass.server = {
+    enable = true;
+    motd = builtins.readFile "${inputs.self}/hosts/onix/onix";
+  };
 
   services.tailscale.enable = true;
 
@@ -69,12 +72,6 @@
     enable = true;
     allowedTCPPorts = [ 80 443 ];
   };
-
-  programs.zsh.loginShellInit = ''
-    cat <<EOF
-    ${builtins.readFile "${inputs.self}/hosts/onix/onix"}
-    EOF
-  '';
 
   users.users = {
     root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };

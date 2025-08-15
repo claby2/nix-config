@@ -3,10 +3,12 @@ let cfg = config.hostclass.server;
 in {
   options.hostclass.server = {
     enable = lib.mkEnableOption "server hostclass";
+    motd = lib.mkOption { type = lib.types.str; };
   };
 
   config = lib.mkIf cfg.enable {
     hostclass.base.enable = true;
+    users.motd = cfg.motd;
 
     # === ENVIRONMENT
     environment.variables.HOSTCLASS = lib.mkAfter "server";

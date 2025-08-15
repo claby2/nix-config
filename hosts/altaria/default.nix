@@ -1,6 +1,9 @@
 { pkgs, config, modulesPath, meta, inputs, homelab, ... }: {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
-  hostclass.server.enable = true;
+  hostclass.server = {
+    enable = true;
+    motd = builtins.readFile "${inputs.self}/hosts/altaria/altaria";
+  };
 
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "server";
@@ -53,12 +56,6 @@
     enable = true;
     allowedTCPPorts = [ 80 443 ];
   };
-
-  programs.zsh.loginShellInit = ''
-    cat <<EOF
-    ${builtins.readFile "${inputs.self}/hosts/altaria/altaria"}
-    EOF
-  '';
 
   users.users = {
     root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };

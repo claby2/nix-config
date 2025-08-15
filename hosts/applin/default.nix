@@ -1,13 +1,10 @@
 { config, inputs, ... }: {
-  hostclass.mac.enable = true;
+  hostclass.mac = {
+    enable = true;
+    motd = builtins.readFile "${inputs.self}/hosts/applin/applin";
+  };
 
   services.tailscale.enable = true;
-
-  programs.zsh.loginShellInit = ''
-    cat <<EOF
-    ${builtins.readFile "${inputs.self}/hosts/applin/applin"}
-    EOF
-  '';
 
   nix.settings.experimental-features = "nix-command flakes";
 
