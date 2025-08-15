@@ -1,14 +1,20 @@
 { pkgs, config, modulesPath, meta, inputs, homelab, ... }: {
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  imports = [ ./hardware.nix (modulesPath + "/profiles/qemu-guest.nix") ];
   hostclass.server = {
     enable = true;
     motd = builtins.readFile "${inputs.self}/hosts/altaria/altaria";
   };
 
+  system.stateVersion = "23.11";
+
+  # === AGE
+  age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
+
+  # === SERVICES
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "server";
 
-  age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
+  # === HOMELAB
   homelab.gatus = let mkEndpoint = homelab.mkGatusEndpoint;
   in {
     enable = true;
@@ -41,22 +47,7 @@
     };
   };
 
-  boot.loader.grub.device = "/dev/sda";
-  boot.initrd.availableKernelModules =
-    [ "ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod" ];
-  boot.initrd.kernelModules = [ ];
-  fileSystems."/" = {
-    device = "/dev/sda1";
-    fsType = "xfs";
-  };
-  swapDevices = [{ device = "/dev/sda2"; }];
-
-  networking.hostName = "altaria";
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 80 443 ];
-  };
-
+  # === USERS
   users.users = {
     root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };
     claby2 = {
@@ -68,11 +59,10 @@
     };
   };
 
+  # === HOME
   home.claby2 = rec {
     enable = true;
     homeDirectory = config.users.users.claby2.home;
     nixConfigDirectory = "${homeDirectory}/nix-config";
   };
-
-  system.stateVersion = "23.11";
 }

@@ -1,48 +1,24 @@
 { pkgs, config, modulesPath, meta, inputs, ... }: {
-  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
+  imports = [ ./hardware.nix (modulesPath + "/profiles/qemu-guest.nix") ];
   hostclass.server = {
     enable = true;
     motd = builtins.readFile "${inputs.self}/hosts/onix/onix";
   };
 
-  services.tailscale.enable = true;
+  system.stateVersion = "23.11";
 
-  homelab.filebrowser = {
-    enable = true;
-    port = 3001;
-    host = "filebrowser.edwardwibowo.com";
-  };
-
-  homelab.personal = {
-    enable = true;
-    host = "edwardwibowo.com";
-  };
-
-  homelab.amy = {
-    enable = true;
-    host = "amyqiao.com";
-  };
-
+  # === AGE
+  age.secrets.restic-repository.file = ./secrets/restic-repository.age;
+  age.secrets.restic-password.file = ./secrets/restic-password.age;
+  age.secrets.restic-environment.file = ./secrets/restic-environment.age;
   age.secrets.freshrss = {
     file = ./secrets/freshrss.age;
     owner = "freshrss";
     group = "freshrss";
   };
-  homelab.freshrss = {
-    enable = true;
-    host = "freshrss.edwardwibowo.com";
-    passwordFile = config.age.secrets.freshrss.path;
-  };
 
-  homelab.gitea = {
-    enable = true;
-    port = 3000;
-    host = "git.edwardwibowo.com";
-  };
-
-  age.secrets.restic-repository.file = ./secrets/restic-repository.age;
-  age.secrets.restic-password.file = ./secrets/restic-password.age;
-  age.secrets.restic-environment.file = ./secrets/restic-environment.age;
+  # === SERVICES
+  services.tailscale.enable = true;
   services.restic.backups.onix = {
     initialize = true;
     paths = [ "/var/lib" "/etc/ssh" ];
@@ -58,21 +34,32 @@
     environmentFile = config.age.secrets.restic-environment.path;
   };
 
-  boot.loader.grub.device = "/dev/sda";
-  boot.initrd.availableKernelModules =
-    [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
-  boot.initrd.kernelModules = [ "nvme" ];
-  fileSystems."/" = {
-    device = "/dev/sda3";
-    fsType = "ext4";
-  };
-
-  networking.hostName = "onix";
-  networking.firewall = {
+  # === HOMELAB
+  homelab.filebrowser = {
     enable = true;
-    allowedTCPPorts = [ 80 443 ];
+    port = 3001;
+    host = "filebrowser.edwardwibowo.com";
+  };
+  homelab.personal = {
+    enable = true;
+    host = "edwardwibowo.com";
+  };
+  homelab.amy = {
+    enable = true;
+    host = "amyqiao.com";
+  };
+  homelab.freshrss = {
+    enable = true;
+    host = "freshrss.edwardwibowo.com";
+    passwordFile = config.age.secrets.freshrss.path;
+  };
+  homelab.gitea = {
+    enable = true;
+    port = 3000;
+    host = "git.edwardwibowo.com";
   };
 
+  # === USERS
   users.users = {
     root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };
     claby2 = {
@@ -84,11 +71,10 @@
     };
   };
 
+  # === HOME
   home.claby2 = rec {
     enable = true;
     homeDirectory = config.users.users.claby2.home;
     nixConfigDirectory = "${homeDirectory}/nix-config";
   };
-
-  system.stateVersion = "23.11";
 }
