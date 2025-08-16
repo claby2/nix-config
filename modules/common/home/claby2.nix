@@ -43,6 +43,8 @@ in {
           "${cfg.nixConfigDirectory}/apps/zsh/zshrc";
       };
       xdg.configFile = {
+        "hladmin".source = config.lib.file.mkOutOfStoreSymlink
+          "${cfg.nixConfigDirectory}/apps/hladmin";
         "nvim".source = config.lib.file.mkOutOfStoreSymlink
           "${cfg.nixConfigDirectory}/apps/nvim";
       } // lib.optionalAttrs cfg.enableLinuxDesktop {
