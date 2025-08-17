@@ -30,6 +30,7 @@ in {
           delta
           pyright
           patdiff
+          mutagen
         ] ++ lib.optionals cfg.enableLinuxDesktop [
           alacritty
           waybar
