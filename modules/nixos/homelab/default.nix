@@ -6,6 +6,7 @@
     ./amy.nix
     ./filebrowser.nix
     ./gatus.nix
+    ./metrics.nix
   ];
   services.nginx = {
     enable = true;

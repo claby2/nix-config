@@ -9,12 +9,27 @@
 
   # === AGE
   age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
+  age.secrets.grafana-password = {
+    file = ./secrets/grafana-password.age;
+    owner = "grafana";
+    group = "grafana";
+  };
 
   # === SERVICES
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "server";
 
   # === HOMELAB
+  homelab.metrics = {
+    enable = true;
+    grafanaAdminPassword =
+      "$__file{${config.age.secrets.grafana-password.path}}";
+    ports = {
+      grafana = 3001;
+      prometheus = 3002;
+      nodeExporter = 3003;
+    };
+  };
   homelab.gatus = let mkEndpoint = homelab.mkGatusEndpoint;
   in {
     enable = true;
