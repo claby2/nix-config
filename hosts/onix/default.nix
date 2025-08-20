@@ -16,6 +16,11 @@
     owner = "freshrss";
     group = "freshrss";
   };
+  age.secrets.grafana-password = {
+    file = ./secrets/grafana-password.age;
+    owner = "grafana";
+    group = "grafana";
+  };
 
   # === SERVICES
   services.tailscale.enable = true;
@@ -35,6 +40,16 @@
   };
 
   # === HOMELAB
+  homelab.metrics = {
+    enable = true;
+    grafanaAdminPassword =
+      "$__file{${config.age.secrets.grafana-password.path}}";
+    ports = {
+      grafana = 3003;
+      prometheus = 3004;
+      nodeExporter = 3005;
+    };
+  };
   homelab.filebrowser = {
     enable = true;
     port = 3001;

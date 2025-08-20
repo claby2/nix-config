@@ -14,4 +14,6 @@ in {
   "hosts/onix/secrets/restic-password.age".publicKeys = [ key.onix key.applin ];
   "hosts/onix/secrets/restic-repository.age".publicKeys =
     [ key.onix key.applin ];
+  "hosts/onix/secrets/grafana-password.age".publicKeys =
+    [ key.onix key.applin ];
 }
