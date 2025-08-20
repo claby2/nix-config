@@ -1,7 +1,7 @@
 { ... }: {
   sshPublicKeys = {
     altaria =
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFBLd7fIMeCNRrQiPzW1ycYJ6wc3cu5l0PMdoXHWjCEu";
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIg8SRUjPyiBA/aucB/p5ZroCQ+peJsdCeQF46LX5S2u";
     applin =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIgpfqrD63csQegPzBTBPcNJbzgdsBkJhDm/w1uchE+";
     onix =
