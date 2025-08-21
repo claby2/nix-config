@@ -42,6 +42,8 @@ in {
       home.file = {
         ".zshrc".source = config.lib.file.mkOutOfStoreSymlink
           "${cfg.nixConfigDirectory}/apps/zsh/zshrc";
+        ".local/bin".source = config.lib.file.mkOutOfStoreSymlink
+          "${cfg.nixConfigDirectory}/apps/scripts";
       };
       xdg.configFile = {
         "hladmin".source = config.lib.file.mkOutOfStoreSymlink
