@@ -2,23 +2,7 @@
 
 My nix-config (NixOS + nix-darwin).
 
-## Architecture
-
-This configuration uses Nix flakes to manage multiple systems across different platforms (Linux and macOS) with a consistent, modular approach. The architecture is built around:
-
-- **Hostclass inheritance** - Layered configuration system promoting code reuse
-- **Modular design** - Separation of concerns across system, user, and application configuration
-- **Declarative secrets** - Encrypted secrets management with agenix
-- **Home-manager integration** - User environment management across all systems
-
-### Systems Overview
-
-The configuration manages four distinct systems:
-
-- **onix** (x86_64-linux) - Linux server
-- **altaria** (x86_64-linux) - Linux server
-- **trubbish** (x86_64-linux) - Linux desktop
-- **applin** (arm64-darwin) - macOS laptop
+This configuration assumes this repository is cloned into `~/nix-config`.
 
 ## Directory Structure
 
@@ -36,7 +20,7 @@ The configuration manages four distinct systems:
 │   ├── nixos/
 │   │   ├── hostclass/
 │   │   └── homelab/       # Self-hosted services
-│   └── darwin/            # Darwin-specific modules
+│   └── darwin/
 │       └── hostclass/
 ├── apps/                  # Application dotfiles
 ├── meta/                  # Shared metadata
@@ -48,7 +32,9 @@ The configuration manages four distinct systems:
 The configuration uses a layered hostclass inheritance system to promote
 modularity and code reuse. Hostclasses can define properties and inherit
 properties from one another, forming a directed acyclic graph. The graph should
-have a single root hostclass: [`hosts`](./modules/common/hostclass/base.nix).
+have a single root hostclass: [`base`](./modules/common/hostclass/base.nix).
+
+A system managed via this configuration will have `$HOSTCLASS` defined.
 
 ### Configuration Pattern
 
@@ -68,8 +54,7 @@ Secrets are managed using [agenix](https://github.com/ryantm/agenix) for age-enc
 
 - Encrypted secrets stored in `hosts/<name>/secrets/`
 - Secrets configuration defined in [`secrets.nix`](./secrets.nix)
-- Age keys managed through SSH keys in [`meta/`](./meta/)
-- Secrets are decrypted at activation time and placed in `/run/agenix/`
+- Age keys managed through SSH keys in [`meta/default.nix`](./meta/default.nix)
 
 ## Development
 
@@ -86,6 +71,8 @@ Secrets are managed using [agenix](https://github.com/ryantm/agenix) for age-enc
 For homelab services, add a module to
 [`modules/nixos/homelab/`](./modules/nixos/homelab/), following [NixOS
 Modules](https://nixos.wiki/wiki/NixOS_modules) convention.
+
+Make sure to import the module in [`modules/nixos/homelab/default.nix`](./modules/nixos/homelab/default.nix).
 
 ### Managing Secrets
 

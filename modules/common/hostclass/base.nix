@@ -24,6 +24,7 @@ in {
       wget
       htop
       tree
+      mtr
       inputs.agenix.packages."${system}".default
       inputs.hladmin.packages."${system}".default
     ];
