@@ -1,7 +1,7 @@
-{ inputs, config, lib, system, ... }:
+{ inputs, config, lib, pkgs, ... }:
 let
   cfg = config.homelab.personal;
-  webPkg = inputs.personal-website.packages.${system}.default;
+  webPkg = inputs.personal-website.packages."${pkgs.system}".default;
 in {
 
   options.homelab.personal = {

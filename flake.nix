@@ -33,11 +33,7 @@
       mkNixosHost = name: system:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit inputs;
-            meta = meta;
-            system = system;
-          };
+          specialArgs = { inherit inputs meta; };
           modules = [
             ./modules/nixos
             ./hosts/${name}
@@ -52,11 +48,7 @@
       mkDarwinHost = name: system:
         nix-darwin.lib.darwinSystem {
           inherit system;
-          specialArgs = {
-            inherit inputs;
-            meta = meta;
-            system = system;
-          };
+          specialArgs = { inherit inputs meta; };
           modules = [
             ./modules/darwin
             ./hosts/${name}
