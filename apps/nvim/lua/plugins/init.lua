@@ -6,6 +6,10 @@ return {
 		opts = {},
 	},
 	{
+		"sindrets/diffview.nvim",
+		opts = {},
+	},
+	{
 		"claby2/codeview.nvim",
 		opts = {},
 	},

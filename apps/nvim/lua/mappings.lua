@@ -59,6 +59,14 @@ map("n", "<leader>cp", "<cmd>ToggleCopilot<cr>", { desc = "Toggle Copilot" })
 -- Dismiss notifications
 map("n", "<leader>d", [[<cmd>lua require("notify").dismiss()<cr>]])
 
+-- CodeView mappings
+map("n", "<leader>cvt", "<cmd>CodeViewTable<cr>", { desc = "Code View Table" })
+map("n", "<leader>cvd", "<cmd>CodeViewDiff<cr>", { desc = "Code View Diff" })
+
+-- Diffview mappings
+map("n", "<leader>dvo", "<cmd>DiffviewOpen<cr>", { desc = "Diffview Open" })
+map("n", "<leader>dvc", "<cmd>DiffviewClose<cr>", { desc = "Diffview Close" })
+
 -- Toggle virtual lines for diagnostics
 map("n", "<leader>v", function()
 	local new_config = not vim.diagnostic.config().virtual_lines
