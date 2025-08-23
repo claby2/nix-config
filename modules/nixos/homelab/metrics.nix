@@ -1,14 +1,20 @@
-{ config, lib, ... }:
+{ meta, config, lib, ... }:
 let cfg = config.homelab.metrics;
 in {
 
   options.homelab.metrics = {
     enable = lib.mkEnableOption "metrics (grafana + prometheus)";
+    hostname = lib.mkOption { type = lib.types.str; };
     grafanaAdminPassword = lib.mkOption { type = lib.types.str; };
     ports = lib.mkOption {
       type = lib.types.submodule {
         options = {
-          grafana = lib.mkOption { type = lib.types.port; };
+          grafana = lib.mkOption {
+            type = lib.types.port;
+            description = ''
+              Port used to bind to 127.0.0.1 and also listen for reverse proxy
+            '';
+          };
           prometheus = lib.mkOption { type = lib.types.port; };
           nodeExporter = lib.mkOption { type = lib.types.port; };
         };
@@ -16,7 +22,8 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = let host = "${cfg.hostname}.${meta.tailnetName}";
+  in lib.mkIf cfg.enable {
     services.grafana = {
       enable = true;
       settings = {
@@ -42,5 +49,14 @@ in {
       }];
     };
 
+    services.nginx.virtualHosts."${host}" = {
+      listen = [{
+        addr = host;
+        port = cfg.ports.grafana;
+      }];
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.ports.grafana}/";
+      };
+    };
   };
 }

@@ -42,6 +42,7 @@
   # === HOMELAB
   homelab.metrics = {
     enable = true;
+    hostname = "altaria";
     grafanaAdminPassword =
       "$__file{${config.age.secrets.grafana-password.path}}";
     ports = {

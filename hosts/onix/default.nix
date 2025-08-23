@@ -22,6 +22,7 @@
   # === HOMELAB
   homelab.metrics = {
     enable = true;
+    hostname = "onix";
     grafanaAdminPassword =
       "$__file{${config.age.secrets.grafana-password.path}}";
     ports = {

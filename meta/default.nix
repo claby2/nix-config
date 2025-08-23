@@ -1,4 +1,5 @@
 { ... }: {
+  tailnetName = "tail983a17.ts.net";
   sshPublicKeys = {
     altaria =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIg8SRUjPyiBA/aucB/p5ZroCQ+peJsdCeQF46LX5S2u";
