@@ -12,11 +12,12 @@
   # NOTE: age.identityPaths looks at ssh host keys, but not personal keys. So,
   # we must override age.identityPaths here.
   age.identityPaths = [ "${config.users.users.claby2.home}/.ssh/id_ed25519" ];
-  age.secrets.onix-restic-repository.file =
-    ../onix/secrets/restic-repository.age;
-  age.secrets.onix-restic-password.file = ../onix/secrets/restic-password.age;
-  age.secrets.onix-restic-environment.file =
-    ../onix/secrets/restic-environment.age;
+  age.secrets.altaria-restic-repository.file =
+    ../altaria/secrets/restic-repository.age;
+  age.secrets.altaria-restic-password.file =
+    ../altaria/secrets/restic-password.age;
+  age.secrets.altaria-restic-environment.file =
+    ../altaria/secrets/restic-environment.age;
 
   # === SERVICES
   services.tailscale.enable = true;
@@ -24,13 +25,13 @@
   # === ENVIRONMENT
   environment.variables.TERM = "rxvt";
   environment.systemPackages = [
-    # NOTE: We can take advantage of the fact that applin has access to onix's
+    # NOTE: We can take advantage of the fact that applin has access to altaria's
     # restic secrets and create a wrapper script.
-    (pkgs.writeScriptBin "restic-onix" ''
+    (pkgs.writeScriptBin "restic-altaria" ''
       set -a
-      source ${config.age.secrets.onix-restic-environment.path}
-      RESTIC_PASSWORD_FILE=${config.age.secrets.onix-restic-password.path}
-      RESTIC_REPOSITORY_FILE=${config.age.secrets.onix-restic-repository.path}
+      source ${config.age.secrets.altaria-restic-environment.path}
+      RESTIC_PASSWORD_FILE=${config.age.secrets.altaria-restic-password.path}
+      RESTIC_REPOSITORY_FILE=${config.age.secrets.altaria-restic-repository.path}
 
       exec ${pkgs.restic}/bin/restic "$@"
     '')

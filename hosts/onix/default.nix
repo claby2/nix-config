@@ -1,4 +1,4 @@
-{ pkgs, config, modulesPath, meta, inputs, ... }: {
+{ pkgs, config, modulesPath, meta, inputs, homelab, ... }: {
   imports = [ ./hardware.nix (modulesPath + "/profiles/qemu-guest.nix") ];
   hostclass.server = {
     enable = true;
@@ -8,14 +8,7 @@
   system.stateVersion = "23.11";
 
   # === AGE
-  age.secrets.restic-repository.file = ./secrets/restic-repository.age;
-  age.secrets.restic-password.file = ./secrets/restic-password.age;
-  age.secrets.restic-environment.file = ./secrets/restic-environment.age;
-  age.secrets.freshrss = {
-    file = ./secrets/freshrss.age;
-    owner = "freshrss";
-    group = "freshrss";
-  };
+  age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
   age.secrets.grafana-password = {
     file = ./secrets/grafana-password.age;
     owner = "grafana";
@@ -24,20 +17,7 @@
 
   # === SERVICES
   services.tailscale.enable = true;
-  services.restic.backups.onix = {
-    initialize = true;
-    paths = [ "/var/lib" "/etc/ssh" ];
-    pruneOpts =
-      [ "--keep-within 7d" "--keep-monthly 12" "--keep-yearly 5" "--prune" ];
-    extraBackupArgs = [ "--cache-dir" "/var/cache/restic-cache" ];
-    timerConfig = {
-      OnCalendar = "00:05";
-      Persistent = true;
-    };
-    repositoryFile = config.age.secrets.restic-repository.path;
-    passwordFile = config.age.secrets.restic-password.path;
-    environmentFile = config.age.secrets.restic-environment.path;
-  };
+  services.tailscale.useRoutingFeatures = "server";
 
   # === HOMELAB
   homelab.metrics = {
@@ -45,33 +25,41 @@
     grafanaAdminPassword =
       "$__file{${config.age.secrets.grafana-password.path}}";
     ports = {
-      grafana = 3003;
-      prometheus = 3004;
-      nodeExporter = 3005;
+      grafana = 3001;
+      prometheus = 3002;
+      nodeExporter = 3003;
     };
   };
-  homelab.filebrowser = {
-    enable = true;
-    port = 3001;
-    host = "filebrowser.edwardwibowo.com";
-  };
-  homelab.personal = {
-    enable = true;
-    host = "edwardwibowo.com";
-  };
-  homelab.amy = {
-    enable = true;
-    host = "amyqiao.com";
-  };
-  homelab.freshrss = {
-    enable = true;
-    host = "freshrss.edwardwibowo.com";
-    passwordFile = config.age.secrets.freshrss.path;
-  };
-  homelab.gitea = {
+  homelab.gatus = let mkEndpoint = homelab.mkGatusEndpoint;
+  in {
     enable = true;
     port = 3000;
-    host = "git.edwardwibowo.com";
+    host = "gatus.edwardwibowo.com";
+    endpoints = [
+      (mkEndpoint "personal" "https://edwardwibowo.com")
+      (mkEndpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
+      (mkEndpoint "freshrss" "https://freshrss.edwardwibowo.com")
+      (mkEndpoint "git" "https://git.edwardwibowo.com")
+      {
+        name = "altaria ssh";
+        url = "ssh://altaria.edwardwibowo.com:22";
+        ssh = {
+          username = "";
+          password = "";
+        };
+        interval = "5m";
+        conditions = [ "[CONNECTED] == true" "[STATUS] == 0" ];
+        alerts = [{ type = "discord"; }];
+      }
+    ];
+    environmentFile = config.age.secrets.gatus-environment.path;
+    alerting.discord = {
+      webhook-url = "$DISCORD_WEBHOOK_URL";
+      default-alert = {
+        send-on-resolved = true;
+        failure-threshold = 1;
+      };
+    };
   };
 
   # === USERS
