@@ -21,6 +21,23 @@
         "type": "github"
       }
     },
+    "amy": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1749538082,
+        "narHash": "sha256-lao/4kgQ0YaqvyGVvmwshaZmKN7pBGT1P/j4ef/XmiI=",
+        "ref": "main",
+        "rev": "596beca3280a795a942c8f0c6dc534905b1b6a99",
+        "revCount": 14,
+        "type": "git",
+        "url": "ssh://git@github.com/amyqcs/amyqiao"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/amyqcs/amyqiao"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -200,6 +217,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "amy": "amy",
         "hladmin": "hladmin",
         "home-manager": "home-manager_2",
         "nix-darwin": "nix-darwin",

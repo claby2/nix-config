@@ -60,11 +60,10 @@
     enable = true;
     host = "edwardwibowo.com";
   };
-  # TODO: reenable this eventually
-  # homelab.amy = {
-  #   enable = true;
-  #   host = "amyqiao.com";
-  # };
+  homelab.amy = {
+    enable = true;
+    host = "amyqiao.com";
+  };
   homelab.freshrss = {
     enable = true;
     host = "freshrss.edwardwibowo.com";

@@ -41,6 +41,7 @@
       (mkEndpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
       (mkEndpoint "freshrss" "https://freshrss.edwardwibowo.com")
       (mkEndpoint "git" "https://git.edwardwibowo.com")
+      (mkEndpoint "amy" "https://amyqiao.com")
       {
         name = "altaria ssh";
         url = "ssh://altaria.edwardwibowo.com:22";

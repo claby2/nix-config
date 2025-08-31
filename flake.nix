@@ -21,6 +21,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    amy = {
+      url = "git+ssh://git@github.com/amyqcs/amyqiao?ref=main";
+      flake = false;
+    };
+
     hladmin = {
       url = "github:claby2/hladmin";
       inputs.nixpkgs.follows = "nixpkgs";
