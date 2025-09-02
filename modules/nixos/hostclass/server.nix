@@ -12,7 +12,7 @@ in {
 
     # === ENVIRONMENT
     environment.variables.HOSTCLASS = lib.mkAfter "server";
-    environment.systemPackages = with pkgs; [ strace lsof ];
+    environment.systemPackages = with pkgs; [ strace lsof tcpdump ];
 
     # === PROGRAMS
     programs.gnupg.agent = {
