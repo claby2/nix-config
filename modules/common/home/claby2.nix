@@ -31,6 +31,7 @@ in {
           pyright
           patdiff
           mutagen
+          nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
         ] ++ lib.optionals cfg.enableLinuxDesktop [
           alacritty
           waybar
