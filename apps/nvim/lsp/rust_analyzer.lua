@@ -3,8 +3,12 @@ return {
 	filetypes = { "rust" },
 	settings = {
 		["rust-analyzer"] = {
-			checkOnSave = {
+			checkOnSave = true,
+			check = {
 				command = "clippy",
+			},
+			inlayHints = {
+				enable = true,
 			},
 		},
 	},

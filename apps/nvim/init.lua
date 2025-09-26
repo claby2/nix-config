@@ -28,7 +28,18 @@ vim.cmd([[let no_ocaml_maps = 1]])
 require("config.lazy")
 require("mappings")
 
-vim.lsp.enable({ "ccls", "gopls", "lua-language-server", "ocamllsp", "ruff", "pyright", "rust_analyzer", "tinymist", "nil_ls" })
+vim.lsp.enable({
+	"ccls",
+	"gopls",
+	"lua-language-server",
+	"ocamllsp",
+	"ruff",
+	"pyright",
+	"rust_analyzer",
+	"tinymist",
+	"nil_ls",
+	"vimtex",
+})
 vim.diagnostic.config({
 	signs = {
 		priority = 10,

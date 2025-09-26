@@ -55,6 +55,8 @@ return {
 			float_opts = {
 				border = "curved",
 			},
+			-- Nice to specify zsh manually here just in case $SHELL is set to something else (e.g. in nix develop shell)
+			shell = "/usr/bin/env zsh",
 		},
 	},
 	{
