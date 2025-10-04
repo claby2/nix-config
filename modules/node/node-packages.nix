@@ -24,4 +24,22 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
+  "@augmentcode/auggie-0.5.7" = nodeEnv.buildNodePackage {
+    name = "_at_augmentcode_slash_auggie";
+    packageName = "@augmentcode/auggie";
+    version = "0.5.7";
+    src = fetchurl {
+      url = "https://registry.npmjs.org/@augmentcode/auggie/-/auggie-0.5.7.tgz";
+      sha512 = "hNhrmrF3/AUxJe5OL2M8BluyN+KD/Rc2rTJF6NrKAF7fqcQNsIbBICbz5b2+DMb02STFJup6dgkVF0HLhW34Bw==";
+    };
+    buildInputs = globalBuildInputs;
+    meta = {
+      description = "Auggie CLI Client by Augment Code";
+      homepage = "https://augmentcode.com";
+      license = "SEE LICENSE IN LICENSE.md";
+    };
+    production = true;
+    bypassCache = true;
+    reconstructLock = true;
+  };
 }
