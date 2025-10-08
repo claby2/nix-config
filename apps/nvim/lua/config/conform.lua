@@ -4,7 +4,7 @@ M.setup = function()
 	require("conform").setup({
 		formatters_by_ft = {
 			lua = { "stylua" },
-			python = { "black" },
+			python = { "yapf" },
 			go = { "gofmt" },
 			rust = { "rustfmt" },
 			sh = { "shfmt" },
