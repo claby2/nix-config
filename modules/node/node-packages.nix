@@ -6,13 +6,13 @@ let
   sources = {};
 in
 {
-  "@anthropic-ai/claude-code-2.0.5" = nodeEnv.buildNodePackage {
+  "@anthropic-ai/claude-code-2.0.20" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.0.5";
+    version = "2.0.20";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.5.tgz";
-      sha512 = "A7Nnbxf4yvfgnzIbML+IYYkyz4Wmg7McHpqi0pzDmyoz3TUQI1KJc798mlQ0bY7ZeLdrzA0IRCv7yR6bwTa3fA==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.20.tgz";
+      sha512 = "VNZa8wQqzoesqFPdj4EAkCgpnvllThfT8Qj+2/8ObHVt0CyNnOG+Y+rkNhQEsQDu5imUj1kf8BSWQqhU/92Xqw==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -24,13 +24,13 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
-  "@augmentcode/auggie-0.5.7" = nodeEnv.buildNodePackage {
+  "@augmentcode/auggie-0.5.9" = nodeEnv.buildNodePackage {
     name = "_at_augmentcode_slash_auggie";
     packageName = "@augmentcode/auggie";
-    version = "0.5.7";
+    version = "0.5.9";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@augmentcode/auggie/-/auggie-0.5.7.tgz";
-      sha512 = "hNhrmrF3/AUxJe5OL2M8BluyN+KD/Rc2rTJF6NrKAF7fqcQNsIbBICbz5b2+DMb02STFJup6dgkVF0HLhW34Bw==";
+      url = "https://registry.npmjs.org/@augmentcode/auggie/-/auggie-0.5.9.tgz";
+      sha512 = "ItxxFWgEbI/YDO3qB98hP4nc3lFth2XBbLNVrROforGZrQBUG30bXp+waDhf7ahr1tvLelS+UWoIIZpLB8kyiA==";
     };
     buildInputs = globalBuildInputs;
     meta = {
