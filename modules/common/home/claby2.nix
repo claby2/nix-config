@@ -76,9 +76,9 @@ in {
 
       programs.git = {
         enable = true;
-        userName = "Edward Wibowo";
-        userEmail = "wibow9770@gmail.com";
-        extraConfig = {
+        settings = {
+          user.name = "Edward Wibowo";
+          user.email = "wibow9770@gmail.com";
           init.defaultBranch = "main";
           credential.helper = "store";
           commit.gpgsign = true;
@@ -88,7 +88,7 @@ in {
 
       services.gpg-agent = {
         enable = true;
-        pinentry.package = pkgs.pinentry.tty;
+        pinentry.package = pkgs.pinentry-curses;
       };
 
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
