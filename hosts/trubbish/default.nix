@@ -22,7 +22,7 @@
     enable = true;
     homeDirectory = config.users.users.claby2.home;
     nixConfigDirectory = "${homeDirectory}/nix-config";
-    enableLinuxDesktop = true;
+    enableLinuxDesktop = true; # TODO: Deprecate this mayb
   };
 }
 

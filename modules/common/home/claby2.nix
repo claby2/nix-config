@@ -10,7 +10,7 @@ let
   };
 
   # Extract the specific package we want
-  claudeCode = node2nixPackages."@anthropic-ai/claude-code-2.0.20";
+  claudeCode = node2nixPackages."@anthropic-ai/claude-code-2.0.25";
   auggie = node2nixPackages."@augmentcode/auggie-0.5.9";
 in {
   options.home.claby2 = {
@@ -67,6 +67,8 @@ in {
           "${cfg.nixConfigDirectory}/apps/hladmin";
         "nvim".source = config.lib.file.mkOutOfStoreSymlink
           "${cfg.nixConfigDirectory}/apps/nvim";
+        "aerospace".source = config.lib.file.mkOutOfStoreSymlink
+          "${cfg.nixConfigDirectory}/apps/aerospace";
       } // lib.optionalAttrs cfg.enableLinuxDesktop {
         "hypr".source = config.lib.file.mkOutOfStoreSymlink
           "${cfg.nixConfigDirectory}/apps/hypr";
