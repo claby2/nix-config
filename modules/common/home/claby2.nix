@@ -10,7 +10,7 @@ let
   };
 
   # Extract the specific package we want
-  claudeCode = node2nixPackages."@anthropic-ai/claude-code-2.0.42";
+  claudeCode = node2nixPackages."@anthropic-ai/claude-code-2.0.55";
   auggie = node2nixPackages."@augmentcode/auggie-0.5.9";
 in {
   options.home.claby2 = {

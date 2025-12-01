@@ -6,13 +6,13 @@ let
   sources = {};
 in
 {
-  "@anthropic-ai/claude-code-2.0.42" = nodeEnv.buildNodePackage {
+  "@anthropic-ai/claude-code-2.0.55" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.0.42";
+    version = "2.0.55";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.42.tgz";
-      sha512 = "poK4Z+mviehjjCIQe+KTU40kSTgnUitxROg79rAwN3L3A7FyvQE8v6jdakvtxYb452/8qBSf+FbvImHvuXn0rw==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.55.tgz";
+      sha512 = "IVY6J2KgTP5BiCbLmuP3kAl8jbXfd6yGoXtvc0L0eiZwxJUMa+cubUU0U8qHRnVkNmDAis+O4P00KmeuGzSLWg==";
     };
     buildInputs = globalBuildInputs;
     meta = {
