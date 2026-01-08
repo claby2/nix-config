@@ -10,8 +10,9 @@ let
   };
 
   # Extract the specific package we want
-  claudeCode = node2nixPackages."@anthropic-ai/claude-code-2.0.69";
+  claudeCode = node2nixPackages."@anthropic-ai/claude-code-2.1.1";
   auggie = node2nixPackages."@augmentcode/auggie-0.5.9";
+  codex = node2nixPackages."@openai/codex-0.79.0";
 in {
   options.home.claby2 = {
     enable = lib.mkEnableOption "claby2 home";
@@ -39,6 +40,7 @@ in {
           nodePackages.prettier
           claudeCode
           auggie
+          codex
           uv
           delta
           pyright
