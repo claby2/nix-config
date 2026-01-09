@@ -14,7 +14,7 @@ in {
     environment.variables.HOSTCLASS = lib.mkAfter "mac";
     # NOTE: I think nix-darwin does not have `users.motd` option, so doing setting motd manually here.
     environment.etc."motd".text = cfg.motd;
-    environment.systemPackages = with pkgs; [ aerospace kitty ];
+    environment.systemPackages = with pkgs; [ aerospace kitty terminal-notifier ];
 
     # === PROGRAMS
     # NOTE: This should ideally be specified in ../../common/hostclass/base.nix
