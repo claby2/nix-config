@@ -14,6 +14,7 @@ M.setup = function()
 			c = { "clang-format" },
 			astro = { "prettier" },
 			json = { "prettier" },
+			jsonc = { "prettier" },
 			markdown = { "prettier" },
 			typescript = { "prettier" },
 			typescriptreact = { "prettier" },
