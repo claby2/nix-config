@@ -22,7 +22,7 @@ in {
           ripgrep
           neovim
           gcc
-          nixfmt-classic
+          nixfmt
           nil
           fzf
           jq
