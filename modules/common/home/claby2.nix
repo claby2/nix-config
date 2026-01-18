@@ -40,6 +40,7 @@ in {
           mutagen
           nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
           node2nix
+          opencode
         ] ++ lib.optionals cfg.enableLinuxDesktop [
           alacritty
           waybar
