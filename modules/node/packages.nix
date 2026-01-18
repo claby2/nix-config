@@ -9,25 +9,31 @@ let
   # Import the node2nix-generated packages
   node2nixPackages = import ./default.nix {
     inherit pkgs;
-    inherit (pkgs.stdenv.hostPlatform) system;
+    system = pkgs.stdenv.hostPlatform.system;
     nodejs = pkgs.nodejs;
   };
 
   # Helper to get a clean name from npm package name
   # @scope/package-name -> package-name
   # simple-name -> simple-name
-  cleanName = name:
-    let parts = builtins.split "/" name;
-    in if builtins.length parts > 1 then builtins.elemAt parts 2 else name;
+  cleanName =
+    name:
+    let
+      parts = builtins.split "/" name;
+    in
+    if builtins.length parts > 1 then builtins.elemAt parts 2 else name;
 
   # Build attribute set from JSON specs
-  getPackage = spec:
+  getPackage =
+    spec:
     let
       name = builtins.head (builtins.attrNames spec);
       version = spec.${name};
       attrName = "${name}-${version}";
-    in {
+    in
+    {
       name = cleanName name;
       value = node2nixPackages.${attrName};
     };
-in builtins.listToAttrs (map getPackage packageSpecs)
+in
+builtins.listToAttrs (map getPackage packageSpecs)

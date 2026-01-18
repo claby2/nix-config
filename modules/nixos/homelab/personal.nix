@@ -1,8 +1,15 @@
-{ inputs, config, lib, pkgs, ... }:
+{
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.homelab.personal;
-  webPkg = inputs.personal-website.packages."${pkgs.system}".default;
-in {
+  webPkg = inputs.personal-website.packages."${pkgs.stdenv.hostPlatform.system}".default;
+in
+{
 
   options.homelab.personal = {
     enable = lib.mkEnableOption "personal website";
@@ -22,7 +29,9 @@ in {
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;
-      locations."/" = { root = "/var/lib/personal"; };
+      locations."/" = {
+        root = "/var/lib/personal";
+      };
     };
   };
 }
