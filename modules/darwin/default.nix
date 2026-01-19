@@ -1,1 +1,7 @@
-{ ... }: { imports = [ ../common ./hostclass ]; }
+{ ... }:
+{
+  imports = [
+    ../common
+    ./hostclass
+  ];
+}

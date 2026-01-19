@@ -1,5 +1,17 @@
-{ pkgs, config, modulesPath, meta, inputs, homelab, ... }: {
-  imports = [ ./hardware.nix (modulesPath + "/profiles/qemu-guest.nix") ];
+{
+  pkgs,
+  config,
+  modulesPath,
+  meta,
+  inputs,
+  homelab,
+  ...
+}:
+{
+  imports = [
+    ./hardware.nix
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
   hostclass.server = {
     enable = true;
     motd = builtins.readFile "${inputs.self}/hosts/onix/onix";
@@ -23,50 +35,57 @@
   homelab.metrics = {
     enable = true;
     hostname = "onix";
-    grafanaAdminPassword =
-      "$__file{${config.age.secrets.grafana-password.path}}";
+    grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
     ports = {
       grafana = 3001;
       prometheus = 3002;
       nodeExporter = 3003;
     };
   };
-  homelab.gatus = let mkEndpoint = homelab.mkGatusEndpoint;
-  in {
-    enable = true;
-    port = 3000;
-    host = "gatus.edwardwibowo.com";
-    endpoints = [
-      (mkEndpoint "personal" "https://edwardwibowo.com")
-      (mkEndpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
-      (mkEndpoint "freshrss" "https://freshrss.edwardwibowo.com")
-      (mkEndpoint "git" "https://git.edwardwibowo.com")
-      (mkEndpoint "amy" "https://amyqiao.com")
-      {
-        name = "altaria ssh";
-        url = "ssh://altaria.edwardwibowo.com:22";
-        ssh = {
-          username = "";
-          password = "";
+  homelab.gatus =
+    let
+      mkEndpoint = homelab.mkGatusEndpoint;
+    in
+    {
+      enable = true;
+      port = 3000;
+      host = "gatus.edwardwibowo.com";
+      endpoints = [
+        (mkEndpoint "personal" "https://edwardwibowo.com")
+        (mkEndpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
+        (mkEndpoint "freshrss" "https://freshrss.edwardwibowo.com")
+        (mkEndpoint "git" "https://git.edwardwibowo.com")
+        (mkEndpoint "amy" "https://amyqiao.com")
+        {
+          name = "altaria ssh";
+          url = "ssh://altaria.edwardwibowo.com:22";
+          ssh = {
+            username = "";
+            password = "";
+          };
+          interval = "5m";
+          conditions = [
+            "[CONNECTED] == true"
+            "[STATUS] == 0"
+          ];
+          alerts = [ { type = "discord"; } ];
+        }
+      ];
+      environmentFile = config.age.secrets.gatus-environment.path;
+      alerting.discord = {
+        webhook-url = "$DISCORD_WEBHOOK_URL";
+        default-alert = {
+          send-on-resolved = true;
+          failure-threshold = 1;
         };
-        interval = "5m";
-        conditions = [ "[CONNECTED] == true" "[STATUS] == 0" ];
-        alerts = [{ type = "discord"; }];
-      }
-    ];
-    environmentFile = config.age.secrets.gatus-environment.path;
-    alerting.discord = {
-      webhook-url = "$DISCORD_WEBHOOK_URL";
-      default-alert = {
-        send-on-resolved = true;
-        failure-threshold = 1;
       };
     };
-  };
 
   # === USERS
   users.users = {
-    root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };
+    root = {
+      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
+    };
     claby2 = {
       shell = pkgs.zsh;
       isNormalUser = true;

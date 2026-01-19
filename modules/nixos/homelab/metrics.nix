@@ -1,6 +1,13 @@
-{ meta, config, lib, ... }:
-let cfg = config.homelab.metrics;
-in {
+{
+  meta,
+  config,
+  lib,
+  ...
+}:
+let
+  cfg = config.homelab.metrics;
+in
+{
 
   options.homelab.metrics = {
     enable = lib.mkEnableOption "metrics (grafana + prometheus)";
@@ -22,45 +29,51 @@ in {
     };
   };
 
-  config = let host = "${cfg.hostname}.${meta.tailnetName}";
-  in lib.mkIf cfg.enable {
-    services.grafana = {
-      enable = true;
-      settings = {
-        server.http_port = cfg.ports.grafana;
-        security.admin_password = cfg.grafanaAdminPassword;
-      };
-    };
-
-    services.prometheus = {
-      enable = true;
-      port = cfg.ports.prometheus;
-      exporters = {
-        node = {
-          enable = true;
-          enabledCollectors = [ "systemd" ];
-          port = cfg.ports.nodeExporter;
+  config =
+    let
+      host = "${cfg.hostname}.${meta.tailnetName}";
+    in
+    lib.mkIf cfg.enable {
+      services.grafana = {
+        enable = true;
+        settings = {
+          server.http_port = cfg.ports.grafana;
+          security.admin_password = cfg.grafanaAdminPassword;
         };
       };
-      scrapeConfigs = [{
-        job_name = "node";
-        static_configs =
-          [{ targets = [ "127.0.0.1:${toString cfg.ports.nodeExporter}" ]; }];
-      }];
-    };
 
-    services.nginx.virtualHosts."${host}" = {
-      listen = [{
-        addr = host;
-        port = cfg.ports.grafana;
-      }];
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.ports.grafana}/";
-        proxyWebsockets = true;
-        extraConfig = ''
-          proxy_set_header Host ${host};
-        '';
+      services.prometheus = {
+        enable = true;
+        port = cfg.ports.prometheus;
+        exporters = {
+          node = {
+            enable = true;
+            enabledCollectors = [ "systemd" ];
+            port = cfg.ports.nodeExporter;
+          };
+        };
+        scrapeConfigs = [
+          {
+            job_name = "node";
+            static_configs = [ { targets = [ "127.0.0.1:${toString cfg.ports.nodeExporter}" ]; } ];
+          }
+        ];
+      };
+
+      services.nginx.virtualHosts."${host}" = {
+        listen = [
+          {
+            addr = host;
+            port = cfg.ports.grafana;
+          }
+        ];
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString cfg.ports.grafana}/";
+          proxyWebsockets = true;
+          extraConfig = ''
+            proxy_set_header Host ${host};
+          '';
+        };
       };
     };
-  };
 }

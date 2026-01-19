@@ -1,6 +1,13 @@
-{ config, lib, pkgs, ... }:
-let cfg = config.homelab.gitea;
-in {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.homelab.gitea;
+in
+{
 
   options.homelab.gitea = {
     enable = lib.mkEnableOption "gitea";
@@ -13,7 +20,9 @@ in {
       enable = true;
 
       settings = {
-        service = { DISABLE_REGISTRATION = true; };
+        service = {
+          DISABLE_REGISTRATION = true;
+        };
         server = {
           HTTP_PORT = cfg.port;
           ROOT_URL = "https://${cfg.host}/";

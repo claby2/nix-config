@@ -1,6 +1,13 @@
-{ inputs, lib, config, ... }:
-let cfg = config.homelab.amy;
-in {
+{
+  inputs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.homelab.amy;
+in
+{
   options.homelab.amy = {
     enable = lib.mkEnableOption "amy's website";
     host = lib.mkOption { type = lib.types.str; };
@@ -10,9 +17,10 @@ in {
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;
-      locations."/" = { root = "${inputs.amy}"; };
+      locations."/" = {
+        root = "${inputs.amy}";
+      };
     };
   };
 
 }
-

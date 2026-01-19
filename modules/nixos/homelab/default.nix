@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
     ./gitea.nix
     ./personal.nix
@@ -15,7 +16,9 @@
     virtualHosts."_" = {
       default = true;
       rejectSSL = true;
-      locations."/" = { return = "444"; };
+      locations."/" = {
+        return = "444";
+      };
     };
   };
   security.acme = {
@@ -27,6 +30,6 @@
     inherit name url;
     interval = "5m";
     conditions = [ "[STATUS] == 200" ];
-    alerts = [{ type = "discord"; }];
+    alerts = [ { type = "discord"; } ];
   };
 }

@@ -1,4 +1,10 @@
-{ config, inputs, pkgs, ... }: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+{
   hostclass.mac = {
     enable = true;
     motd = builtins.readFile "${inputs.self}/hosts/applin/applin";
@@ -12,12 +18,9 @@
   # NOTE: age.identityPaths looks at ssh host keys, but not personal keys. So,
   # we must override age.identityPaths here.
   age.identityPaths = [ "${config.users.users.claby2.home}/.ssh/id_ed25519" ];
-  age.secrets.altaria-restic-repository.file =
-    ../altaria/secrets/restic-repository.age;
-  age.secrets.altaria-restic-password.file =
-    ../altaria/secrets/restic-password.age;
-  age.secrets.altaria-restic-environment.file =
-    ../altaria/secrets/restic-environment.age;
+  age.secrets.altaria-restic-repository.file = ../altaria/secrets/restic-repository.age;
+  age.secrets.altaria-restic-password.file = ../altaria/secrets/restic-password.age;
+  age.secrets.altaria-restic-environment.file = ../altaria/secrets/restic-environment.age;
 
   # === SERVICES
   services.tailscale.enable = true;

@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let cfg = config.homelab.filebrowser;
-in {
+let
+  cfg = config.homelab.filebrowser;
+in
+{
   options.homelab.filebrowser = {
     enable = lib.mkEnableOption "filebrowser";
     port = lib.mkOption { type = lib.types.port; };
@@ -24,8 +26,9 @@ in {
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;
-      locations."/" = { proxyPass = "http://127.0.0.1:${toString cfg.port}/"; };
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}/";
+      };
     };
   };
 }
-

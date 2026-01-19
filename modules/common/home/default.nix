@@ -1,1 +1,4 @@
-{ ... }: { imports = [ ./claby2.nix ]; }
+{ ... }:
+{
+  imports = [ ./claby2.nix ];
+}

@@ -1,6 +1,13 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.hostclass.server;
-in {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.hostclass.server;
+in
+{
   options.hostclass.server = {
     enable = lib.mkEnableOption "server hostclass";
     motd = lib.mkOption { type = lib.types.str; };
@@ -12,7 +19,11 @@ in {
 
     # === ENVIRONMENT
     environment.variables.HOSTCLASS = lib.mkAfter "server";
-    environment.systemPackages = with pkgs; [ strace lsof tcpdump ];
+    environment.systemPackages = with pkgs; [
+      strace
+      lsof
+      tcpdump
+    ];
 
     # === PROGRAMS
     programs.gnupg.agent = {

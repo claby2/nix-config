@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let cfg = config.homelab.freshrss;
-in {
+let
+  cfg = config.homelab.freshrss;
+in
+{
   options.homelab.freshrss = {
     enable = lib.mkEnableOption "freshrss";
     host = lib.mkOption { type = lib.types.str; };

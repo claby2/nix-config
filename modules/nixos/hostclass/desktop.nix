@@ -1,6 +1,13 @@
-{ pkgs, lib, config, ... }:
-let cfg = config.hostclass.desktop;
-in {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.hostclass.desktop;
+in
+{
   options.hostclass.desktop = {
     enable = lib.mkEnableOption "desktop hostclass";
   };
@@ -39,4 +46,3 @@ in {
     networking.wireless.enable = true;
   };
 }
-

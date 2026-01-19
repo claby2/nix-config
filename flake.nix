@@ -32,10 +32,19 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nix-darwin, agenix, ... }:
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      home-manager,
+      nix-darwin,
+      agenix,
+      ...
+    }:
     let
       meta = import ./meta { };
-      mkNixosHost = name: system:
+      mkNixosHost =
+        name: system:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs meta; };
@@ -50,7 +59,8 @@
             agenix.nixosModules.default
           ];
         };
-      mkDarwinHost = name: system:
+      mkDarwinHost =
+        name: system:
         nix-darwin.lib.darwinSystem {
           inherit system;
           specialArgs = { inherit inputs meta; };
@@ -66,7 +76,8 @@
           ];
 
         };
-    in {
+    in
+    {
 
       ## Nixos Hosts
       nixosConfigurations.onix = mkNixosHost "onix" "x86_64-linux";

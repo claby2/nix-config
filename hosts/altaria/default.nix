@@ -1,5 +1,16 @@
-{ pkgs, config, modulesPath, meta, inputs, ... }: {
-  imports = [ ./hardware.nix (modulesPath + "/profiles/qemu-guest.nix") ];
+{
+  pkgs,
+  config,
+  modulesPath,
+  meta,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    ./hardware.nix
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
   hostclass.server = {
     enable = true;
     motd = builtins.readFile "${inputs.self}/hosts/altaria/altaria";
@@ -26,10 +37,20 @@
   services.tailscale.enable = true;
   services.restic.backups.altaria = {
     initialize = true;
-    paths = [ "/var/lib" "/etc/ssh" ];
-    pruneOpts =
-      [ "--keep-within 7d" "--keep-monthly 12" "--keep-yearly 5" "--prune" ];
-    extraBackupArgs = [ "--cache-dir" "/var/cache/restic-cache" ];
+    paths = [
+      "/var/lib"
+      "/etc/ssh"
+    ];
+    pruneOpts = [
+      "--keep-within 7d"
+      "--keep-monthly 12"
+      "--keep-yearly 5"
+      "--prune"
+    ];
+    extraBackupArgs = [
+      "--cache-dir"
+      "/var/cache/restic-cache"
+    ];
     timerConfig = {
       OnCalendar = "00:05";
       Persistent = true;
@@ -43,8 +64,7 @@
   homelab.metrics = {
     enable = true;
     hostname = "altaria";
-    grafanaAdminPassword =
-      "$__file{${config.age.secrets.grafana-password.path}}";
+    grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
     ports = {
       grafana = 3003;
       prometheus = 3004;
@@ -77,14 +97,18 @@
 
   # === USERS
   users.users = {
-    root = { openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ]; };
+    root = {
+      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
+    };
     claby2 = {
       shell = pkgs.zsh;
       isNormalUser = true;
       home = "/home/claby2";
       extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys =
-        [ meta.sshPublicKeys.applin meta.sshPublicKeys.browncs ];
+      openssh.authorizedKeys.keys = [
+        meta.sshPublicKeys.applin
+        meta.sshPublicKeys.browncs
+      ];
     };
   };
 

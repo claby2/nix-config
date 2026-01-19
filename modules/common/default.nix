@@ -1,1 +1,7 @@
-{ ... }: { imports = [ ./hostclass ./home ]; }
+{ ... }:
+{
+  imports = [
+    ./hostclass
+    ./home
+  ];
+}

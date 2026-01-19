@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let cfg = config.homelab.gatus;
-in {
+let
+  cfg = config.homelab.gatus;
+in
+{
   options.homelab.gatus = {
     enable = lib.mkEnableOption "gatus";
     port = lib.mkOption { type = lib.types.port; };
@@ -25,7 +27,9 @@ in {
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;
-      locations."/" = { proxyPass = "http://127.0.0.1:${toString cfg.port}/"; };
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.port}/";
+      };
     };
   };
 }
