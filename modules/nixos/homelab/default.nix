@@ -8,6 +8,7 @@
     ./filebrowser.nix
     ./gatus.nix
     ./metrics.nix
+    ./avge.nix
   ];
   services.nginx = {
     enable = true;

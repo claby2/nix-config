@@ -32,6 +32,11 @@
   services.tailscale.useRoutingFeatures = "server";
 
   # === HOMELAB
+  homelab.avge = {
+    enable = true;
+    port = 6767;
+    host = "tcg.brownavge.org";
+  };
   homelab.metrics = {
     enable = true;
     hostname = "onix";
