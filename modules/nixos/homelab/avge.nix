@@ -18,7 +18,10 @@ in
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         WorkingDirectory = "/home/claby2/avge-card-game";
-        Environment = "PORT=${toString cfg.port}";
+        Environment = [
+          "PORT=${toString cfg.port}"
+          "PATH=${lib.makeBinPath [ pkgs.bash pkgs.coreutils ]}:$PATH"
+        ];
         ExecStart = "${pkgs.nodejs}/bin/npm run server";
         User = "claby2";
         Restart = "on-failure";
