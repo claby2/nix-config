@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.homelab.avge;
 in
@@ -10,8 +10,21 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Seems like the freshrss service in nixpkgs does not enable SSL...
-    # Forcing that here!
+    # Enable SSL for the nginx virtual host.
+
+    systemd.services.avge = {
+      description = "avge card game server";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        WorkingDirectory = "/home/claby2/avge-card-game";
+        Environment = "PORT=${toString cfg.port}";
+        ExecStart = "${pkgs.nodejs}/bin/npm run server";
+        User = "claby2";
+        Restart = "on-failure";
+      };
+    };
+
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;
