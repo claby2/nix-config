@@ -12,6 +12,14 @@ in
     enable = lib.mkEnableOption "avge";
     port = lib.mkOption { type = lib.types.port; };
     host = lib.mkOption { type = lib.types.str; };
+    user = lib.mkOption {
+      type = lib.types.str;
+      description = "User to run the avge services as.";
+    };
+    directory = lib.mkOption {
+      type = lib.types.path;
+      description = "Working directory for the avge card game repository.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -22,12 +30,12 @@ in
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
       serviceConfig = {
-        WorkingDirectory = "/home/claby2/avge-card-game";
+        WorkingDirectory = cfg.directory;
         Environment = [
           "PORT=${toString cfg.port}"
         ];
         ExecStart = "${pkgs.nodejs}/bin/npm run server";
-        User = "claby2";
+        User = cfg.user;
         Restart = "on-failure";
       };
       path = [

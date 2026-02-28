@@ -36,6 +36,8 @@
     enable = true;
     port = 6767;
     host = "tcg.brownavge.org";
+    user = "claby2";
+    directory = "/home/claby2/avge-card-game";
   };
   homelab.metrics = {
     enable = true;
