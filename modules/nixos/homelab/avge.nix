@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.homelab.avge;
 in
@@ -20,12 +25,16 @@ in
         WorkingDirectory = "/home/claby2/avge-card-game";
         Environment = [
           "PORT=${toString cfg.port}"
-          "PATH=${lib.makeBinPath [ pkgs.bash pkgs.coreutils ]}:$PATH"
         ];
         ExecStart = "${pkgs.nodejs}/bin/npm run server";
         User = "claby2";
         Restart = "on-failure";
       };
+      path = [
+        pkgs.nodejs
+        pkgs.bash
+        pkgs.coreutils
+      ];
     };
 
     services.nginx.virtualHosts.${cfg.host} = {
