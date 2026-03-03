@@ -45,6 +45,30 @@ in
       ];
     };
 
+    systemd.services.avge-git-pull = {
+      description = "git pull for avge repository";
+      after = [ "network.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        WorkingDirectory = cfg.directory;
+        ExecStart = "${pkgs.git}/bin/git pull";
+        User = cfg.user;
+      };
+      path = [
+        pkgs.openssh
+        pkgs.bash
+        pkgs.coreutils
+      ];
+    };
+
+    systemd.timers.avge-git-pull = {
+      description = "Run git pull for avge every 30 minutes";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*:00,30";
+      };
+    };
+
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;
