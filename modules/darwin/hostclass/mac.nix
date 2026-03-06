@@ -26,6 +26,7 @@ in
       kitty
       terminal-notifier
       jankyborders
+      pngpaste
     ];
 
     # === PROGRAMS
