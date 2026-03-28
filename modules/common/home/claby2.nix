@@ -36,8 +36,8 @@ in
             jq
             tokei
             nodePackages.prettier
-            inputs.claude-code.packages.${pkgs.system}.default
-            inputs.codex-cli.packages.${pkgs.system}.default
+            inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+            inputs.codex-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
             uv
             delta
             pyright

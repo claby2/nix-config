@@ -34,8 +34,8 @@ in
       htop
       tree
       mtr
-      inputs.agenix.packages."${system}".default
-      inputs.hladmin.packages."${system}".default
+      inputs.agenix.packages."${stdenv.hostPlatform.system}".default
+      inputs.hladmin.packages."${stdenv.hostPlatform.system}".default
     ];
     environment.variables.EDITOR = "vim";
 

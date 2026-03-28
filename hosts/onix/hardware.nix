@@ -1,5 +1,12 @@
-{ ... }:
 {
+  modulesPath,
+  ...
+}:
+{
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
+
   networking.hostName = "onix";
   networking.firewall = {
     enable = true;

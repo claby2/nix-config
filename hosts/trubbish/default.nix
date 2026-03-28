@@ -8,7 +8,6 @@
 {
   imports = [
     ./hardware.nix
-    (modulesPath + "/installer/scan/not-detected.nix")
   ];
   hostclass.desktop.enable = true;
 

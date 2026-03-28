@@ -1,5 +1,12 @@
-{ ... }:
 {
+  modulesPath,
+  ...
+}:
+{
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+
   networking.hostName = "trubbish";
 
   boot.loader.systemd-boot.enable = true;

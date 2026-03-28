@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  modulesPath,
   meta,
   inputs,
   ...
@@ -9,7 +8,6 @@
 {
   imports = [
     ./hardware.nix
-    (modulesPath + "/profiles/qemu-guest.nix")
   ];
   hostclass.server = {
     enable = true;

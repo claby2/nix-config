@@ -1,5 +1,12 @@
-{ ... }:
 {
+  modulesPath,
+  ...
+}:
+{
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
+  ];
+
   networking.hostName = "altaria";
   networking.firewall = {
     enable = true;
