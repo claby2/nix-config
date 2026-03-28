@@ -2,12 +2,11 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }:
 let
   cfg = config.home.claby2;
-
-  myNodePackages = import ../../node/packages.nix { inherit pkgs; };
 in
 {
   options.home.claby2 = {
@@ -37,9 +36,8 @@ in
             jq
             tokei
             nodePackages.prettier
-            myNodePackages.claude-code
-            myNodePackages.auggie
-            myNodePackages.codex
+            inputs.claude-code.packages.${pkgs.system}.default
+            inputs.codex-cli.packages.${pkgs.system}.default
             uv
             delta
             pyright
@@ -48,7 +46,6 @@ in
             patdiff
             mutagen
             nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
-            node2nix
             opencode
             comma
           ]
