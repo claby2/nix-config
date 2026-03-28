@@ -12,6 +12,7 @@
 
   networking.hostName = "groudon";
   networking.networkmanager.enable = true;
+  nixpkgs.config.allowUnfree = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.initrd.availableKernelModules = [
@@ -48,7 +49,4 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.enableAllFirmware = true;
-
-  # idk, getting wifi to work
-  nixpkgs.config.allowUnfree = true;
 }
