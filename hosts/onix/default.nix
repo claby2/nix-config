@@ -4,7 +4,6 @@
   modulesPath,
   meta,
   inputs,
-  homelab,
   ...
 }:
 {
@@ -48,44 +47,50 @@
       nodeExporter = 3003;
     };
   };
-  homelab.gatus =
-    let
-      mkEndpoint = homelab.mkGatusEndpoint;
-    in
-    {
-      enable = true;
-      port = 3000;
-      host = "gatus.edwardwibowo.com";
-      endpoints = [
-        (mkEndpoint "personal" "https://edwardwibowo.com")
-        (mkEndpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
-        (mkEndpoint "freshrss" "https://freshrss.edwardwibowo.com")
-        (mkEndpoint "git" "https://git.edwardwibowo.com")
-        (mkEndpoint "amy" "https://amyqiao.com")
-        {
-          name = "altaria ssh";
-          url = "ssh://altaria.edwardwibowo.com:22";
-          ssh = {
-            username = "";
-            password = "";
-          };
-          interval = "5m";
-          conditions = [
-            "[CONNECTED] == true"
-            "[STATUS] == 0"
-          ];
-          alerts = [ { type = "discord"; } ];
-        }
-      ];
-      environmentFile = config.age.secrets.gatus-environment.path;
-      alerting.discord = {
-        webhook-url = "$DISCORD_WEBHOOK_URL";
-        default-alert = {
-          send-on-resolved = true;
-          failure-threshold = 1;
+  homelab.gatus = {
+    enable = true;
+    port = 3000;
+    host = "gatus.edwardwibowo.com";
+    endpoints = [
+      {
+        name = "personal";
+        url = "https://edwardwibowo.com";
+      }
+      {
+        name = "filebrowser";
+        url = "https://filebrowser.edwardwibowo.com";
+      }
+      {
+        name = "freshrss";
+        url = "https://freshrss.edwardwibowo.com";
+      }
+      {
+        name = "git";
+        url = "https://git.edwardwibowo.com";
+      }
+      {
+        name = "amy";
+        url = "https://amyqiao.com";
+      }
+    ];
+    manualEndpoints = [
+      {
+        name = "altaria ssh";
+        url = "ssh://altaria.edwardwibowo.com:22";
+        ssh = {
+          username = "";
+          password = "";
         };
-      };
-    };
+        interval = "5m";
+        conditions = [
+          "[CONNECTED] == true"
+          "[STATUS] == 0"
+        ];
+        alerts = [ { type = "discord"; } ];
+      }
+    ];
+    environmentFile = config.age.secrets.gatus-environment.path;
+  };
 
   # === USERS
   users.users = {

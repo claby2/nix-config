@@ -7,8 +7,28 @@ in
     enable = lib.mkEnableOption "gatus";
     port = lib.mkOption { type = lib.types.port; };
     host = lib.mkOption { type = lib.types.str; };
-    endpoints = lib.mkOption { };
-    alerting = lib.mkOption { };
+    endpoints = lib.mkOption {
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            name = lib.mkOption { type = lib.types.str; };
+            url = lib.mkOption { type = lib.types.str; };
+          };
+        }
+      );
+      default = [ ];
+      description = "Simple endpoints that check for HTTP 200 with Discord alerting.";
+    };
+    manualEndpoints = lib.mkOption {
+      type = lib.types.listOf lib.types.attrs;
+      default = [ ];
+      description = "Fully custom endpoint configurations.";
+    };
+    extraAlerting = lib.mkOption {
+      type = lib.types.attrs;
+      default = { };
+      description = "Additional alerting configurations beyond the default Discord alerting.";
+    };
     environmentFile = lib.mkOption { type = lib.types.nullOr lib.types.path; };
   };
 
@@ -19,8 +39,23 @@ in
       settings = {
         web.port = cfg.port;
         url = cfg.host;
-        endpoints = cfg.endpoints;
-        alerting = cfg.alerting;
+        endpoints =
+          (map (ep: {
+            inherit (ep) name url;
+            interval = "5m";
+            conditions = [ "[STATUS] == 200" ];
+            alerts = [ { type = "discord"; } ];
+          }) cfg.endpoints)
+          ++ cfg.manualEndpoints;
+        alerting = {
+          discord = {
+            webhook-url = "$DISCORD_WEBHOOK_URL";
+            default-alert = {
+              send-on-resolved = true;
+              failure-threshold = 1;
+            };
+          };
+        } // cfg.extraAlerting;
       };
     };
 
