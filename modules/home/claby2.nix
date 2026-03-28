@@ -46,6 +46,9 @@ in
             nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
             opencode
             comma
+            clang-tools
+            ccls
+            stylua
           ];
 
           file = {

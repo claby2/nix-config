@@ -29,6 +29,7 @@ require("config.lazy")
 require("mappings")
 
 vim.lsp.enable({
+	"clangd",
 	"ccls",
 	"gopls",
 	"lua-language-server",

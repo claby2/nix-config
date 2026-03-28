@@ -1,5 +1,5 @@
 return {
-	cmd = { "ccls" },
-	filetypes = { "cpp", "objc", "objcpp" },
+	cmd = { "clangd" },
+	filetypes = { "c" },
 	root_markers = { ".clangd", ".clang-format", "compile_commands.json", "compile_flags.txt" },
 }
