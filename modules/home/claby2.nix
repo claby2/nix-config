@@ -46,6 +46,8 @@ in
             nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
             opencode
             comma
+            nh
+            nix-output-monitor
             clang-tools
             ccls
             stylua
