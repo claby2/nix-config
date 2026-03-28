@@ -22,12 +22,13 @@
   };
 
   # === REMOTE BUILDS
+  age.secrets.builder-key.file = ./secrets/builder-key.age;
   nix.buildMachines = [
     {
       hostName = "groudon";
       system = "x86_64-linux";
       sshUser = "builder";
-      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+      sshKey = config.age.secrets.builder-key.path;
     }
   ];
   nix.distributedBuilds = true;

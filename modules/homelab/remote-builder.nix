@@ -20,6 +20,6 @@ in
       openssh.authorizedKeys.keys = cfg.authorizedKeys;
     };
     users.groups.builder = { };
-    nix.settings.trusted-users = [ "builder" ];
+    nix.settings.extra-trusted-users = [ "builder" ];
   };
 }

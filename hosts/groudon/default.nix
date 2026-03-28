@@ -36,8 +36,8 @@
   homelab.remoteBuilder = {
     enable = true;
     authorizedKeys = [
-      meta.sshPublicKeys.onix
-      meta.sshPublicKeys.altaria
+      meta.sshPublicKeys.onixBuilder
+      meta.sshPublicKeys.altariaBuilder
     ];
   };
 
