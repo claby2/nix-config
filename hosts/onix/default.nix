@@ -8,7 +8,7 @@
 }:
 {
   imports = [
-    ../../hostclass/server.nix
+    (import ../../hostclass/server.nix { motd = builtins.readFile ./onix; })
     ./hardware.nix
   ];
   system.stateVersion = "23.11";

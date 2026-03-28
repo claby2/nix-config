@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ../../hostclass/mac.nix
+    (import ../../hostclass/mac.nix { motd = builtins.readFile ./applin; })
   ];
   system.stateVersion = 6;
   nix.settings.experimental-features = "nix-command flakes";

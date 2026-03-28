@@ -14,8 +14,10 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  # === HOSTCLASS
+  hostclass.name = lib.mkDefault "base";
+
   # === ENVIRONMENT
-  environment.variables.HOSTCLASS = lib.mkDefault "base";
   environment.systemPackages = with pkgs; [
     git
     vim

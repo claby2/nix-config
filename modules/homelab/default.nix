@@ -1,5 +1,11 @@
-{ ... }:
+{ pkgs, ... }:
 {
+  assertions = [
+    {
+      assertion = pkgs.stdenv.isLinux;
+      message = "The homelab module can only be used on NixOS (Linux) systems.";
+    }
+  ];
   imports = [
     ./gitea.nix
     ./personal.nix

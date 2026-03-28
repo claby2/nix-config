@@ -1,17 +1,26 @@
 {
-  inputs,
+  motd ? "",
+}:
+{
   pkgs,
   lib,
-  config,
   ...
 }:
 {
   imports = [ ./base.nix ];
 
-  environment.variables.HOSTCLASS = lib.mkAfter "mac";
+  hostclass.name = "mac";
+
+  # === ASSERTIONS
+  assertions = [
+    {
+      assertion = pkgs.stdenv.isDarwin;
+      message = "The 'mac' hostclass can only be used on Darwin systems.";
+    }
+  ];
 
   # === MOTD
-  environment.etc."motd".text = "TODO";
+  environment.etc."motd".text = motd;
 
   # === ENVIRONMENT
   environment.systemPackages = with pkgs; [

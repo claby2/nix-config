@@ -1,17 +1,26 @@
 {
-  inputs,
+  motd ? "",
+}:
+{
   pkgs,
   lib,
-  config,
   ...
 }:
 {
   imports = [ ./base.nix ];
 
-  environment.variables.HOSTCLASS = lib.mkAfter "server";
+  hostclass.name = "server";
+
+  # === ASSERTIONS
+  assertions = [
+    {
+      assertion = pkgs.stdenv.isLinux;
+      message = "The 'server' hostclass can only be used on NixOS (Linux) systems.";
+    }
+  ];
 
   # === MOTD
-  users.motd = "TODO";
+  users.motd = motd;
 
   # === ENVIRONMENT
   environment.systemPackages = with pkgs; [
@@ -33,5 +42,4 @@
     settings.PasswordAuthentication = false;
     settings.AllowAgentForwarding = true;
   };
-
 }

@@ -54,6 +54,7 @@
           specialArgs = { inherit inputs meta; };
           modules = [
             ./hosts/${name}
+            ./modules/hostclass.nix
             ./modules/home
             ./modules/homelab
             home-manager.nixosModules.home-manager
@@ -71,6 +72,7 @@
           specialArgs = { inherit inputs meta; };
           modules = [
             ./hosts/${name}
+            ./modules/hostclass.nix
             ./modules/home
             home-manager.darwinModules.home-manager
             {
