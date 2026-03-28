@@ -11,39 +11,41 @@ This configuration assumes this repository is cloned into `~/nix-config`.
 ├── hosts/                 # Per-host system configurations
 │   ├── onix/
 │   ├── altaria/
-│   ├── trubbish/
+│   ├── groudon/
 │   └── applin/
+├── hostclass/             # Hostclass definitions
 ├── modules/
-│   ├── common/
-│   │   ├── hostclass/
-│   │   └── home/          # User-specific home-manager config
-│   ├── nixos/
-│   │   ├── hostclass/
-│   │   └── homelab/       # Self-hosted services
-│   └── darwin/
-│       └── hostclass/
+│   ├── hostclass.nix      # Hostclass option definition
+│   ├── home/              # User-specific home-manager config
+│   └── homelab/           # Self-hosted services
 ├── apps/                  # Application dotfiles
 ├── meta/                  # Shared metadata
+├── rebuild.sh             # Rebuild helper script
 └── secrets.nix            # Agenix secrets configuration
 ```
 
 ## Hostclass System
 
-The configuration uses a layered hostclass inheritance system to promote
-modularity and code reuse. Hostclasses can define properties and inherit
-properties from one another, forming a directed acyclic graph. The graph should
-have a single root hostclass: [`base`](./modules/common/hostclass/base.nix).
+Each host imports a hostclass file from the top-level [`hostclass/`](./hostclass)
+directory. Hostclasses inherit from one another via `imports`, with
+[`base`](./hostclass/base.nix) as the root. The current hostclasses are:
+
+- **`base`** - Common configuration shared by all hosts
+- **`server`** - NixOS servers (imports `base`)
+- **`mac`** - macOS/nix-darwin machines (imports `base`)
 
 A system managed via this configuration will have `$HOSTCLASS` defined.
 
 ### Configuration Pattern
 
-Each host enables its hostclass via `hostclass.<type>.enable = true`.
+Each host imports its hostclass directly, passing an optional `motd` parameter:
 
 ```nix
 # Example host configuration
 {
-  hostclass.server.enable = true;  # Automatically enables base
+  imports = [
+    (import ../../hostclass/server.nix { motd = builtins.readFile ./hostname; })
+  ];
   # Additional host-specific configuration...
 }
 ```
@@ -69,10 +71,10 @@ Secrets are managed using [agenix](https://github.com/ryantm/agenix) for age-enc
 ### Adding Homelab Services
 
 For homelab services, add a module to
-[`modules/nixos/homelab/`](./modules/nixos/homelab/), following [NixOS
+[`modules/homelab/`](./modules/homelab/), following [NixOS
 Modules](https://nixos.wiki/wiki/NixOS_modules) convention.
 
-Make sure to import the module in [`modules/nixos/homelab/default.nix`](./modules/nixos/homelab/default.nix).
+Make sure to import the module in [`modules/homelab/default.nix`](./modules/homelab/default.nix).
 
 ### Managing Secrets
 
