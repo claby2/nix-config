@@ -12,7 +12,6 @@
 
   networking.hostName = "groudon";
   networking.networkmanager.enable = true;
-  nixpkgs.config.allowUnfree = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.initrd.availableKernelModules = [

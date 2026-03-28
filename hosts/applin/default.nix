@@ -5,11 +5,9 @@
   ...
 }:
 {
-  hostclass.mac = {
-    enable = true;
-    motd = builtins.readFile "${inputs.self}/hosts/applin/applin";
-  };
-
+  imports = [
+    ../../hostclass/mac.nix
+  ];
   system.stateVersion = 6;
   nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.hostPlatform = "aarch64-darwin";

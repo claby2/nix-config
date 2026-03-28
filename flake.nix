@@ -53,8 +53,9 @@
           inherit system;
           specialArgs = { inherit inputs meta; };
           modules = [
-            ./modules/nixos
             ./hosts/${name}
+            ./modules/home
+            ./modules/homelab
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -69,8 +70,8 @@
           inherit system;
           specialArgs = { inherit inputs meta; };
           modules = [
-            ./modules/darwin
             ./hosts/${name}
+            ./modules/home
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -86,7 +87,6 @@
       ## Nixos Hosts
       nixosConfigurations.onix = mkNixosHost "onix" "x86_64-linux";
       nixosConfigurations.altaria = mkNixosHost "altaria" "x86_64-linux";
-      nixosConfigurations.trubbish = mkNixosHost "trubbish" "x86_64-linux";
       nixosConfigurations.groudon = mkNixosHost "groudon" "x86_64-linux";
 
       ## Darwin Hosts

@@ -7,13 +7,9 @@
 }:
 {
   imports = [
+    ../../hostclass/server.nix
     ./hardware.nix
   ];
-  hostclass.server = {
-    enable = true;
-    motd = builtins.readFile "${inputs.self}/hosts/altaria/altaria";
-  };
-
   system.stateVersion = "23.11";
 
   # === AGE

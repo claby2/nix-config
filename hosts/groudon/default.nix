@@ -7,12 +7,10 @@
   ...
 }:
 {
-  imports = [ ./hardware.nix ];
-  hostclass.server = {
-    enable = true;
-    motd = builtins.readFile "${inputs.self}/hosts/groudon/groudon";
-  };
-
+  imports = [
+    ../../hostclass/server.nix
+    ./hardware.nix
+  ];
   system.stateVersion = "23.11";
   nix.settings.experimental-features = "nix-command flakes";
 
