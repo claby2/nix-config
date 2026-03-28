@@ -19,37 +19,41 @@ in
     home-manager.users.claby2 =
       { config, ... }:
       {
-        home.username = "claby2";
-        home.homeDirectory = cfg.homeDirectory;
+        home = {
+          username = "claby2";
+          inherit (cfg) homeDirectory;
 
-        home.packages = with pkgs; [
-          gnupg
-          ripgrep
-          neovim
-          gcc
-          nixfmt
-          nil
-          fzf
-          jq
-          tokei
-          nodePackages.prettier
-          inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
-          inputs.codex-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
-          uv
-          delta
-          pyright
-          yapf
-          ruff
-          patdiff
-          mutagen
-          nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
-          opencode
-          comma
-        ];
+          packages = with pkgs; [
+            gnupg
+            ripgrep
+            neovim
+            gcc
+            nixfmt
+            nil
+            fzf
+            jq
+            tokei
+            nodePackages.prettier
+            inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+            inputs.codex-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
+            uv
+            delta
+            pyright
+            yapf
+            ruff
+            patdiff
+            mutagen
+            nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
+            opencode
+            comma
+          ];
 
-        home.file = {
-          ".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/zsh/zshrc";
-          ".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/scripts";
+          file = {
+            ".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/zsh/zshrc";
+            ".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/scripts";
+          };
+
+          stateVersion = "25.05";
         };
         xdg.configFile = {
           "hladmin".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/hladmin";
@@ -81,7 +85,6 @@ in
           "flakes"
         ];
 
-        home.stateVersion = "25.05";
       };
   };
 }

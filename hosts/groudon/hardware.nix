@@ -12,19 +12,21 @@
   networking.hostName = "groudon";
   networking.networkmanager.enable = true;
 
-  boot.loader.systemd-boot.enable = true;
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "uas"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.kernelParams = [ "nomodeset" ]; # GPU doesn't work right now, so setting this :(
-  boot.extraModulePackages = [ ];
+  boot = {
+    loader.systemd-boot.enable = true;
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "uas"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-amd" ];
+    kernelParams = [ "nomodeset" ]; # GPU doesn't work right now, so setting this :(
+    extraModulePackages = [ ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/391517ea-8ddf-4814-b36e-779debb87925";
@@ -45,6 +47,8 @@
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.enableAllFirmware = true;
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    enableAllFirmware = true;
+  };
 }

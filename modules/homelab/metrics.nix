@@ -35,46 +35,48 @@ in
       host = "${cfg.hostname}.${meta.tailnetName}";
     in
     lib.mkIf cfg.enable {
-      services.grafana = {
-        enable = true;
-        settings = {
-          server.http_port = cfg.ports.grafana;
-          security.admin_password = cfg.grafanaAdminPassword;
-          security.secret_key = cfg.grafanaSecretKey;
-        };
-      };
-
-      services.prometheus = {
-        enable = true;
-        port = cfg.ports.prometheus;
-        exporters = {
-          node = {
-            enable = true;
-            enabledCollectors = [ "systemd" ];
-            port = cfg.ports.nodeExporter;
+      services = {
+        grafana = {
+          enable = true;
+          settings = {
+            server.http_port = cfg.ports.grafana;
+            security.admin_password = cfg.grafanaAdminPassword;
+            security.secret_key = cfg.grafanaSecretKey;
           };
         };
-        scrapeConfigs = [
-          {
-            job_name = "node";
-            static_configs = [ { targets = [ "127.0.0.1:${toString cfg.ports.nodeExporter}" ]; } ];
-          }
-        ];
-      };
 
-      services.nginx.virtualHosts."${host}" = {
-        listen = [
-          {
-            addr = host;
-            port = cfg.ports.grafana;
-          }
-        ];
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:${toString cfg.ports.grafana}/";
-          proxyWebsockets = true;
-          extraConfig = ''
-            proxy_set_header Host ${host};
-          '';
+        prometheus = {
+          enable = true;
+          port = cfg.ports.prometheus;
+          exporters = {
+            node = {
+              enable = true;
+              enabledCollectors = [ "systemd" ];
+              port = cfg.ports.nodeExporter;
+            };
+          };
+          scrapeConfigs = [
+            {
+              job_name = "node";
+              static_configs = [ { targets = [ "127.0.0.1:${toString cfg.ports.nodeExporter}" ]; } ];
+            }
+          ];
+        };
+
+        nginx.virtualHosts."${host}" = {
+          listen = [
+            {
+              addr = host;
+              port = cfg.ports.grafana;
+            }
+          ];
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:${toString cfg.ports.grafana}/";
+            proxyWebsockets = true;
+            extraConfig = ''
+              proxy_set_header Host ${host};
+            '';
+          };
         };
       };
     };

@@ -35,7 +35,7 @@ in
   config = lib.mkIf cfg.enable {
     services.gatus = {
       enable = true;
-      environmentFile = cfg.environmentFile;
+      inherit (cfg) environmentFile;
       settings = {
         web.port = cfg.port;
         url = cfg.host;
@@ -55,7 +55,8 @@ in
               failure-threshold = 1;
             };
           };
-        } // cfg.extraAlerting;
+        }
+        // cfg.extraAlerting;
       };
     };
 

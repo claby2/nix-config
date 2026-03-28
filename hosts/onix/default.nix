@@ -4,6 +4,9 @@
   meta,
   ...
 }:
+let
+  endpoint = name: url: { inherit name url; };
+in
 {
   imports = [
     (import ../../hostclass/server.nix { motd = builtins.readFile ./onix; })
@@ -13,49 +16,47 @@
   nix.settings.extra-trusted-users = [ "claby2" ];
 
   # === AGE
-  age.secrets.gatus-environment.file = ./secrets/gatus-environment.age;
-  age.secrets.grafana-password = {
-    file = ./secrets/grafana-password.age;
-    owner = "grafana";
-    group = "grafana";
-  };
-  age.secrets.grafana-secret-key = {
-    file = ./secrets/grafana-secret-key.age;
-    owner = "grafana";
-    group = "grafana";
+  age.secrets = {
+    gatus-environment.file = ./secrets/gatus-environment.age;
+    grafana-password = {
+      file = ./secrets/grafana-password.age;
+      owner = "grafana";
+      group = "grafana";
+    };
+    grafana-secret-key = {
+      file = ./secrets/grafana-secret-key.age;
+      owner = "grafana";
+      group = "grafana";
+    };
   };
 
   # === SERVICES
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "server";
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+  };
 
   # === HOMELAB
-  homelab.avge = {
-    enable = true;
-    port = 6767;
-    host = "tcg.brownavge.org";
-    user = "claby2";
-    directory = "/home/claby2/avge-card-game";
-  };
-  homelab.metrics = {
-    enable = true;
-    hostname = "onix";
-    grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
-    grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
-    ports = {
-      grafana = 3001;
-      prometheus = 3002;
-      nodeExporter = 3003;
+  homelab = {
+    avge = {
+      enable = true;
+      port = 6767;
+      host = "tcg.brownavge.org";
+      user = "claby2";
+      directory = "/home/claby2/avge-card-game";
     };
-  };
-  homelab.gatus =
-    let
-      endpoint = name: url: {
-        name = name;
-        url = url;
+    metrics = {
+      enable = true;
+      hostname = "onix";
+      grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
+      grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
+      ports = {
+        grafana = 3001;
+        prometheus = 3002;
+        nodeExporter = 3003;
       };
-    in
-    {
+    };
+    gatus = {
       enable = true;
       port = 3000;
       host = "gatus.edwardwibowo.com";
@@ -84,6 +85,7 @@
       ];
       environmentFile = config.age.secrets.gatus-environment.path;
     };
+  };
 
   # === USERS
   users.users = {

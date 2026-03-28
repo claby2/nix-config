@@ -87,9 +87,11 @@
     {
 
       ## Nixos Hosts
-      nixosConfigurations.onix = mkNixosHost "onix" "x86_64-linux";
-      nixosConfigurations.altaria = mkNixosHost "altaria" "x86_64-linux";
-      nixosConfigurations.groudon = mkNixosHost "groudon" "x86_64-linux";
+      nixosConfigurations = {
+        onix = mkNixosHost "onix" "x86_64-linux";
+        altaria = mkNixosHost "altaria" "x86_64-linux";
+        groudon = mkNixosHost "groudon" "x86_64-linux";
+      };
 
       ## Darwin Hosts
       darwinConfigurations.applin = mkDarwinHost "applin" "aarch64-darwin";

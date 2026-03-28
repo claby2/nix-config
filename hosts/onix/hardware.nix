@@ -16,16 +16,18 @@
     ];
   };
 
-  boot.loader.grub.device = "/dev/sda";
-  boot.initrd.availableKernelModules = [
-    "ahci"
-    "xhci_pci"
-    "virtio_pci"
-    "virtio_scsi"
-    "sd_mod"
-    "sr_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
+  boot = {
+    loader.grub.device = "/dev/sda";
+    initrd.availableKernelModules = [
+      "ahci"
+      "xhci_pci"
+      "virtio_pci"
+      "virtio_scsi"
+      "sd_mod"
+      "sr_mod"
+    ];
+    initrd.kernelModules = [ ];
+  };
   fileSystems."/" = {
     device = "/dev/sda1";
     fsType = "xfs";

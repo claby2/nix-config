@@ -13,7 +13,7 @@ in
     services.freshrss = {
       enable = true;
       baseUrl = "https://${cfg.host}";
-      passwordFile = cfg.passwordFile;
+      inherit (cfg) passwordFile;
       virtualHost = cfg.host;
     };
 

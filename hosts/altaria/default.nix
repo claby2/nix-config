@@ -13,23 +13,25 @@
   nix.settings.extra-trusted-users = [ "claby2" ];
 
   # === AGE
-  age.secrets.restic-repository.file = ./secrets/restic-repository.age;
-  age.secrets.restic-password.file = ./secrets/restic-password.age;
-  age.secrets.restic-environment.file = ./secrets/restic-environment.age;
-  age.secrets.freshrss = {
-    file = ./secrets/freshrss.age;
-    owner = "freshrss";
-    group = "freshrss";
-  };
-  age.secrets.grafana-password = {
-    file = ./secrets/grafana-password.age;
-    owner = "grafana";
-    group = "grafana";
-  };
-  age.secrets.grafana-secret-key = {
-    file = ./secrets/grafana-secret-key.age;
-    owner = "grafana";
-    group = "grafana";
+  age.secrets = {
+    restic-repository.file = ./secrets/restic-repository.age;
+    restic-password.file = ./secrets/restic-password.age;
+    restic-environment.file = ./secrets/restic-environment.age;
+    freshrss = {
+      file = ./secrets/freshrss.age;
+      owner = "freshrss";
+      group = "freshrss";
+    };
+    grafana-password = {
+      file = ./secrets/grafana-password.age;
+      owner = "grafana";
+      group = "grafana";
+    };
+    grafana-secret-key = {
+      file = ./secrets/grafana-secret-key.age;
+      owner = "grafana";
+      group = "grafana";
+    };
   };
 
   # === SERVICES
@@ -60,39 +62,41 @@
   };
 
   # === HOMELAB
-  homelab.metrics = {
-    enable = true;
-    hostname = "altaria";
-    grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
-    grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
-    ports = {
-      grafana = 3003;
-      prometheus = 3004;
-      nodeExporter = 3005;
+  homelab = {
+    metrics = {
+      enable = true;
+      hostname = "altaria";
+      grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
+      grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
+      ports = {
+        grafana = 3003;
+        prometheus = 3004;
+        nodeExporter = 3005;
+      };
     };
-  };
-  homelab.filebrowser = {
-    enable = true;
-    port = 3001;
-    host = "filebrowser.edwardwibowo.com";
-  };
-  homelab.personal = {
-    enable = true;
-    host = "edwardwibowo.com";
-  };
-  homelab.amy = {
-    enable = true;
-    host = "amyqiao.com";
-  };
-  homelab.freshrss = {
-    enable = true;
-    host = "freshrss.edwardwibowo.com";
-    passwordFile = config.age.secrets.freshrss.path;
-  };
-  homelab.gitea = {
-    enable = true;
-    port = 3000;
-    host = "git.edwardwibowo.com";
+    filebrowser = {
+      enable = true;
+      port = 3001;
+      host = "filebrowser.edwardwibowo.com";
+    };
+    personal = {
+      enable = true;
+      host = "edwardwibowo.com";
+    };
+    amy = {
+      enable = true;
+      host = "amyqiao.com";
+    };
+    freshrss = {
+      enable = true;
+      host = "freshrss.edwardwibowo.com";
+      passwordFile = config.age.secrets.freshrss.path;
+    };
+    gitea = {
+      enable = true;
+      port = 3000;
+      host = "git.edwardwibowo.com";
+    };
   };
 
   # === USERS
