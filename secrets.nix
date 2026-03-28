@@ -24,6 +24,10 @@ in
     key.altaria
     key.applin
   ];
+  "hosts/altaria/secrets/grafana-secret-key.age".publicKeys = [
+    key.altaria
+    key.applin
+  ];
 
   # === Onix
   "hosts/onix/secrets/gatus-environment.age".publicKeys = [
@@ -31,6 +35,10 @@ in
     key.applin
   ];
   "hosts/onix/secrets/grafana-password.age".publicKeys = [
+    key.onix
+    key.applin
+  ];
+  "hosts/onix/secrets/grafana-secret-key.age".publicKeys = [
     key.onix
     key.applin
   ];

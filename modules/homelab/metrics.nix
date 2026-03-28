@@ -13,6 +13,7 @@ in
     enable = lib.mkEnableOption "metrics (grafana + prometheus)";
     hostname = lib.mkOption { type = lib.types.str; };
     grafanaAdminPassword = lib.mkOption { type = lib.types.str; };
+    grafanaSecretKey = lib.mkOption { type = lib.types.str; };
     ports = lib.mkOption {
       type = lib.types.submodule {
         options = {
@@ -39,6 +40,7 @@ in
         settings = {
           server.http_port = cfg.ports.grafana;
           security.admin_password = cfg.grafanaAdminPassword;
+          security.secret_key = cfg.grafanaSecretKey;
         };
       };
 

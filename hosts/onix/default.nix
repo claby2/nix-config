@@ -21,6 +21,11 @@
     owner = "grafana";
     group = "grafana";
   };
+  age.secrets.grafana-secret-key = {
+    file = ./secrets/grafana-secret-key.age;
+    owner = "grafana";
+    group = "grafana";
+  };
 
   # === SERVICES
   services.tailscale.enable = true;
@@ -38,6 +43,7 @@
     enable = true;
     hostname = "onix";
     grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
+    grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
     ports = {
       grafana = 3001;
       prometheus = 3002;

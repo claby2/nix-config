@@ -27,6 +27,11 @@
     owner = "grafana";
     group = "grafana";
   };
+  age.secrets.grafana-secret-key = {
+    file = ./secrets/grafana-secret-key.age;
+    owner = "grafana";
+    group = "grafana";
+  };
 
   # === SERVICES
   services.tailscale.enable = true;
@@ -60,6 +65,7 @@
     enable = true;
     hostname = "altaria";
     grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
+    grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
     ports = {
       grafana = 3003;
       prometheus = 3004;
