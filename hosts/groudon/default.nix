@@ -1,9 +1,7 @@
 {
   pkgs,
   config,
-  modulesPath,
   meta,
-  inputs,
   ...
 }:
 {
