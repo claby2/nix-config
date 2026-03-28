@@ -10,7 +10,6 @@
     ./hardware.nix
   ];
   system.stateVersion = "23.11";
-  nix.settings.experimental-features = "nix-command flakes";
 
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "server";

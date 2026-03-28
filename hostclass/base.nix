@@ -13,6 +13,11 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   # === HOSTCLASS
   hostclass.name = lib.mkDefault "base";
 

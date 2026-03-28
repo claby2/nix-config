@@ -84,12 +84,6 @@ in
           enable = true;
           pinentry.package = pkgs.pinentry-curses;
         };
-
-        nix.settings.experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
-
       };
   };
 }
