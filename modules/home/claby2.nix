@@ -13,7 +13,6 @@ in
     enable = lib.mkEnableOption "claby2 home";
     homeDirectory = lib.mkOption { type = lib.types.str; };
     nixConfigDirectory = lib.mkOption { type = lib.types.str; };
-    enableLinuxDesktop = lib.mkEnableOption "enable linux desktop";
   };
 
   config = lib.mkIf cfg.enable {
@@ -23,39 +22,30 @@ in
         home.username = "claby2";
         home.homeDirectory = cfg.homeDirectory;
 
-        home.packages =
-          with pkgs;
-          [
-            gnupg
-            ripgrep
-            neovim
-            gcc
-            nixfmt
-            nil
-            fzf
-            jq
-            tokei
-            nodePackages.prettier
-            inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
-            inputs.codex-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
-            uv
-            delta
-            pyright
-            yapf
-            ruff
-            patdiff
-            mutagen
-            nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
-            opencode
-            comma
-          ]
-          ++ lib.optionals cfg.enableLinuxDesktop [
-            alacritty
-            waybar
-            wofi
-            firefox
-            nerd-fonts.jetbrains-mono
-          ];
+        home.packages = with pkgs; [
+          gnupg
+          ripgrep
+          neovim
+          gcc
+          nixfmt
+          nil
+          fzf
+          jq
+          tokei
+          nodePackages.prettier
+          inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+          inputs.codex-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
+          uv
+          delta
+          pyright
+          yapf
+          ruff
+          patdiff
+          mutagen
+          nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
+          opencode
+          comma
+        ];
 
         home.file = {
           ".zshrc".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/zsh/zshrc";
@@ -65,9 +55,6 @@ in
           "hladmin".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/hladmin";
           "nvim".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/nvim";
           "aerospace".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/aerospace";
-        }
-        // lib.optionalAttrs cfg.enableLinuxDesktop {
-          "hypr".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/hypr";
         };
 
         programs.git = {
