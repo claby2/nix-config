@@ -21,8 +21,6 @@
     root = {
       openssh.authorizedKeys.keys = [
         meta.sshPublicKeys.applin
-        meta.sshPublicKeys.altaria
-        meta.sshPublicKeys.onix
       ];
     };
     claby2 = {
