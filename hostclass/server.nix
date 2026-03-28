@@ -35,6 +35,7 @@
     enableSSHSupport = true;
     pinentryPackage = pkgs.pinentry-curses;
   };
+  programs.zsh.syntaxHighlighting.enable = true;
 
   # === SERVICES
   services.openssh = {
