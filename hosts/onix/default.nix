@@ -47,50 +47,42 @@
       nodeExporter = 3003;
     };
   };
-  homelab.gatus = {
-    enable = true;
-    port = 3000;
-    host = "gatus.edwardwibowo.com";
-    endpoints = [
-      {
-        name = "personal";
-        url = "https://edwardwibowo.com";
-      }
-      {
-        name = "filebrowser";
-        url = "https://filebrowser.edwardwibowo.com";
-      }
-      {
-        name = "freshrss";
-        url = "https://freshrss.edwardwibowo.com";
-      }
-      {
-        name = "git";
-        url = "https://git.edwardwibowo.com";
-      }
-      {
-        name = "amy";
-        url = "https://amyqiao.com";
-      }
-    ];
-    manualEndpoints = [
-      {
-        name = "altaria ssh";
-        url = "ssh://altaria.edwardwibowo.com:22";
-        ssh = {
-          username = "";
-          password = "";
-        };
-        interval = "5m";
-        conditions = [
-          "[CONNECTED] == true"
-          "[STATUS] == 0"
-        ];
-        alerts = [ { type = "discord"; } ];
-      }
-    ];
-    environmentFile = config.age.secrets.gatus-environment.path;
-  };
+  homelab.gatus =
+    let
+      endpoint = name: url: {
+        name = name;
+        url = url;
+      };
+    in
+    {
+      enable = true;
+      port = 3000;
+      host = "gatus.edwardwibowo.com";
+      endpoints = [
+        (endpoint "personal" "https://edwardwibowo.com")
+        (endpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
+        (endpoint "freshrss" "https://freshrss.edwardwibowo.com")
+        (endpoint "git" "https://git.edwardwibowo.com")
+        (endpoint "amy" "https://amyqiao.com")
+      ];
+      manualEndpoints = [
+        {
+          name = "altaria ssh";
+          url = "ssh://altaria.edwardwibowo.com:22";
+          ssh = {
+            username = "";
+            password = "";
+          };
+          interval = "5m";
+          conditions = [
+            "[CONNECTED] == true"
+            "[STATUS] == 0"
+          ];
+          alerts = [ { type = "discord"; } ];
+        }
+      ];
+      environmentFile = config.age.secrets.gatus-environment.path;
+    };
 
   # === USERS
   users.users = {
