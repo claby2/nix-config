@@ -21,6 +21,17 @@
     group = "grafana";
   };
 
+  # === REMOTE BUILDS
+  nix.buildMachines = [
+    {
+      hostName = "groudon";
+      system = "x86_64-linux";
+      sshUser = "builder";
+      sshKey = "/etc/ssh/ssh_host_ed25519_key";
+    }
+  ];
+  nix.distributedBuilds = true;
+
   # === SERVICES
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "server";

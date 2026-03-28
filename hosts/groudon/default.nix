@@ -33,6 +33,14 @@
     };
   };
 
+  homelab.remoteBuilder = {
+    enable = true;
+    authorizedKeys = [
+      meta.sshPublicKeys.onix
+      meta.sshPublicKeys.altaria
+    ];
+  };
+
   home.claby2 = rec {
     enable = true;
     homeDirectory = config.users.users.claby2.home;
