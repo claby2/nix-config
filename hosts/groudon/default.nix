@@ -19,7 +19,11 @@
 
   users.users = {
     root = {
-      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
+      openssh.authorizedKeys.keys = [
+        meta.sshPublicKeys.applin
+        meta.sshPublicKeys.altaria
+        meta.sshPublicKeys.onix
+      ];
     };
     claby2 = {
       shell = pkgs.zsh;
@@ -31,14 +35,6 @@
       ];
       openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
     };
-  };
-
-  homelab.remoteBuilder = {
-    enable = true;
-    authorizedKeys = [
-      meta.sshPublicKeys.onixBuilder
-      meta.sshPublicKeys.altariaBuilder
-    ];
   };
 
   home.claby2 = rec {

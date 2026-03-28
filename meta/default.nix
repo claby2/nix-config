@@ -8,7 +8,5 @@
     groudon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1C0Qu/H4YJf2hpwwNRZ/SEBxuS0uxin0eSux+GVrdj";
     browncs = # Key on Brown CS machine
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGF7r6WW7gCyUSPbPHFTOrqWZyCTd+h+DFkkKgs6jeWa";
-    altariaBuilder = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMG1SH+pCBPgQANDwT/slMNVPo+TRoq+b6hR+QsoXtCI";
-    onixBuilder = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII+xc8L2hEMypat8rGWXYzI5dkJhsWKV0+/tdtLnV0ks";
   };
 }

@@ -11,6 +11,7 @@
     ./hardware.nix
   ];
   system.stateVersion = "23.11";
+  nix.settings.extra-trusted-users = [ "claby2" ];
 
   # === AGE
   age.secrets.restic-repository.file = ./secrets/restic-repository.age;
@@ -26,18 +27,6 @@
     owner = "grafana";
     group = "grafana";
   };
-
-  # === REMOTE BUILDS
-  age.secrets.builder-key.file = ./secrets/builder-key.age;
-  nix.buildMachines = [
-    {
-      hostName = "groudon";
-      system = "x86_64-linux";
-      sshUser = "builder";
-      sshKey = config.age.secrets.builder-key.path;
-    }
-  ];
-  nix.distributedBuilds = true;
 
   # === SERVICES
   services.tailscale.enable = true;

@@ -15,7 +15,6 @@
     ./gatus.nix
     ./metrics.nix
     ./avge.nix
-    ./remote-builder.nix
   ];
   services.nginx = {
     enable = true;

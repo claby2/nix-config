@@ -4,10 +4,6 @@ in
 {
 
   # === Altaria
-  "hosts/altaria/secrets/builder-key.age".publicKeys = [
-    key.altaria
-    key.applin
-  ];
   "hosts/altaria/secrets/freshrss.age".publicKeys = [
     key.altaria
     key.applin
@@ -30,10 +26,6 @@ in
   ];
 
   # === Onix
-  "hosts/onix/secrets/builder-key.age".publicKeys = [
-    key.onix
-    key.applin
-  ];
   "hosts/onix/secrets/gatus-environment.age".publicKeys = [
     key.onix
     key.applin
