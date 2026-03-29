@@ -9,7 +9,7 @@
     (import ../../hostclass/server.nix { motd = builtins.readFile ./groudon; })
     ./hardware.nix
   ];
-  system.stateVersion = "23.11";
+  system.stateVersion = "25.11";
 
   services.tailscale.enable = true;
   services.tailscale.useRoutingFeatures = "server";
