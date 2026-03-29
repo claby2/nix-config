@@ -37,6 +37,14 @@
         "subvol=@root"
       ];
     };
+    "/.snapshots" = {
+      device = "/dev/disk/by-uuid/ceb92813-ddf0-4333-836c-f65e40f045c8";
+      fsType = "btrfs";
+      options = [
+        "compress=zstd"
+        "subvol=@snapshots"
+      ];
+    };
 
     "/home" = {
       device = "/dev/disk/by-uuid/ceb92813-ddf0-4333-836c-f65e40f045c8";
@@ -44,6 +52,14 @@
       options = [
         "compress=zstd"
         "subvol=@home"
+      ];
+    };
+    "/home/.snapshots" = {
+      device = "/dev/disk/by-uuid/ceb92813-ddf0-4333-836c-f65e40f045c8";
+      fsType = "btrfs";
+      options = [
+        "compress=zstd"
+        "subvol=@home-snapshots"
       ];
     };
 
