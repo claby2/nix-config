@@ -33,4 +33,10 @@
 
   # === PROGRAMS
   programs.zsh.enableSyntaxHighlighting = true;
+
+  # === USERS
+  users.users.claby2 = {
+    home = "/Users/claby2";
+    name = "claby2";
+  };
 }

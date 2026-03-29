@@ -1,7 +1,5 @@
 {
-  pkgs,
   config,
-  meta,
   ...
 }:
 let
@@ -28,12 +26,6 @@ in
       owner = "grafana";
       group = "grafana";
     };
-  };
-
-  # === SERVICES
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
   };
 
   # === HOMELAB
@@ -85,26 +77,5 @@ in
       ];
       environmentFile = config.age.secrets.gatus-environment.path;
     };
-  };
-
-  # === USERS
-  users.users = {
-    root = {
-      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
-    };
-    claby2 = {
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      home = "/home/claby2";
-      extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
-    };
-  };
-
-  # === HOME
-  home.claby2 = rec {
-    enable = true;
-    homeDirectory = config.users.users.claby2.home;
-    nixConfigDirectory = "${homeDirectory}/nix-config";
   };
 }

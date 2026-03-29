@@ -23,9 +23,6 @@
     };
   };
 
-  # === SERVICES
-  services.tailscale.enable = true;
-
   # === ENVIRONMENT
   environment = {
     variables.TERM = "rxvt";
@@ -41,18 +38,5 @@
         exec ${pkgs.restic}/bin/restic "$@"
       '')
     ];
-  };
-
-  # === USERS
-  users.users.claby2 = {
-    home = "/Users/claby2";
-    name = "claby2";
-  };
-
-  # === HOME
-  home.claby2 = rec {
-    enable = true;
-    homeDirectory = config.users.users.claby2.home;
-    nixConfigDirectory = "${homeDirectory}/nix-config";
   };
 }

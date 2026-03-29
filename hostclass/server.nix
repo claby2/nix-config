@@ -4,6 +4,7 @@
 {
   pkgs,
   lib,
+  meta,
   ...
 }:
 {
@@ -42,5 +43,25 @@
     enable = true;
     settings.PasswordAuthentication = false;
     settings.AllowAgentForwarding = true;
+  };
+  services.tailscale.useRoutingFeatures = "server";
+
+  # === USERS
+  users.users = {
+    root = {
+      openssh.authorizedKeys.keys = [
+        meta.sshPublicKeys.applin
+      ];
+    };
+    claby2 = {
+      shell = pkgs.zsh;
+      isNormalUser = true;
+      home = "/home/claby2";
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+      ];
+      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
+    };
   };
 }

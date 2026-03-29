@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }:
 {
@@ -35,5 +36,15 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+  };
+
+  # === SERVICES
+  services.tailscale.enable = true;
+
+  # === HOME
+  home.claby2 = rec {
+    enable = true;
+    homeDirectory = config.users.users.claby2.home;
+    nixConfigDirectory = "${homeDirectory}/nix-config";
   };
 }

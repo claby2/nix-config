@@ -1,7 +1,5 @@
 {
-  pkgs,
   config,
-  meta,
   ...
 }:
 {
@@ -35,7 +33,6 @@
   };
 
   # === SERVICES
-  services.tailscale.enable = true;
   services.restic.backups.altaria = {
     initialize = true;
     paths = [
@@ -97,29 +94,5 @@
       port = 3000;
       host = "git.edwardwibowo.com";
     };
-  };
-
-  # === USERS
-  users.users = {
-    root = {
-      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
-    };
-    claby2 = {
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      home = "/home/claby2";
-      extraGroups = [ "wheel" ];
-      openssh.authorizedKeys.keys = [
-        meta.sshPublicKeys.applin
-        meta.sshPublicKeys.browncs
-      ];
-    };
-  };
-
-  # === HOME
-  home.claby2 = rec {
-    enable = true;
-    homeDirectory = config.users.users.claby2.home;
-    nixConfigDirectory = "${homeDirectory}/nix-config";
   };
 }

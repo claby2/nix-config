@@ -1,7 +1,4 @@
 {
-  pkgs,
-  config,
-  meta,
   ...
 }:
 {
@@ -10,9 +7,6 @@
     ./hardware.nix
   ];
   system.stateVersion = "25.11";
-
-  services.tailscale.enable = true;
-  services.tailscale.useRoutingFeatures = "server";
 
   services.snapper = {
     snapshotInterval = "hourly";
@@ -45,29 +39,5 @@
         TIMELINE_LIMIT_YEARLY = 2;
       };
     };
-  };
-
-  users.users = {
-    root = {
-      openssh.authorizedKeys.keys = [
-        meta.sshPublicKeys.applin
-      ];
-    };
-    claby2 = {
-      shell = pkgs.zsh;
-      isNormalUser = true;
-      home = "/home/claby2";
-      extraGroups = [
-        "wheel"
-        "networkmanager"
-      ];
-      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
-    };
-  };
-
-  home.claby2 = rec {
-    enable = true;
-    homeDirectory = config.users.users.claby2.home;
-    nixConfigDirectory = "${homeDirectory}/nix-config";
   };
 }
