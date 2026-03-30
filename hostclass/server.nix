@@ -4,9 +4,9 @@
     ./nixos.nix
     ../modules/homelab
   ];
+  hostclasses = [ "server" ];
 
   environment = {
-    variables.HOSTCLASS = "server";
     systemPackages = with pkgs; [
       strace
       lsof
@@ -15,6 +15,5 @@
     ];
   };
 
-  # === SERVICES
   services.tailscale.useRoutingFeatures = "server";
 }

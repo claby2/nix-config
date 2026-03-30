@@ -10,12 +10,12 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.agenix.nixosModules.default
   ];
+  hostclasses = [ "nixos" ];
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
   };
 
-  # === ASSERTIONS
   assertions = [
     {
       assertion = pkgs.stdenv.isLinux;
@@ -23,10 +23,6 @@
     }
   ];
 
-  # === ENVIRONMENT
-  environment.variables.HOSTCLASS = "nixos";
-
-  # === PROGRAMS
   programs = {
     gnupg.agent = {
       enable = true;
@@ -36,7 +32,6 @@
     zsh.syntaxHighlighting.enable = true;
   };
 
-  # === SERVICES
   services = {
     openssh = {
       enable = true;
@@ -45,7 +40,6 @@
     };
   };
 
-  # === USERS
   users.users = {
     root = {
       openssh.authorizedKeys.keys = [

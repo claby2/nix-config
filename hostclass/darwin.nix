@@ -9,12 +9,12 @@
     inputs.home-manager.darwinModules.home-manager
     inputs.agenix.darwinModules.default
   ];
+  hostclasses = [ "darwin" ];
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
   };
 
-  # === ASSERTIONS
   assertions = [
     {
       assertion = pkgs.stdenv.isDarwin;
@@ -22,9 +22,7 @@
     }
   ];
 
-  # === ENVIRONMENT
   environment = {
-    variables.HOSTCLASS = "darwin";
     systemPackages = with pkgs; [
       aerospace
       kitty
@@ -34,10 +32,8 @@
     ];
   };
 
-  # === PROGRAMS
   programs.zsh.enableSyntaxHighlighting = true;
 
-  # === USERS
   users.users.claby2 = {
     home = "/Users/claby2";
     name = "claby2";
