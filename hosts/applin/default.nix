@@ -4,12 +4,10 @@
   ...
 }:
 {
-  imports = [
-    (import ../../hostclass/mac.nix { motd = builtins.readFile ./applin; })
-  ];
   system.stateVersion = 6;
   nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.hostPlatform = "aarch64-darwin";
+  environment.etc."motd".text = builtins.readFile ./applin;
 
   # === AGE
   # NOTE: age.identityPaths looks at ssh host keys, but not personal keys. So,

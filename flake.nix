@@ -37,63 +37,40 @@
   };
 
   outputs =
-    inputs@{
+    {
       self,
       nixpkgs,
       home-manager,
       nix-darwin,
       agenix,
       ...
-    }:
+    }@inputs:
     let
       meta = import ./meta { };
-      mkNixosHost =
-        name: system:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs meta; };
-          modules = [
-            ./hosts/${name}
-            ./modules/hostclass.nix
-            ./modules/home
-            ./modules/homelab
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-            }
-            agenix.nixosModules.default
-          ];
-        };
-      mkDarwinHost =
-        name: system:
-        nix-darwin.lib.darwinSystem {
-          inherit system;
-          specialArgs = { inherit inputs meta; };
-          modules = [
-            ./hosts/${name}
-            ./modules/hostclass.nix
-            ./modules/home
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-            }
-            agenix.darwinModules.default
-          ];
 
+      mkHost =
+        builder: system: hostclass: hostname:
+        builder {
+          inherit system;
+          specialArgs = { inherit inputs meta; };
+          modules = [
+            ./hostclass/${hostclass}.nix
+            ./hosts/${hostname}
+          ];
         };
+      mkNixosHost = mkHost nixpkgs.lib.nixosSystem;
+      mkDarwinHost = mkHost nix-darwin.lib.darwinSystem;
     in
     {
 
       ## Nixos Hosts
       nixosConfigurations = {
-        onix = mkNixosHost "onix" "x86_64-linux";
-        altaria = mkNixosHost "altaria" "x86_64-linux";
-        groudon = mkNixosHost "groudon" "x86_64-linux";
+        onix = mkNixosHost "x86_64-linux" "server" "onix";
+        altaria = mkNixosHost "x86_64-linux" "server" "altaria";
+        groudon = mkNixosHost "x86_64-linux" "server" "groudon";
       };
 
       ## Darwin Hosts
-      darwinConfigurations.applin = mkDarwinHost "applin" "aarch64-darwin";
+      darwinConfigurations.applin = mkDarwinHost "aarch64-darwin" "mac" "applin";
     };
 }

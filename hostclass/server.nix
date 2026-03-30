@@ -1,16 +1,18 @@
 {
-  motd ? "",
-}:
-{
   pkgs,
-  lib,
   meta,
+  inputs,
   ...
 }:
 {
-  imports = [ ./base.nix ];
-
-  hostclass.name = "server";
+  imports = [
+    ./base.nix
+    ../modules/homelab
+    inputs.home-manager.nixosModules.home-manager
+    inputs.agenix.nixosModules.default
+  ];
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
 
   # === ASSERTIONS
   assertions = [
@@ -20,10 +22,8 @@
     }
   ];
 
-  # === MOTD
-  users.motd = motd;
-
   # === ENVIRONMENT
+  environment.variables.HOSTCLASS = "server";
   environment.systemPackages = with pkgs; [
     strace
     lsof

@@ -6,6 +6,10 @@
   ...
 }:
 {
+  imports = [
+    ../modules/home
+  ];
+
   # Include the git commit hash (and also whether it was dirty at the time of
   # building) in the configuration revision. This shows up when running
   # `nixos-version --configuration-revision` on NixOS or `darwin-version
@@ -16,21 +20,21 @@
 
   nix.settings.experimental-features = "nix-command flakes";
 
-  # === HOSTCLASS
-  hostclass.name = lib.mkDefault "base";
-
   # === ENVIRONMENT
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    wget
-    htop
-    tree
-    mtr
-    inputs.agenix.packages."${stdenv.hostPlatform.system}".default
-    inputs.hladmin.packages."${stdenv.hostPlatform.system}".default
-  ];
-  environment.variables.EDITOR = "vim";
+  environment = {
+    variables.HOSTCLASS = lib.mkDefault "base";
+    systemPackages = with pkgs; [
+      git
+      vim
+      wget
+      htop
+      tree
+      mtr
+      inputs.agenix.packages."${stdenv.hostPlatform.system}".default
+      inputs.hladmin.packages."${stdenv.hostPlatform.system}".default
+    ];
+    variables.EDITOR = "vim";
+  };
 
   # === PROGRAMS
   programs.zsh = {

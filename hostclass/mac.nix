@@ -1,15 +1,16 @@
 {
-  motd ? "",
-}:
-{
   pkgs,
-  lib,
+  inputs,
   ...
 }:
 {
-  imports = [ ./base.nix ];
-
-  hostclass.name = "mac";
+  imports = [
+    ./base.nix
+    inputs.home-manager.darwinModules.home-manager
+    inputs.agenix.darwinModules.default
+  ];
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
 
   # === ASSERTIONS
   assertions = [
@@ -19,10 +20,8 @@
     }
   ];
 
-  # === MOTD
-  environment.etc."motd".text = motd;
-
   # === ENVIRONMENT
+  environment.variables.HOSTCLASS = "mac";
   environment.systemPackages = with pkgs; [
     aerospace
     kitty

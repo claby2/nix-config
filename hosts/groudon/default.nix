@@ -3,10 +3,10 @@
 }:
 {
   imports = [
-    (import ../../hostclass/server.nix { motd = builtins.readFile ./groudon; })
     ./hardware.nix
   ];
   system.stateVersion = "25.11";
+  users.motd = builtins.readFile ./groudon;
 
   services.snapper = {
     snapshotInterval = "hourly";
