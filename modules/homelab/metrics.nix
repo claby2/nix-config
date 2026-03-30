@@ -5,73 +5,66 @@
   ...
 }:
 let
+  hostname = config.networking.hostName;
   cfg = config.homelab.metrics;
 in
 {
 
-  options.homelab.metrics = {
-    enable = lib.mkEnableOption "metrics (grafana + prometheus)";
-    hostname = lib.mkOption { type = lib.types.str; };
-    grafanaAdminPassword = lib.mkOption { type = lib.types.str; };
-    grafanaSecretKey = lib.mkOption { type = lib.types.str; };
-    ports = lib.mkOption {
-      type = lib.types.submodule {
-        options = {
-          grafana = lib.mkOption {
-            type = lib.types.port;
-            description = ''
-              Port used to bind to 127.0.0.1 and also listen for reverse proxy
-            '';
-          };
-          prometheus = lib.mkOption { type = lib.types.port; };
-          nodeExporter = lib.mkOption { type = lib.types.port; };
-        };
-      };
-    };
+  options.homelab.metrics.grafana = {
+    enable = lib.mkEnableOption "grafana";
+    adminPassword = lib.mkOption { type = lib.types.str; };
+    secretKey = lib.mkOption { type = lib.types.str; };
+    port = lib.mkOption { type = lib.types.port; };
+  };
+
+  options.homelab.metrics.prometheus = {
+    enable = lib.mkEnableOption "prometheus";
+    port = lib.mkOption { type = lib.types.port; };
+    nodeExporterPort = lib.mkOption { type = lib.types.port; };
   };
 
   config =
     let
-      host = "${cfg.hostname}.${meta.tailnetName}";
+      host = "${hostname}.${meta.tailnetName}";
     in
-    lib.mkIf cfg.enable {
+    {
       services = {
-        grafana = {
+        grafana = lib.mkIf cfg.grafana.enable {
           enable = true;
           settings = {
-            server.http_port = cfg.ports.grafana;
-            security.admin_password = cfg.grafanaAdminPassword;
-            security.secret_key = cfg.grafanaSecretKey;
+            server.http_port = cfg.grafana.port;
+            security.admin_password = cfg.grafana.adminPassword;
+            security.secret_key = cfg.grafana.secretKey;
           };
         };
 
-        prometheus = {
+        prometheus = lib.mkIf cfg.prometheus.enable {
           enable = true;
-          port = cfg.ports.prometheus;
+          port = cfg.prometheus.port;
           exporters = {
             node = {
               enable = true;
               enabledCollectors = [ "systemd" ];
-              port = cfg.ports.nodeExporter;
+              port = cfg.prometheus.nodeExporterPort;
             };
           };
           scrapeConfigs = [
             {
               job_name = "node";
-              static_configs = [ { targets = [ "127.0.0.1:${toString cfg.ports.nodeExporter}" ]; } ];
+              static_configs = [ { targets = [ "127.0.0.1:${toString cfg.prometheus.nodeExporterPort}" ]; } ];
             }
           ];
         };
 
-        nginx.virtualHosts."${host}" = {
+        nginx.virtualHosts."${host}" = lib.mkIf cfg.grafana.enable {
           listen = [
             {
               addr = host;
-              port = cfg.ports.grafana;
+              port = cfg.grafana.port;
             }
           ];
           locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString cfg.ports.grafana}/";
+            proxyPass = "http://127.0.0.1:${toString cfg.grafana.port}/";
             proxyWebsockets = true;
             extraConfig = ''
               proxy_set_header Host ${host};

@@ -20,16 +20,6 @@
       owner = "freshrss";
       group = "freshrss";
     };
-    grafana-password = {
-      file = ./secrets/grafana-password.age;
-      owner = "grafana";
-      group = "grafana";
-    };
-    grafana-secret-key = {
-      file = ./secrets/grafana-secret-key.age;
-      owner = "grafana";
-      group = "grafana";
-    };
   };
 
   # === SERVICES
@@ -60,16 +50,10 @@
 
   # === HOMELAB
   homelab = {
-    metrics = {
+    metrics.prometheus = {
       enable = true;
-      hostname = "altaria";
-      grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
-      grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
-      ports = {
-        grafana = 3003;
-        prometheus = 3004;
-        nodeExporter = 3005;
-      };
+      port = 3004;
+      nodeExporterPort = 3005;
     };
     filebrowser = {
       enable = true;

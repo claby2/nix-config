@@ -38,14 +38,16 @@ in
       directory = "/home/claby2/avge-card-game";
     };
     metrics = {
-      enable = true;
-      hostname = "onix";
-      grafanaAdminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
-      grafanaSecretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
-      ports = {
-        grafana = 3001;
-        prometheus = 3002;
-        nodeExporter = 3003;
+      grafana = {
+        enable = true;
+        adminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
+        secretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
+        port = 3001;
+      };
+      prometheus = {
+        enable = true;
+        port = 3002;
+        nodeExporterPort = 3003;
       };
     };
     gatus = {
