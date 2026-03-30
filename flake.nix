@@ -71,6 +71,6 @@
       };
 
       ## Darwin Hosts
-      darwinConfigurations.applin = mkDarwinHost "aarch64-darwin" "mac" "applin";
+      darwinConfigurations.applin = mkDarwinHost "aarch64-darwin" "darwin" "applin";
     };
 }
