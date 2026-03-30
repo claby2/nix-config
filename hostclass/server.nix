@@ -16,5 +16,5 @@
   };
 
   # === SERVICES
-  tailscale.useRoutingFeatures = "server";
+  services.tailscale.useRoutingFeatures = "server";
 }
