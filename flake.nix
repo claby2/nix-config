@@ -71,7 +71,10 @@
           inherit system;
           specialArgs = { inherit inputs meta; };
           modules = [
-            { nixpkgs.overlays = overlays; }
+            {
+              nixpkgs.overlays = overlays;
+              nixpkgs.config.problems.handlers.j.broken = "warn";
+            }
             ./hostclass/${hostclass}.nix
             ./hosts/${hostname}
           ];
