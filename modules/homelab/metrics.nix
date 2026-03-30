@@ -40,7 +40,7 @@ in
 
         prometheus = lib.mkIf cfg.prometheus.enable {
           enable = true;
-          port = cfg.prometheus.port;
+          inherit (cfg.prometheus) port;
           exporters = {
             node = {
               enable = true;
@@ -60,7 +60,7 @@ in
           listen = [
             {
               addr = host;
-              port = cfg.grafana.port;
+              inherit (cfg.grafana) port;
             }
           ];
           locations."/" = {

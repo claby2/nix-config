@@ -56,12 +56,10 @@
           #     - Overlay workaround: https://github.com/NixOS/nixpkgs/issues/479840#issuecomment-3747503791
           # - Parent Issue: https://github.com/NixOS/nixpkgs/issues/475479
           # - Hydra Build Failure: https://hydra.nixos.org/build/324243490
-          j = (
-            prev.j.overrideAttrs (oldAttrs: {
-              NIX_CFLAGS_COMPILE = " -std=gnu17 -Wno-error";
-              NIX_CPPFLAGS_COMPILE = " -include stdint.h";
-            })
-          );
+          j = prev.j.overrideAttrs (oldAttrs: {
+            NIX_CFLAGS_COMPILE = " -std=gnu17 -Wno-error";
+            NIX_CPPFLAGS_COMPILE = " -include stdint.h";
+          });
         })
       ];
 
