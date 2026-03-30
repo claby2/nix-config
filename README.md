@@ -31,20 +31,6 @@ directory. Hostclasses inherit from one another via `imports`, with
 
 A system managed via this configuration will have `$HOSTCLASS` defined.
 
-### Configuration Pattern
-
-Each host imports its hostclass directly, passing an optional `motd` parameter:
-
-```nix
-# Example host configuration
-{
-  imports = [
-    (import ../../hostclass/server.nix { motd = builtins.readFile ./hostname; })
-  ];
-  # Additional host-specific configuration...
-}
-```
-
 ## Secrets Management
 
 Secrets are managed using [agenix](https://github.com/ryantm/agenix) for age-encrypted secrets:
