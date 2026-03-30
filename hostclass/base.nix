@@ -15,9 +15,7 @@
   # `nixos-version --configuration-revision` on NixOS or `darwin-version
   # --configuration-revision` on darwin.
   system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or "unknown";
-
   nixpkgs.config.allowUnfree = true;
-
   nix.settings.experimental-features = "nix-command flakes";
 
   # === ENVIRONMENT
@@ -29,7 +27,6 @@
       wget
       htop
       tree
-      mtr
       inputs.agenix.packages."${stdenv.hostPlatform.system}".default
       inputs.hladmin.packages."${stdenv.hostPlatform.system}".default
     ];

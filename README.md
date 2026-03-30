@@ -15,7 +15,6 @@ This configuration assumes this repository is cloned into `~/nix-config`.
 │   └── applin/
 ├── hostclass/             # Hostclass definitions
 ├── modules/
-│   ├── hostclass.nix      # Hostclass option definition
 │   ├── home/              # User-specific home-manager config
 │   └── homelab/           # Self-hosted services
 ├── apps/                  # Application dotfiles
@@ -28,11 +27,7 @@ This configuration assumes this repository is cloned into `~/nix-config`.
 
 Each host imports a hostclass file from the top-level [`hostclass/`](./hostclass)
 directory. Hostclasses inherit from one another via `imports`, with
-[`base`](./hostclass/base.nix) as the root. The current hostclasses are:
-
-- **`base`** - Common configuration shared by all hosts
-- **`server`** - NixOS servers (imports `base`)
-- **`mac`** - macOS/nix-darwin machines (imports `base`)
+[`base`](./hostclass/base.nix) as the root.
 
 A system managed via this configuration will have `$HOSTCLASS` defined.
 

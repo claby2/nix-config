@@ -67,7 +67,7 @@
       nixosConfigurations = {
         onix = mkNixosHost "x86_64-linux" "server" "onix";
         altaria = mkNixosHost "x86_64-linux" "server" "altaria";
-        groudon = mkNixosHost "x86_64-linux" "server" "groudon";
+        groudon = mkNixosHost "x86_64-linux" "nixos" "groudon";
       };
 
       ## Darwin Hosts
