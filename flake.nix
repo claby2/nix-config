@@ -48,12 +48,30 @@
     let
       meta = import ./meta { };
 
+      overlays = [
+        (final: prev: {
+          # Overlay to fix j build
+          # See:
+          # - J Build Issue: https://github.com/NixOS/nixpkgs/issues/479840
+          #     - Overlay workaround: https://github.com/NixOS/nixpkgs/issues/479840#issuecomment-3747503791
+          # - Parent Issue: https://github.com/NixOS/nixpkgs/issues/475479
+          # - Hydra Build Failure: https://hydra.nixos.org/build/324243490
+          j = (
+            prev.j.overrideAttrs (oldAttrs: {
+              NIX_CFLAGS_COMPILE = " -std=gnu17 -Wno-error";
+              NIX_CPPFLAGS_COMPILE = " -include stdint.h";
+            })
+          );
+        })
+      ];
+
       mkHost =
         builder: system: hostclass: hostname:
         builder {
           inherit system;
           specialArgs = { inherit inputs meta; };
           modules = [
+            { nixpkgs.overlays = overlays; }
             ./hostclass/${hostclass}.nix
             ./hosts/${hostname}
           ];
