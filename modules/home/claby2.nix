@@ -33,7 +33,7 @@ in
             fzf
             jq
             tokei
-            nodePackages.prettier
+            prettier
             inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
             inputs.codex-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
             uv
