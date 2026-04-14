@@ -61,21 +61,10 @@ in
         (endpoint "git" "https://git.edwardwibowo.com")
         (endpoint "amy" "https://amyqiao.com")
       ];
-      manualEndpoints = [
-        {
-          name = "altaria ssh";
-          url = "ssh://altaria.edwardwibowo.com:22";
-          ssh = {
-            username = "";
-            password = "";
-          };
-          interval = "5m";
-          conditions = [
-            "[CONNECTED] == true"
-            "[STATUS] == 0"
-          ];
-          alerts = [ { type = "discord"; } ];
-        }
+      sshEndpoints = [
+        (endpoint "altaria ssh" "ssh://altaria.edwardwibowo.com:22")
+        (endpoint "altaria tailscale ssh" "ssh://altaria:22")
+        (endpoint "groudon tailscale ssh" "ssh://groudon:22")
       ];
       environmentFile = config.age.secrets.gatus-environment.path;
     };

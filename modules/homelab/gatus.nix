@@ -19,6 +19,16 @@ in
       default = [ ];
       description = "Simple endpoints that check for HTTP 200 with Discord alerting.";
     };
+    sshEndpoints = lib.mkOption {
+      type = lib.types.listOf (lib.types.submodule {
+        options = {
+          name = lib.mkOption { type = lib.types.str; };
+          url = lib.mkOption { type = lib.types.str; };
+        };
+      });
+      default = [ ];
+      description = "SSH endpoints with Discord alerting.";
+    };
     manualEndpoints = lib.mkOption {
       type = lib.types.listOf lib.types.attrs;
       default = [ ];
@@ -46,6 +56,19 @@ in
             conditions = [ "[STATUS] == 200" ];
             alerts = [ { type = "discord"; } ];
           }) cfg.endpoints)
+          ++ (map (ep: {
+            inherit (ep) name url;
+            interval = "5m";
+            ssh = {
+              username = "";
+              password = "";
+            };
+            conditions = [
+              "[CONNECTED] == true"
+              "[STATUS] == 0"
+            ];
+            alerts = [ { type = "discord"; } ];
+          }) cfg.sshEndpoints)
           ++ cfg.manualEndpoints;
         alerting = {
           discord = {
