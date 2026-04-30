@@ -37,6 +37,16 @@ in
       user = "claby2";
       directory = "/home/claby2/avge-card-game";
     };
+    avgenew = {
+      enable = true;
+      frontendPort = 8080;
+      backendPort = 5600;
+      frontendHost = "avge.edwardwibowo.com";
+      backendHost = "avgebackend.edwardwibowo.com";
+      user = "claby2";
+      frontendDirectory = "/home/claby2/AVGE-card-game-frontend";
+      backendDirectory = "/home/claby2/avge-card-game-platform-dev";
+    };
     metrics = {
       grafana = {
         enable = true;

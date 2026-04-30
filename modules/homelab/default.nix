@@ -15,6 +15,7 @@
     ./gatus.nix
     ./metrics.nix
     ./avge.nix
+    ./avgenew.nix
   ];
   services.nginx = {
     enable = true;
