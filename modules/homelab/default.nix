@@ -14,8 +14,8 @@
     ./filebrowser.nix
     ./gatus.nix
     ./metrics.nix
-    ./avge.nix
-    ./avgenew.nix
+    ./avgetcg.nix
+    ./avgetcgnew.nix
   ];
   services.nginx = {
     enable = true;

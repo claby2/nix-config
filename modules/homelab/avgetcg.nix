@@ -5,20 +5,20 @@
   ...
 }:
 let
-  cfg = config.homelab.avge;
+  cfg = config.homelab.avgetcg;
 in
 {
-  options.homelab.avge = {
-    enable = lib.mkEnableOption "avge";
+  options.homelab.avgetcg = {
+    enable = lib.mkEnableOption "avgetcg";
     port = lib.mkOption { type = lib.types.port; };
     host = lib.mkOption { type = lib.types.str; };
     user = lib.mkOption {
       type = lib.types.str;
-      description = "User to run the avge services as.";
+      description = "User to run the avgetcg services as.";
     };
     directory = lib.mkOption {
       type = lib.types.path;
-      description = "Working directory for the avge card game repository.";
+      description = "Working directory for the avgetcg card game repository.";
     };
   };
 
@@ -26,8 +26,8 @@ in
     # Enable SSL for the nginx virtual host.
 
     systemd = {
-      services.avge = {
-        description = "avge card game server";
+      services.avgetcg = {
+        description = "avgetcg card game server";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
@@ -46,8 +46,8 @@ in
         ];
       };
 
-      services.avge-git-pull = {
-        description = "git pull for avge repository";
+      services.avgetcg-git-pull = {
+        description = "git pull for avgetcg repository";
         after = [ "network.target" ];
         serviceConfig = {
           Type = "oneshot";
@@ -62,8 +62,8 @@ in
         ];
       };
 
-      timers.avge-git-pull = {
-        description = "Run git pull for avge every 30 minutes";
+      timers.avgetcg-git-pull = {
+        description = "Run git pull for avgetcg every 30 minutes";
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "*:00,30";

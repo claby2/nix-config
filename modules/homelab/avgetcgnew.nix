@@ -5,26 +5,26 @@
   ...
 }:
 let
-  cfg = config.homelab.avgenew;
+  cfg = config.homelab.avgetcgnew;
 in
 {
-  options.homelab.avgenew = {
-    enable = lib.mkEnableOption "avge new";
+  options.homelab.avgetcgnew = {
+    enable = lib.mkEnableOption "avgetcgnew";
     frontendPort = lib.mkOption { type = lib.types.port; };
     backendPort = lib.mkOption { type = lib.types.port; };
     frontendHost = lib.mkOption { type = lib.types.str; };
     backendHost = lib.mkOption { type = lib.types.str; };
     user = lib.mkOption {
       type = lib.types.str;
-      description = "User to run the avge services as.";
+      description = "User to run the avgetcgnew services as.";
     };
     frontendDirectory = lib.mkOption {
       type = lib.types.path;
-      description = "Working directory for the avge card game repository.";
+      description = "Working directory for the avgetcgnew card game repository.";
     };
     backendDirectory = lib.mkOption {
       type = lib.types.path;
-      description = "Working directory for the avge card game repository.";
+      description = "Working directory for the avgetcgnew card game repository.";
     };
   };
 
@@ -32,8 +32,8 @@ in
     # Enable SSL for the nginx virtual host.
 
     systemd = {
-      services.avgenewfrontend = {
-        description = "avge card game server";
+      services.avgetcgnew-frontend = {
+        description = "avgetcgnew card game server";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
@@ -50,8 +50,8 @@ in
         ];
       };
 
-      services.avgenewfrontend-git-pull = {
-        description = "git pull for avge repository";
+      services.avgetcgnew-frontend-git-pull = {
+        description = "git pull for avgetcgnew repository";
         after = [ "network.target" ];
         serviceConfig = {
           Type = "oneshot";
@@ -66,8 +66,8 @@ in
         ];
       };
 
-      timers.avgenewfrontend-git-pull = {
-        description = "Run git pull for avge every 30 minutes";
+      timers.avgetcgnew-frontend-git-pull = {
+        description = "Run git pull for avgetcgnew every 30 minutes";
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "*:00,30";
@@ -76,7 +76,7 @@ in
 
       # BACKEND
 
-      services.avgenewbackend =
+      services.avgetcgnew-backend =
         let
           pythonEnv = pkgs.python3.withPackages (
             ps: with ps; [
@@ -87,7 +87,7 @@ in
           );
         in
         {
-          description = "avge card game server";
+          description = "avgetcgnew card game server";
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
           serviceConfig = {
@@ -106,8 +106,8 @@ in
           ];
         };
 
-      services.avgenewbackend-git-pull = {
-        description = "git pull for avge repository";
+      services.avgetcgnew-backend-git-pull = {
+        description = "git pull for avgetcgnew repository";
         after = [ "network.target" ];
         serviceConfig = {
           Type = "oneshot";
@@ -122,8 +122,8 @@ in
         ];
       };
 
-      timers.avgenewbackend-git-pull = {
-        description = "Run git pull for avge every 30 minutes";
+      timers.avgetcgnew-backend-git-pull = {
+        description = "Run git pull for avgetcgnew every 30 minutes";
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "*:00,30";

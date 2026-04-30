@@ -30,14 +30,14 @@ in
 
   # === HOMELAB
   homelab = {
-    avge = {
+    avgetcg = {
       enable = true;
       port = 6767;
       host = "tcg.brownavge.org";
       user = "claby2";
       directory = "/home/claby2/avge-card-game";
     };
-    avgenew = {
+    avgetcgnew = {
       enable = true;
       frontendPort = 8080;
       backendPort = 5600;
