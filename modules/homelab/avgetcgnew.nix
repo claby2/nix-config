@@ -83,6 +83,7 @@ in
               flask
               flask-socketio
               pytest
+              gevent
             ]
           );
         in
@@ -94,6 +95,9 @@ in
             WorkingDirectory = cfg.backendDirectory;
             Environment = [
               "ROUTER_PORT=${toString cfg.backendPort}"
+              "ROUTER_ALLOWED_ORIGINS=https://${cfg.frontendHost}"
+              "ROUTER_COOKIE_SECURE=true"
+              "ROUTER_COOKIE_SAMESITE=None"
             ];
             ExecStart = "${pythonEnv}/bin/python3 -m card_game.server.router_server";
             User = cfg.user;
