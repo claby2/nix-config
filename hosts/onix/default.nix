@@ -39,7 +39,6 @@ in
     };
     avgetcgnew = {
       enable = true;
-      frontendPort = 8080;
       backendPort = 5600;
       frontendHost = "avge.edwardwibowo.com";
       backendHost = "avgebackend.edwardwibowo.com";

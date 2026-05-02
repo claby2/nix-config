@@ -10,7 +10,6 @@ in
 {
   options.homelab.avgetcgnew = {
     enable = lib.mkEnableOption "avgetcgnew";
-    frontendPort = lib.mkOption { type = lib.types.port; };
     backendPort = lib.mkOption { type = lib.types.port; };
     frontendHost = lib.mkOption { type = lib.types.str; };
     backendHost = lib.mkOption { type = lib.types.str; };
@@ -32,19 +31,23 @@ in
     # Enable SSL for the nginx virtual host.
 
     systemd = {
-      services.avgetcgnew-frontend = {
-        description = "avgetcgnew card game server";
+      services.avgetcgnew-frontend-build = {
+        description = "Build avgetcgnew frontend production bundle";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
           WorkingDirectory = cfg.frontendDirectory;
-          ExecStartPre = "${pkgs.nodejs}/bin/npm install";
-          ExecStart = "${pkgs.nodejs}/bin/npm run dev -- --port ${toString cfg.frontendPort}";
+          ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.nodejs_22}/bin/npm install && ${pkgs.nodejs_22}/bin/npm run build && ${pkgs.rsync}/bin/rsync -a --delete dist/ /var/lib/avgetcgnew-frontend/'";
           User = cfg.user;
-          Restart = "on-failure";
+          UMask = "0022";
+          StateDirectory = "avgetcgnew-frontend";
+          StateDirectoryMode = "0755";
         };
         path = [
           pkgs.nodejs_22
+          pkgs.rsync
           pkgs.bash
           pkgs.coreutils
         ];
@@ -57,6 +60,7 @@ in
           Type = "oneshot";
           WorkingDirectory = cfg.frontendDirectory;
           ExecStart = "${pkgs.git}/bin/git pull";
+          ExecStartPost = "${pkgs.systemd}/bin/systemctl start avgetcgnew-frontend-build";
           User = cfg.user;
         };
         path = [
@@ -139,9 +143,9 @@ in
     services.nginx.virtualHosts.${cfg.frontendHost} = {
       addSSL = true;
       enableACME = true;
+      root = "/var/lib/avgetcgnew-frontend";
       locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.frontendPort}/";
-        proxyWebsockets = true;
+        tryFiles = "$uri $uri/ /index.html";
       };
     };
 
