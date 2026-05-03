@@ -56,11 +56,11 @@ in
       services.avgetcgnew-frontend-git-pull = {
         description = "git pull for avgetcgnew repository";
         after = [ "network.target" ];
+        onSuccess = [ "avgetcgnew-frontend-build.service" ];
         serviceConfig = {
           Type = "oneshot";
           WorkingDirectory = cfg.frontendDirectory;
           ExecStart = "${pkgs.git}/bin/git pull";
-          ExecStartPost = "${pkgs.systemd}/bin/systemctl start avgetcgnew-frontend-build";
           User = cfg.user;
         };
         path = [
@@ -117,6 +117,7 @@ in
       services.avgetcgnew-backend-git-pull = {
         description = "git pull for avgetcgnew repository";
         after = [ "network.target" ];
+        onSuccess = [ "avgetcgnew-backend.service" ];
         serviceConfig = {
           Type = "oneshot";
           WorkingDirectory = cfg.backendDirectory;
