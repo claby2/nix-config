@@ -34,8 +34,9 @@ in
             jq
             tokei
             prettier
-            inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
-            inputs.codex-cli.packages.${pkgs.stdenv.hostPlatform.system}.default
+            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
+            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode
+            inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi
             uv
             delta
             pyright
@@ -44,7 +45,6 @@ in
             patdiff
             mutagen
             nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
-            opencode
             comma
             nh
             nix-output-monitor

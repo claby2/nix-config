@@ -31,9 +31,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    claude-code.url = "github:sadjow/claude-code-nix";
-
-    codex-cli.url = "github:sadjow/codex-cli-nix";
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs =
