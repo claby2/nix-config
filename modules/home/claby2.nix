@@ -51,6 +51,7 @@ in
             clang-tools
             ccls
             stylua
+            ollama
           ];
 
           file = {
