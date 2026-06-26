@@ -16,4 +16,6 @@
   };
 
   services.tailscale.useRoutingFeatures = "server";
+
+  services.earlyoom.enable = true;
 }
