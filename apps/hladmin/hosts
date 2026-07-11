@@ -1,4 +1,4 @@
-group servers altaria onix groudon
-group all localhost altaria onix groudon
+group servers altaria onix groudon cherrim
+group all localhost altaria onix groudon cherrim
 group local localhost
 default local
