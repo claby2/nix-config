@@ -5,11 +5,9 @@
   networking.networkmanager.wifi.powersave = false;
 
   fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "xfs";
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
   };
-
-  swapDevices = [ { device = "/dev/disk/by-label/swap"; } ];
 
   # Raspberry Pi does not use GRUB
   boot.loader.grub.enable = false;
