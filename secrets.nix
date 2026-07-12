@@ -43,4 +43,13 @@ in
     key.applin
   ];
 
+  # === Cherrim
+  "hosts/cherrim/secrets/grafana-password.age".publicKeys = [
+    key.cherrim
+    key.applin
+  ];
+  "hosts/cherrim/secrets/grafana-secret-key.age".publicKeys = [
+    key.cherrim
+    key.applin
+  ];
 }
