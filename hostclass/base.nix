@@ -24,6 +24,9 @@
   };
 
   config = {
+
+    nix.settings.extra-trusted-users = [ "claby2" ];
+
     # Include the git commit hash (and also whether it was dirty at the time of
     # building) in the configuration revision. This shows up when running
     # `nixos-version --configuration-revision` on NixOS or `darwin-version
