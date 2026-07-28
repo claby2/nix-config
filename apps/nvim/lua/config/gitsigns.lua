@@ -2,6 +2,7 @@ local M = {}
 
 M.setup = function()
 	require("gitsigns").setup({
+		sign_priority = 20,
 		on_attach = function(bufnr)
 			local gs = package.loaded.gitsigns
 			local function map(mode, l, r, opts)

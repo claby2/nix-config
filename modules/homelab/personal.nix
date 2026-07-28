@@ -17,20 +17,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ webPkg ];
-
-    system.activationScripts.deployWebsite = {
-      text = ''
-        mkdir -p /var/lib/personal
-        cp -r ${webPkg}/. /var/lib/personal/
-      '';
-    };
-
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;
       locations."/" = {
-        root = "/var/lib/personal";
+        root = "${webPkg}";
       };
     };
   };

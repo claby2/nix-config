@@ -39,7 +39,6 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"tinymist",
 	"nil_ls",
-	"vimtex",
 })
 vim.diagnostic.config({
 	signs = {

@@ -20,7 +20,7 @@ M.setup = function()
 			typescriptreact = { "prettier" },
 			yaml = { "prettier" },
 			typst = { "typstyle" },
-            nix = { "nixfmt" },
+			nix = { "nixfmt" },
 		},
 	})
 end

@@ -39,7 +39,10 @@ in
       default = { };
       description = "Additional alerting configurations beyond the default Discord alerting.";
     };
-    environmentFile = lib.mkOption { type = lib.types.nullOr lib.types.path; };
+    environmentFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+    };
   };
 
   config = lib.mkIf cfg.enable {

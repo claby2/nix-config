@@ -27,7 +27,7 @@
     systemPackages = [
       # NOTE: We can take advantage of the fact that applin has access to altaria's
       # restic secrets and create a wrapper script.
-      (pkgs.writeScriptBin "restic-altaria" ''
+      (pkgs.writeShellScriptBin "restic-altaria" ''
         set -a
         source ${config.age.secrets.altaria-restic-environment.path}
         RESTIC_PASSWORD_FILE=${config.age.secrets.altaria-restic-password.path}

@@ -19,11 +19,11 @@ in
     };
     frontendDirectory = lib.mkOption {
       type = lib.types.path;
-      description = "Working directory for the avgetcgnew card game repository.";
+      description = "Working directory for the avgetcgnew frontend repository.";
     };
     backendDirectory = lib.mkOption {
       type = lib.types.path;
-      description = "Working directory for the avgetcgnew card game repository.";
+      description = "Working directory for the avgetcgnew backend repository.";
     };
   };
 

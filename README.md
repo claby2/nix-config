@@ -12,6 +12,7 @@ This configuration assumes this repository is cloned into `~/nix-config`.
 │   ├── onix/
 │   ├── altaria/
 │   ├── groudon/
+│   ├── cherrim/
 │   └── applin/
 ├── hostclass/             # Hostclass definitions
 ├── modules/

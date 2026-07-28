@@ -88,12 +88,7 @@ return {
 	{
 		"lewis6991/gitsigns.nvim",
 		event = "BufRead",
-		init = function()
-			require("config.gitsigns").setup()
-			require("gitsigns").setup({
-				sign_priority = 20,
-			})
-		end,
+		config = require("config.gitsigns").setup,
 	},
 	{
 		"Julian/lean.nvim",

@@ -23,8 +23,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Enable SSL for the nginx virtual host.
-
     systemd = {
       services.avgetcg = {
         description = "avgetcg card game server";

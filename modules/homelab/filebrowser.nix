@@ -21,8 +21,8 @@ in
       '';
     };
 
-    # Seems like the freshrss service in nixpkgs does not enable SSL...
-    # Forcing that here!
+    # The filebrowser service in nixpkgs does not configure nginx SSL,
+    # so force it here.
     services.nginx.virtualHosts.${cfg.host} = {
       addSSL = true;
       enableACME = true;

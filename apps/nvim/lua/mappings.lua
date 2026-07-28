@@ -6,12 +6,12 @@ map("n", "<leader>s", "<cmd>set spell!<cr>", { desc = "Toggle spell checking" })
 map("n", "<leader>f", [[<cmd> lua require("conform").format()<cr>]], { desc = "Format current buffer" })
 
 map("n", "<leader><tab>", [[<cmd>:FzfLua files<cr>]], { desc = "Find files" })
-map("n", "<leader>rg", [[<cmd>:FzfLua grep_visual<cr>]], { desc = "Find files" })
+map("n", "<leader>rg", [[<cmd>:FzfLua grep_visual<cr>]], { desc = "Grep visual selection" })
 map("n", "<leader>t", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle NvimTree" })
 map("n", "<leader>T", "<cmd>NvimTreeFindFileToggle<cr>", { desc = "Toggle NvimTreeFindFile" })
 
 -- Restart LSP
-map("n", "<leader>lr", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
+map("n", "<leader>rr", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
 
 -- LSP mappings
 map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
