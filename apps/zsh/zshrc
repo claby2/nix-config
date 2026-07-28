@@ -53,4 +53,3 @@ alias ls='ls --color=tty'
 alias nixdev='nix develop -c zsh'
 
 source <(fzf --zsh)
-command -v hladmin >/dev/null 2>&1 && source <(hladmin completion zsh)
