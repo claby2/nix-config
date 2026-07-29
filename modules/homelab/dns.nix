@@ -39,28 +39,15 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf (cfg.entries != { }) {
+      boot.kernel.sysctl = {
+        "net.ipv4.ip_nonlocal_bind" = 1;
+        "net.ipv6.ip_nonlocal_bind" = 1;
+      };
+
       services.nginx.virtualHosts = lib.mapAttrs' (
         sub: port:
         lib.nameValuePair (fqdn sub) {
-          # Default listen (port 80). Plain HTTP; traffic rides Tailscale.
-          #
-          # Restrict to tailnet source addresses: these vhosts share the
-          # global 0.0.0.0:80 listener and are selected purely by Host
-          # header, so on hosts that also open port 80 publicly (for
-          # ACME/public vhosts) anyone could reach them by sending
-          # "Host: <sub>.${tld}" to the public IP — no public DNS record
-          # needed. The interface-scoped firewall rule below doesn't
-          # protect against that, and binding to the tailscale IP instead
-          # would race tailscale0 coming up at boot; a source ACL has
-          # neither problem. Tailnet traffic always arrives from
-          # 100.64.0.0/10 (or Tailscale's IPv6 ULA range), including a
-          # host talking to its own services.
-          extraConfig = ''
-            allow 100.64.0.0/10;
-            allow fd7a:115c:a1e0::/48;
-            allow 127.0.0.1;
-            deny all;
-          '';
+          listenAddresses = [ meta.tailscaleIPs.${config.networking.hostName} ];
           locations."/" = {
             proxyPass = "http://127.0.0.1:${toString port}/";
             proxyWebsockets = true;
