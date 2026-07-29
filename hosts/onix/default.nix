@@ -19,6 +19,9 @@ in
 
   # === HOMELAB
   homelab = {
+    dns.entries = {
+      "onix.prometheus" = config.homelab.metrics.prometheus.port;
+    };
     avgetcg = {
       enable = true;
       port = 6767;

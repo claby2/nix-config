@@ -23,7 +23,10 @@
   homelab = {
     dns = {
       server.enable = true;
-      entries.grafana = config.homelab.metrics.grafana.port;
+      entries = {
+        "grafana" = config.homelab.metrics.grafana.port;
+        "cherrim.prometheus" = config.homelab.metrics.prometheus.port;
+      };
     };
     metrics = {
       grafana = {

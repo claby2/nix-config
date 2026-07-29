@@ -3,6 +3,8 @@ _: {
   # Stable tailnet IPv4 addresses (`tailscale ip -4 <host>`).
   tailscaleIPs = {
     cherrim = "100.111.150.115";
+    altaria = "100.71.84.105";
+    onix = "100.111.30.114";
   };
   # TLD for homelab-internal DNS; the zone itself is derived from each
   # host's homelab.dns.entries (see modules/homelab/dns.nix). Tailscale

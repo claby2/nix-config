@@ -49,6 +49,9 @@
 
   # === HOMELAB
   homelab = {
+    dns.entries = {
+      "altaria.prometheus" = config.homelab.metrics.prometheus.port;
+    };
     metrics.prometheus = {
       enable = true;
       port = 3004;
