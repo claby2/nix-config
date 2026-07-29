@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  meta,
   ...
 }:
 {
@@ -24,9 +25,9 @@
 
   environment = {
     # tailscaled-on-macOS can't install split DNS into the system resolver,
-    # so route the .internal TLD to MagicDNS explicitly (same workaround
+    # so route the internal TLD to MagicDNS explicitly (same workaround
     # nix-darwin's tailscale module uses for ts.net).
-    etc."resolver/internal".text = "nameserver 100.100.100.100";
+    etc."resolver/${meta.internalTld}".text = "nameserver 100.100.100.100";
     systemPackages = with pkgs; [
       aerospace
       kitty
