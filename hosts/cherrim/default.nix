@@ -21,12 +21,17 @@
 
   # === HOMELAB
   homelab = {
+    dns = {
+      server.enable = true;
+      entries."grafana.internal" = 3001;
+    };
     metrics = {
       grafana = {
         enable = true;
         adminPassword = "$__file{${config.age.secrets.grafana-password.path}}";
         secretKey = "$__file{${config.age.secrets.grafana-secret-key.path}}";
         port = 3001;
+        domain = "grafana.internal";
       };
       prometheus = {
         enable = true;

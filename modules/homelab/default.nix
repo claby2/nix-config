@@ -14,6 +14,7 @@
     ./filebrowser.nix
     ./gatus.nix
     ./metrics.nix
+    ./dns.nix
     ./avgetcg.nix
     ./avgetcgnew.nix
   ];

@@ -1,5 +1,15 @@
 _: {
   tailnetName = "tail983a17.ts.net";
+  # Stable tailnet IPv4 addresses (`tailscale ip -4 <host>`).
+  tailscaleIPs = {
+    cherrim = "100.111.150.115";
+  };
+  # Source of truth for .internal DNS, served by dnsmasq on cherrim.
+  # Maps internal domain -> host whose tailnet IP the record points at.
+  # Add services on other hosts here (plus the host's IP above).
+  internalDomains = {
+    "grafana.internal" = "cherrim";
+  };
   sshPublicKeys = {
     altaria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIg8SRUjPyiBA/aucB/p5ZroCQ+peJsdCeQF46LX5S2u";
     applin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIgpfqrD63csQegPzBTBPcNJbzgdsBkJhDm/w1uchE+";
