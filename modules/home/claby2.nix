@@ -51,6 +51,7 @@ in
             clang-tools
             ccls
             stylua
+            tree-sitter # Needed by nvim-treesitter (main branch) to build parsers
             ollama
           ];
 
