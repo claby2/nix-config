@@ -16,7 +16,12 @@ return {
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {},
+		opts = {
+			keywords = {
+				REVIEW = { icon = " ", color = "info" },
+				CLAUDE = { icon = " ", color = "#FFA759", alt = { "REVIEW claude" } },
+			},
+		},
 	},
 	{
 		"stevearc/conform.nvim",
