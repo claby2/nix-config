@@ -26,6 +26,23 @@
       entries = {
         "grafana" = config.homelab.metrics.grafana.port;
         "cherrim.prometheus" = config.homelab.metrics.prometheus.port;
+        "silph" = config.homelab.silph.server.port;
+        "cherrim.silph-collector" = config.homelab.silph.collector.port;
+      };
+    };
+    silph = {
+      collector = {
+        enable = true;
+        port = 9100;
+      };
+      server = {
+        enable = true;
+        port = 8080;
+        targets = {
+          cherrim = "http://cherrim.silph-collector.internal";
+          onix = "http://onix.silph-collector.internal";
+          altaria = "http://altaria.silph-collector.internal";
+        };
       };
     };
     metrics = {

@@ -349,7 +349,28 @@
         "nix-darwin": "nix-darwin",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "personal-website": "personal-website"
+        "personal-website": "personal-website",
+        "silph": "silph"
+      }
+    },
+    "silph": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785659503,
+        "narHash": "sha256-USvb8B6cwmNbKjcFztgrQRSkYG2qB0Ak0hx+IbiXsW4=",
+        "owner": "claby2",
+        "repo": "silph",
+        "rev": "99c6f09a381768526c81b2d02d3c713801552e47",
+        "type": "github"
+      },
+      "original": {
+        "owner": "claby2",
+        "repo": "silph",
+        "type": "github"
       }
     },
     "systems": {

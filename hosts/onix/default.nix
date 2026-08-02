@@ -21,6 +21,11 @@ in
   homelab = {
     dns.entries = {
       "onix.prometheus" = config.homelab.metrics.prometheus.port;
+      "onix.silph-collector" = config.homelab.silph.collector.port;
+    };
+    silph.collector = {
+      enable = true;
+      port = 9100;
     };
     avgetcg = {
       enable = true;
