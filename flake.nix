@@ -92,6 +92,12 @@
       mkDarwinHost = mkHost nix-darwin.lib.darwinSystem;
     in
     {
+      # Expensive packages composed against this flake's nixpkgs. CI builds
+      # these on x86 and arm runners and pushes them to claby2-nix-config.cachix.org
+      # so hosts substitute instead of compiling.
+      packages = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: {
+        silph = inputs.silph.packages.${system}.default;
+      });
 
       ## Nixos Hosts
       nixosConfigurations = {

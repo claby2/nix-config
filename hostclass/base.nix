@@ -25,7 +25,11 @@
 
   config = {
 
-    nix.settings.extra-trusted-users = [ "claby2" ];
+    nix.settings = {
+      extra-trusted-users = [ "claby2" ];
+      extra-substituters = [ "https://claby2-nix-config.cachix.org" ];
+      extra-trusted-public-keys = [ "claby2-nix-config.cachix.org-1:cGFfRwVVrMfN8X5dfLMnRAYocHaqm+pc+5CnSPDMzOA=" ];
+    };
 
     # Include the git commit hash (and also whether it was dirty at the time of
     # building) in the configuration revision. This shows up when running
