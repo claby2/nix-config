@@ -71,10 +71,6 @@
       enable = true;
       host = "edwardwibowo.com";
     };
-    amy = {
-      enable = true;
-      host = "amyqiao.com";
-    };
     freshrss = {
       enable = true;
       host = "freshrss.edwardwibowo.com";

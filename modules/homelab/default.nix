@@ -10,14 +10,11 @@
     ./gitea.nix
     ./personal.nix
     ./freshrss.nix
-    ./amy.nix
     ./filebrowser.nix
     ./gatus.nix
     ./metrics.nix
     ./silph.nix
     ./dns.nix
-    ./avgetcg.nix
-    ./avgetcgnew.nix
   ];
   services.nginx = {
     enable = true;

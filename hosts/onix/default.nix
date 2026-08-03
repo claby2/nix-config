@@ -27,22 +27,6 @@ in
       enable = true;
       port = 9100;
     };
-    avgetcg = {
-      enable = true;
-      port = 6767;
-      host = "tcg.brownavge.org";
-      user = "claby2";
-      directory = "/home/claby2/avge-card-game";
-    };
-    avgetcgnew = {
-      enable = true;
-      backendPort = 5600;
-      frontendHost = "avge.edwardwibowo.com";
-      backendHost = "avgebackend.edwardwibowo.com";
-      user = "claby2";
-      frontendDirectory = "/home/claby2/AVGE-card-game-frontend";
-      backendDirectory = "/home/claby2/avge-card-game-platform-dev";
-    };
     metrics.prometheus = {
       enable = true;
       port = 3002;
@@ -57,7 +41,6 @@ in
         (endpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
         (endpoint "freshrss" "https://freshrss.edwardwibowo.com")
         (endpoint "git" "https://git.edwardwibowo.com")
-        (endpoint "amy" "https://amyqiao.com")
       ];
       sshEndpoints = [
         (endpoint "altaria ssh" "ssh://altaria.edwardwibowo.com:22")
