@@ -78,7 +78,7 @@ in
             webhook-url = "$DISCORD_WEBHOOK_URL";
             default-alert = {
               send-on-resolved = true;
-              failure-threshold = 1;
+              failure-threshold = 2;
             };
           };
         }
