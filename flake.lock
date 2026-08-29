@@ -308,11 +308,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784158817,
-        "narHash": "sha256-8z+ZDYAbmOkWRbqbTaH8iI3NaTzfkVxbo2D4eUeZDuM=",
+        "lastModified": 1787971668,
+        "narHash": "sha256-cmD78yv1/d+pP/PqqLo0O/1FSqNqsJWmOcDYQTVOPmk=",
         "ref": "main",
-        "rev": "15eb675cfa294fe535a6f237d49a5f103e530aaf",
-        "revCount": 215,
+        "rev": "76296390ea737a1625f35ef43625a6a56d370d33",
+        "revCount": 217,
         "type": "git",
         "url": "ssh://git@github.com/claby2/claby2.github.io.git"
       },
