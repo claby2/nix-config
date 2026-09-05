@@ -26,6 +26,11 @@ in
     silph.collector = {
       enable = true;
       port = 9100;
+      metrics = {
+        cpu = { };
+        memory = { };
+        disk = { };
+      };
     };
     metrics.prometheus = {
       enable = true;

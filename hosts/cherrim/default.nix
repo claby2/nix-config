@@ -34,6 +34,12 @@
       collector = {
         enable = true;
         port = 9100;
+        metrics = {
+          cpu = { };
+          memory = { };
+          disk = { };
+          temperature = { };
+        };
       };
       server = {
         enable = true;
