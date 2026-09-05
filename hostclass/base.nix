@@ -27,8 +27,14 @@
 
     nix.settings = {
       extra-trusted-users = [ "claby2" ];
-      extra-substituters = [ "https://claby2-nix-config.cachix.org" ];
-      extra-trusted-public-keys = [ "claby2-nix-config.cachix.org-1:cGFfRwVVrMfN8X5dfLMnRAYocHaqm+pc+5CnSPDMzOA=" ];
+      extra-substituters = [
+        "https://claby2-nix-config.cachix.org"
+        "https://cache.numtide.com"
+      ];
+      extra-trusted-public-keys = [
+        "claby2-nix-config.cachix.org-1:cGFfRwVVrMfN8X5dfLMnRAYocHaqm+pc+5CnSPDMzOA="
+        "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+      ];
     };
 
     # Include the git commit hash (and also whether it was dirty at the time of
