@@ -91,6 +91,7 @@
       # these on x86 and arm runners and pushes them to claby2-nix-config.cachix.org
       # so hosts substitute instead of compiling.
       packages = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: {
+        hladmin = inputs.hladmin.packages.${system}.default;
         silph = inputs.silph.packages.${system}.default;
       });
 
