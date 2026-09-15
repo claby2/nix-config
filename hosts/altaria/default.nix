@@ -14,6 +14,7 @@
     restic-repository.file = ./secrets/restic-repository.age;
     restic-password.file = ./secrets/restic-password.age;
     restic-environment.file = ./secrets/restic-environment.age;
+    samba-password.file = ./secrets/samba-password.age;
     freshrss = {
       file = ./secrets/freshrss.age;
       owner = "freshrss";
@@ -67,10 +68,9 @@
       port = 3004;
       nodeExporterPort = 3005;
     };
-    filebrowser = {
+    files = {
       enable = true;
-      port = 3001;
-      host = "filebrowser.edwardwibowo.com";
+      passwordFile = config.age.secrets.samba-password.path;
     };
     personal = {
       enable = true;

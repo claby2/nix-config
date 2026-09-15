@@ -10,7 +10,7 @@
     ./gitea.nix
     ./personal.nix
     ./freshrss.nix
-    ./filebrowser.nix
+    ./files.nix
     ./gatus.nix
     ./metrics.nix
     ./silph.nix

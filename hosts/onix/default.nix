@@ -43,7 +43,6 @@ in
       host = "gatus.edwardwibowo.com";
       endpoints = [
         (endpoint "personal" "https://edwardwibowo.com")
-        (endpoint "filebrowser" "https://filebrowser.edwardwibowo.com")
         (endpoint "freshrss" "https://freshrss.edwardwibowo.com")
         (endpoint "git" "https://git.edwardwibowo.com")
       ];
@@ -51,6 +50,15 @@ in
         (endpoint "altaria ssh" "ssh://altaria.edwardwibowo.com:22")
         (endpoint "altaria tailscale ssh" "ssh://altaria:22")
         (endpoint "groudon tailscale ssh" "ssh://groudon:22")
+      ];
+      manualEndpoints = [
+        {
+          name = "altaria files (smb)";
+          url = "tcp://altaria:445";
+          interval = "5m";
+          conditions = [ "[CONNECTED] == true" ];
+          alerts = [ { type = "discord"; } ];
+        }
       ];
       environmentFile = config.age.secrets.gatus-environment.path;
     };
