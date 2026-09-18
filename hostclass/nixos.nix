@@ -35,8 +35,13 @@
   services = {
     openssh = {
       enable = true;
-      settings.PasswordAuthentication = false;
-      settings.AllowAgentForwarding = true;
+      settings = {
+        PasswordAuthentication = false;
+        # Without this, sshd still offers keyboard-interactive via PAM,
+        # which effectively re-enables password login.
+        KbdInteractiveAuthentication = false;
+        AllowAgentForwarding = true;
+      };
     };
   };
 

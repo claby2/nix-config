@@ -6,7 +6,10 @@ in
   options.homelab.gatus = {
     enable = lib.mkEnableOption "gatus";
     port = lib.mkOption { type = lib.types.port; };
-    host = lib.mkOption { type = lib.types.str; };
+    url = lib.mkOption {
+      type = lib.types.str;
+      description = "URL the dashboard is reachable at; used in alert links.";
+    };
     endpoints = lib.mkOption {
       type = lib.types.listOf (
         lib.types.submodule {
@@ -20,12 +23,14 @@ in
       description = "Simple endpoints that check for HTTP 200 with Discord alerting.";
     };
     sshEndpoints = lib.mkOption {
-      type = lib.types.listOf (lib.types.submodule {
-        options = {
-          name = lib.mkOption { type = lib.types.str; };
-          url = lib.mkOption { type = lib.types.str; };
-        };
-      });
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            name = lib.mkOption { type = lib.types.str; };
+            url = lib.mkOption { type = lib.types.str; };
+          };
+        }
+      );
       default = [ ];
       description = "SSH endpoints with Discord alerting.";
     };
@@ -50,8 +55,11 @@ in
       enable = true;
       inherit (cfg) environmentFile;
       settings = {
-        web.port = cfg.port;
-        url = cfg.host;
+        web = {
+          address = "127.0.0.1";
+          port = cfg.port;
+        };
+        inherit (cfg) url;
         endpoints =
           (map (ep: {
             inherit (ep) name url;
@@ -83,14 +91,6 @@ in
           };
         }
         // cfg.extraAlerting;
-      };
-    };
-
-    services.nginx.virtualHosts.${cfg.host} = {
-      addSSL = true;
-      enableACME = true;
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:${toString cfg.port}/";
       };
     };
   };

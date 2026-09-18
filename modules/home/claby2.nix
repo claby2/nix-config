@@ -75,7 +75,7 @@ in
             user.name = "Edward Wibowo";
             user.email = "wibow9770@gmail.com";
             init.defaultBranch = "main";
-            credential.helper = "store";
+            credential.helper = if pkgs.stdenv.isDarwin then "osxkeychain" else "cache --timeout=3600";
             commit.gpgsign = true;
           };
           signing = {

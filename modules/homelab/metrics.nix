@@ -46,9 +46,11 @@ in
       prometheus = lib.mkIf cfg.prometheus.enable {
         enable = true;
         inherit (cfg.prometheus) port;
+        listenAddress = "127.0.0.1";
         exporters = {
           node = {
             enable = true;
+            listenAddress = "127.0.0.1";
             enabledCollectors = [ "systemd" ];
             port = cfg.prometheus.nodeExporterPort;
           };

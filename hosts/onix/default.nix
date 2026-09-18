@@ -22,6 +22,7 @@ in
     dns.entries = {
       "onix.prometheus" = config.homelab.metrics.prometheus.port;
       "onix.silph-collector" = config.homelab.silph.collector.port;
+      gatus = config.homelab.gatus.port;
     };
     silph.collector = {
       enable = true;
@@ -40,7 +41,7 @@ in
     gatus = {
       enable = true;
       port = 3000;
-      host = "gatus.edwardwibowo.com";
+      url = "http://${config.homelab.dns.fqdns.gatus}";
       endpoints = [
         (endpoint "personal" "https://edwardwibowo.com")
         (endpoint "freshrss" "https://freshrss.edwardwibowo.com")

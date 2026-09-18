@@ -24,6 +24,7 @@ in
           DISABLE_REGISTRATION = true;
         };
         server = {
+          HTTP_ADDR = "127.0.0.1";
           HTTP_PORT = cfg.port;
           ROOT_URL = "https://${cfg.host}/";
         };

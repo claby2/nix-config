@@ -18,6 +18,9 @@
   ];
   services.nginx = {
     enable = true;
+    recommendedTlsSettings = true;
+    recommendedProxySettings = true;
+    recommendedOptimisation = true;
     # Default virtual host that catches all unmatched requests
     # Returns 444 to drop connections without sending a response
     virtualHosts."_" = {
