@@ -2,7 +2,7 @@
 {
   assertions = [
     {
-      assertion = pkgs.stdenv.isLinux;
+      assertion = pkgs.stdenv.hostPlatform.isLinux;
       message = "The homelab module can only be used on NixOS (Linux) systems.";
     }
   ];

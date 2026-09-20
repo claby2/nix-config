@@ -35,6 +35,10 @@
         "claby2-nix-config.cachix.org-1:cGFfRwVVrMfN8X5dfLMnRAYocHaqm+pc+5CnSPDMzOA="
         "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
 
     # Include the git commit hash (and also whether it was dirty at the time of
@@ -43,7 +47,6 @@
     # --configuration-revision` on darwin.
     system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or "unknown";
     nixpkgs.config.allowUnfree = true;
-    nix.settings.experimental-features = "nix-command flakes";
 
     environment = {
       variables.HOSTCLASS = lib.last config.hostclasses; # LAST hostclass in list takes precedence

@@ -18,7 +18,7 @@
 
   assertions = [
     {
-      assertion = pkgs.stdenv.isDarwin;
+      assertion = pkgs.stdenv.hostPlatform.isDarwin;
       message = "The 'darwin' hostclass can only be used on Darwin systems.";
     }
   ];

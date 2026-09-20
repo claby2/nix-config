@@ -5,7 +5,6 @@
 }:
 {
   system.stateVersion = 6;
-  nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.hostPlatform = "aarch64-darwin";
   environment.etc."motd".text = builtins.readFile ./applin;
 
