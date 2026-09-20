@@ -53,6 +53,7 @@ in
             stylua
             tree-sitter # Needed by nvim-treesitter (main branch) to build parsers
             ollama
+            tmux
           ];
 
           file = {
