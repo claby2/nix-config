@@ -29,10 +29,9 @@
     # nix-darwin's tailscale module uses for ts.net).
     etc."resolver/${meta.internalTld}".text = "nameserver 100.100.100.100";
     systemPackages = with pkgs; [
-      aerospace
+      rift-wm
       kitty
       terminal-notifier
-      jankyborders
       pngpaste
     ];
   };

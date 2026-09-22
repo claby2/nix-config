@@ -66,7 +66,7 @@ in
         xdg.configFile = {
           "hladmin".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/hladmin";
           "nvim".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/nvim";
-          "aerospace".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/aerospace";
+          "rift".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/rift";
           "kitty".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/kitty";
         };
 

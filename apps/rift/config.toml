@@ -1,0 +1,65 @@
+[keys]
+"Alt + Z" = "toggle_space_activated"
+"Alt + H" = { move_focus = "left" }
+"Alt + J" = { move_focus = "down" }
+"Alt + K" = { move_focus = "up" }
+"Alt + L" = { move_focus = "right" }
+"Alt + Shift + H" = { move_node = "left" }
+"Alt + Shift + J" = { move_node = "down" }
+"Alt + Shift + K" = { move_node = "up" }
+"Alt + Shift + L" = { move_node = "right" }
+"Alt + Shift + Space" = "toggle_window_floating"
+
+"Alt + Return" = { exec = "open -n -a Kitty" }
+"Alt + F" = "toggle_fullscreen"
+
+"Alt + 1" = { switch_to_workspace = 0 }
+"Alt + 2" = { switch_to_workspace = 1 }
+"Alt + 3" = { switch_to_workspace = 2 }
+"Alt + 4" = { switch_to_workspace = 3 }
+"Alt + 5" = { switch_to_workspace = 4 }
+"Alt + 6" = { switch_to_workspace = 5 }
+"Alt + 7" = { switch_to_workspace = 6 }
+"Alt + 8" = { switch_to_workspace = 7 }
+"Alt + 9" = { switch_to_workspace = 8 }
+"Alt + Shift + 1" = { move_window_to_workspace = 0 }
+"Alt + Shift + 2" = { move_window_to_workspace = 1 }
+"Alt + Shift + 3" = { move_window_to_workspace = 2 }
+"Alt + Shift + 4" = { move_window_to_workspace = 3 }
+"Alt + Shift + 5" = { move_window_to_workspace = 4 }
+"Alt + Shift + 6" = { move_window_to_workspace = 5 }
+"Alt + Shift + 7" = { move_window_to_workspace = 6 }
+"Alt + Shift + 8" = { move_window_to_workspace = 7 }
+"Alt + Shift + 9" = { move_window_to_workspace = 8 }
+
+[settings]
+animate = true
+animation_duration = 0.1
+mouse_hides_on_focus = false
+
+[settings.layout]
+mode = "traditional"
+
+[settings.layout.gaps.outer]
+top = 10.0
+left = 10.0
+bottom = 10.0
+right = 10.0
+
+[settings.layout.gaps.inner]
+horizontal = 10.0
+vertical = 10.0
+
+[virtual_workspaces]
+default_workspace_count = 9
+workspace_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+default_workspace = 0
+
+[settings.ui.menu_bar]
+enabled = true
+display_style = "label"
+active_label = "name"
+
+[settings.gestures]
+enabled = true
+fingers = 3
