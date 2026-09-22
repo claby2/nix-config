@@ -51,7 +51,6 @@
   # === HOMELAB
   homelab = {
     dns.entries = {
-      "altaria.prometheus" = config.homelab.metrics.prometheus.port;
       "altaria.silph-collector" = config.homelab.silph.collector.port;
     };
     silph.collector = {
@@ -62,11 +61,6 @@
         memory = { };
         disk = { };
       };
-    };
-    metrics.prometheus = {
-      enable = true;
-      port = 3004;
-      nodeExporterPort = 3005;
     };
     files = {
       enable = true;

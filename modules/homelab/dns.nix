@@ -17,11 +17,11 @@ in
       type = lib.types.attrsOf lib.types.port;
       default = { };
       example = {
-        grafana = 3001;
+        gatus = 3000;
       };
       description = ''
         Services on this host reachable via the internal TLD, mapping bare
-        subdomain (e.g. "grafana") to the local port nginx proxies to.
+        subdomain (e.g. "gatus") to the local port nginx proxies to.
         The full domain is "<subdomain>.''${meta.internalTld}"; the dns
         server aggregates entries from every host to build the zone.
       '';
@@ -32,7 +32,7 @@ in
       default = lib.mapAttrs (sub: _: fqdn sub) cfg.entries;
       description = ''
         Full internal domain for each entry (subdomain -> fqdn), for
-        services that need to know their own URL (e.g. grafana root_url).
+        services that need to know their own URL (e.g. gatus url).
       '';
     };
   };

@@ -12,7 +12,6 @@
     ./freshrss.nix
     ./files.nix
     ./gatus.nix
-    ./metrics.nix
     ./silph.nix
     ./dns.nix
   ];

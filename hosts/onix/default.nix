@@ -20,7 +20,6 @@ in
   # === HOMELAB
   homelab = {
     dns.entries = {
-      "onix.prometheus" = config.homelab.metrics.prometheus.port;
       "onix.silph-collector" = config.homelab.silph.collector.port;
       gatus = config.homelab.gatus.port;
     };
@@ -32,11 +31,6 @@ in
         memory = { };
         disk = { };
       };
-    };
-    metrics.prometheus = {
-      enable = true;
-      port = 3002;
-      nodeExporterPort = 3003;
     };
     gatus = {
       enable = true;
