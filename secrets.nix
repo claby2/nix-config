@@ -24,9 +24,8 @@ in
     key.altaria
     key.applin
   ];
-  # === Onix
-  "hosts/onix/secrets/gatus-environment.age".publicKeys = [
-    key.onix
+  "hosts/altaria/secrets/gatus-environment.age".publicKeys = [
+    key.altaria
     key.applin
   ];
 }
