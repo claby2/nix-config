@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   assertions = [
     {
@@ -17,7 +17,9 @@
     ./services/freshrss.nix
     ./services/files.nix
     ./services/gatus.nix
-    ./services/silph.nix
+    ./services/silph-collector.nix
+    ./services/silph-server.nix
+    inputs.silph.nixosModules.default
   ];
   services.nginx = {
     enable = true;

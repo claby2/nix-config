@@ -57,7 +57,7 @@
       gitea.public = "git.edwardwibowo.com";
       silph-collector.internal = "altaria.silph-collector";
     };
-    silph.collector = {
+    silph-collector = {
       enable = true;
       port = 9100;
       metrics = {

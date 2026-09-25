@@ -23,7 +23,7 @@ in
       silph-collector.internal = "onix.silph-collector";
       gatus.internal = "gatus";
     };
-    silph.collector = {
+    silph-collector = {
       enable = true;
       port = 9100;
       metrics = {
