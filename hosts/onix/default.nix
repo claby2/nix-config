@@ -19,9 +19,9 @@ in
 
   # === HOMELAB
   homelab = {
-    dns.entries = {
-      "onix.silph-collector" = config.homelab.silph.collector.port;
-      gatus = config.homelab.gatus.port;
+    hosting = {
+      silph-collector.internal = "onix.silph-collector";
+      gatus.internal = "gatus";
     };
     silph.collector = {
       enable = true;
@@ -35,7 +35,6 @@ in
     gatus = {
       enable = true;
       port = 3000;
-      url = "http://${config.homelab.dns.fqdns.gatus}";
       endpoints = [
         (endpoint "personal" "https://edwardwibowo.com")
         (endpoint "freshrss" "https://freshrss.edwardwibowo.com")

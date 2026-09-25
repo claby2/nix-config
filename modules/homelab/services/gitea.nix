@@ -6,13 +6,13 @@
 }:
 let
   cfg = config.homelab.gitea;
+  hosting = config.homelab.hosting.gitea;
 in
 {
 
   options.homelab.gitea = {
     enable = lib.mkEnableOption "gitea";
     port = lib.mkOption { type = lib.types.port; };
-    host = lib.mkOption { type = lib.types.str; };
   };
 
   config = lib.mkIf cfg.enable {
@@ -26,7 +26,7 @@ in
         server = {
           HTTP_ADDR = "127.0.0.1";
           HTTP_PORT = cfg.port;
-          ROOT_URL = "https://${cfg.host}/";
+          ROOT_URL = "${hosting.url}/";
         };
         # TODO: Things break if I remove mailer config... >.<
         mailer = {
@@ -36,9 +36,7 @@ in
       };
     };
 
-    services.nginx.virtualHosts.${cfg.host} = {
-      addSSL = true;
-      enableACME = true;
+    homelab.hosting.gitea.vhost = {
       locations."/" = {
         proxyPass = "http://127.0.0.1:${toString cfg.port}/";
         extraConfig = ''

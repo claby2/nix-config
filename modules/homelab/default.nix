@@ -7,13 +7,17 @@
     }
   ];
   imports = [
-    ./gitea.nix
-    ./personal.nix
-    ./freshrss.nix
-    ./files.nix
-    ./gatus.nix
-    ./silph.nix
+    # Layers: how services are exposed on this host and found on the tailnet.
+    ./hosting.nix
     ./dns.nix
+    # Services: daemon config only; each registers a vhost fragment with
+    # hosting.nix and reads its own address back from there.
+    ./services/gitea.nix
+    ./services/personal.nix
+    ./services/freshrss.nix
+    ./services/files.nix
+    ./services/gatus.nix
+    ./services/silph.nix
   ];
   services.nginx = {
     enable = true;

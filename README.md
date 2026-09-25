@@ -18,6 +18,9 @@ This configuration assumes this repository is cloned into `~/nix-config`.
 ├── modules/
 │   ├── home/              # User-specific home-manager config
 │   └── homelab/           # Self-hosted services
+│       ├── hosting.nix    # How each host exposes services (public/internal, edge/proxy)
+│       ├── dns.nix        # Authoritative dnsmasq for the internal tailnet zone
+│       └── services/      # Service modules; register vhost fragments with hosting.nix
 ├── apps/                  # Application dotfiles
 ├── meta/                  # Shared metadata
 ├── rebuild.sh             # Rebuild helper script

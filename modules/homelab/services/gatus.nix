@@ -1,15 +1,12 @@
 { config, lib, ... }:
 let
   cfg = config.homelab.gatus;
+  hosting = config.homelab.hosting.gatus;
 in
 {
   options.homelab.gatus = {
     enable = lib.mkEnableOption "gatus";
     port = lib.mkOption { type = lib.types.port; };
-    url = lib.mkOption {
-      type = lib.types.str;
-      description = "URL the dashboard is reachable at; used in alert links.";
-    };
     endpoints = lib.mkOption {
       type = lib.types.listOf (
         lib.types.submodule {
@@ -51,6 +48,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    homelab.hosting.gatus.vhost.locations."/" = {
+      proxyPass = "http://127.0.0.1:${toString cfg.port}/";
+      proxyWebsockets = true;
+    };
+
     services.gatus = {
       enable = true;
       inherit (cfg) environmentFile;
@@ -59,7 +61,8 @@ in
           address = "127.0.0.1";
           port = cfg.port;
         };
-        inherit (cfg) url;
+        # Used in alert links.
+        inherit (hosting) url;
         endpoints =
           (map (ep: {
             inherit (ep) name url;

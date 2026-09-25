@@ -50,8 +50,12 @@
 
   # === HOMELAB
   homelab = {
-    dns.entries = {
-      "altaria.silph-collector" = config.homelab.silph.collector.port;
+    edge = true;
+    hosting = {
+      personal.public = "edwardwibowo.com";
+      freshrss.public = "freshrss.edwardwibowo.com";
+      gitea.public = "git.edwardwibowo.com";
+      silph-collector.internal = "altaria.silph-collector";
     };
     silph.collector = {
       enable = true;
@@ -66,19 +70,14 @@
       enable = true;
       passwordFile = config.age.secrets.samba-password.path;
     };
-    personal = {
-      enable = true;
-      host = "edwardwibowo.com";
-    };
+    personal.enable = true;
     freshrss = {
       enable = true;
-      host = "freshrss.edwardwibowo.com";
       passwordFile = config.age.secrets.freshrss.path;
     };
     gitea = {
       enable = true;
       port = 3000;
-      host = "git.edwardwibowo.com";
     };
   };
 }

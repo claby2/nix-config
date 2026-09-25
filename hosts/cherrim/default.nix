@@ -7,12 +7,10 @@
 
   # === HOMELAB
   homelab = {
-    dns = {
-      server.enable = true;
-      entries = {
-        "silph" = config.homelab.silph.server.port;
-        "cherrim.silph-collector" = config.homelab.silph.collector.port;
-      };
+    dns.server.enable = true;
+    hosting = {
+      silph.internal = "silph";
+      silph-collector.internal = "cherrim.silph-collector";
     };
     silph = {
       collector = {

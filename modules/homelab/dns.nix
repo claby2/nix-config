@@ -5,115 +5,71 @@
   inputs,
   ...
 }:
+# Authoritative dnsmasq server for the internal TLD, serving the tailnet.
+# The zone is derived from every host's `homelab.hosting.<name>.internal`
+# (see hosting.nix); each record points at the owning host's tailnet IP.
+# Tailscale split DNS in the admin console routes the TLD to this host.
 let
   cfg = config.homelab.dns;
   tld = meta.internalTld;
-  fqdn = sub: "${sub}.${tld}";
+
+  # [ { host; name; } ] for every internal name across all hosts.
+  records = lib.sort (a: b: a.name < b.name) (
+    lib.concatLists (
+      lib.mapAttrsToList (
+        host: hostCfg:
+        map (s: {
+          inherit host;
+          name = "${s.internal}.${tld}";
+        }) (lib.filter (s: s.internal != null) (lib.attrValues hostCfg.config.homelab.hosting))
+      ) inputs.self.nixosConfigurations
+    )
+  );
+  names = map (r: r.name) records;
+  duplicates = lib.unique (lib.filter (n: lib.count (m: m == n) names > 1) names);
+  hostsMissingIP = lib.unique (
+    map (r: r.host) (lib.filter (r: !(meta.tailscaleIPs ? ${r.host})) records)
+  );
 in
 {
-  options.homelab.dns = {
-    server.enable = lib.mkEnableOption "authoritative dnsmasq server for the .${tld} zone";
-    entries = lib.mkOption {
-      type = lib.types.attrsOf lib.types.port;
-      default = { };
-      example = {
-        gatus = 3000;
+  options.homelab.dns.server.enable =
+    lib.mkEnableOption "authoritative dnsmasq server for the .${tld} zone";
+
+  config = lib.mkIf cfg.server.enable {
+    assertions = [
+      {
+        assertion = hostsMissingIP == [ ];
+        message = "homelab.dns: host(s) ${toString hostsMissingIP} define internal names but have no meta.tailscaleIPs entry";
+      }
+      {
+        assertion = duplicates == [ ];
+        message = "homelab.dns: internal name(s) ${toString duplicates} are defined on more than one host";
+      }
+    ];
+
+    services.dnsmasq = {
+      enable = true;
+      # Don't make dnsmasq this host's own resolver — it has no upstreams
+      # and would break the host's general name resolution.
+      resolveLocalQueries = false;
+      settings = {
+        interface = "tailscale0";
+        # tailscale0 may appear after dnsmasq starts; bind dynamically
+        # instead of failing at boot (vs bind-interfaces).
+        bind-dynamic = true;
+        # No upstreams; queries outside the internal TLD are REFUSED —
+        # fine, since Tailscale split DNS only routes that TLD here.
+        no-resolv = true;
+        no-hosts = true;
+        # Authoritative for the internal TLD: unknown names => NXDOMAIN.
+        local = "/${tld}/";
+        address = map (r: "/${r.name}/${meta.tailscaleIPs.${r.host}}") records;
       };
-      description = ''
-        Services on this host reachable via the internal TLD, mapping bare
-        subdomain (e.g. "gatus") to the local port nginx proxies to.
-        The full domain is "<subdomain>.''${meta.internalTld}"; the dns
-        server aggregates entries from every host to build the zone.
-      '';
     };
-    fqdns = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      readOnly = true;
-      default = lib.mapAttrs (sub: _: fqdn sub) cfg.entries;
-      description = ''
-        Full internal domain for each entry (subdomain -> fqdn), for
-        services that need to know their own URL (e.g. gatus url).
-      '';
+
+    networking.firewall.interfaces."tailscale0" = {
+      allowedUDPPorts = [ 53 ];
+      allowedTCPPorts = [ 53 ];
     };
   };
-
-  config = lib.mkMerge [
-    (lib.mkIf (cfg.entries != { }) {
-      boot.kernel.sysctl = {
-        "net.ipv4.ip_nonlocal_bind" = 1;
-        "net.ipv6.ip_nonlocal_bind" = 1;
-      };
-
-      services.nginx.virtualHosts = lib.mapAttrs' (
-        sub: port:
-        lib.nameValuePair (fqdn sub) {
-          listenAddresses = [ meta.tailscaleIPs.${config.networking.hostName} ];
-          locations."/" = {
-            proxyPass = "http://127.0.0.1:${toString port}/";
-            proxyWebsockets = true;
-          };
-        }
-      ) cfg.entries;
-
-      networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 80 ];
-    })
-
-    (lib.mkIf cfg.server.enable (
-      let
-        # The zone is derived from every host's homelab.dns.entries; each
-        # record points at the owning host's tailnet IP.
-        entriesByHost = lib.filterAttrs (_: entries: entries != { }) (
-          lib.mapAttrs (_: hostCfg: hostCfg.config.homelab.dns.entries or { }) inputs.self.nixosConfigurations
-        );
-        zone = lib.concatMapAttrs (
-          host: entries:
-          lib.mapAttrs' (sub: _: lib.nameValuePair (fqdn sub) meta.tailscaleIPs.${host}) entries
-        ) entriesByHost;
-        hostsMissingIP = lib.attrNames (
-          lib.filterAttrs (host: _: !(meta.tailscaleIPs ? ${host})) entriesByHost
-        );
-        totalEntries = lib.foldlAttrs (
-          n: _: entries:
-          n + lib.length (lib.attrNames entries)
-        ) 0 entriesByHost;
-      in
-      {
-        assertions = [
-          {
-            assertion = hostsMissingIP == [ ];
-            message = "homelab.dns: host(s) ${toString hostsMissingIP} define dns entries but have no meta.tailscaleIPs entry";
-          }
-          {
-            assertion = lib.length (lib.attrNames zone) == totalEntries;
-            message = "homelab.dns: the same subdomain is defined in homelab.dns.entries on more than one host";
-          }
-        ];
-
-        services.dnsmasq = {
-          enable = true;
-          # Don't make dnsmasq this host's own resolver — it has no upstreams
-          # and would break the host's general name resolution.
-          resolveLocalQueries = false;
-          settings = {
-            interface = "tailscale0";
-            # tailscale0 may appear after dnsmasq starts; bind dynamically
-            # instead of failing at boot (vs bind-interfaces).
-            bind-dynamic = true;
-            # No upstreams; queries outside the internal TLD are REFUSED —
-            # fine, since Tailscale split DNS only routes that TLD here.
-            no-resolv = true;
-            no-hosts = true;
-            # Authoritative for the internal TLD: unknown names => NXDOMAIN.
-            local = "/${tld}/";
-            address = lib.mapAttrsToList (domain: ip: "/${domain}/${ip}") zone;
-          };
-        };
-
-        networking.firewall.interfaces."tailscale0" = {
-          allowedUDPPorts = [ 53 ];
-          allowedTCPPorts = [ 53 ];
-        };
-      }
-    ))
-  ];
 }

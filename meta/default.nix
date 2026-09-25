@@ -8,7 +8,7 @@ _: {
     groudon = "100.76.70.106";
   };
   # TLD for homelab-internal DNS; the zone itself is derived from each
-  # host's homelab.dns.entries (see modules/homelab/dns.nix). Tailscale
+  # host's homelab.hosting.<name>.internal (see modules/homelab/dns.nix). Tailscale
   # split DNS in the admin console routes this TLD to the dns server
   # host's tailnet IP — update it there too if this ever changes.
   internalTld = "internal";

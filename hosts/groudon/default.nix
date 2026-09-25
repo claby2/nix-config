@@ -45,9 +45,7 @@
 
   # === HOMELAB
   homelab = {
-    dns.entries = {
-      "groudon.silph-collector" = config.homelab.silph.collector.port;
-    };
+    hosting.silph-collector.internal = "groudon.silph-collector";
     silph.collector = {
       enable = true;
       port = 9100;

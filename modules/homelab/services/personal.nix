@@ -13,13 +13,10 @@ in
 
   options.homelab.personal = {
     enable = lib.mkEnableOption "personal website";
-    host = lib.mkOption { type = lib.types.str; };
   };
 
   config = lib.mkIf cfg.enable {
-    services.nginx.virtualHosts.${cfg.host} = {
-      addSSL = true;
-      enableACME = true;
+    homelab.hosting.personal.vhost = {
       locations."/" = {
         root = "${webPkg}";
       };

@@ -52,6 +52,10 @@ in
           metrics = cfg.collector.metrics;
         };
       };
+      homelab.hosting.silph-collector.vhost.locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.collector.port}/";
+        proxyWebsockets = true;
+      };
     })
     (lib.mkIf cfg.server.enable {
       services.silph.server = {
@@ -60,6 +64,10 @@ in
           listen = "127.0.0.1:${toString cfg.server.port}";
           targets = lib.mapAttrsToList (name: url: { inherit name url; }) cfg.server.targets;
         };
+      };
+      homelab.hosting.silph.vhost.locations."/" = {
+        proxyPass = "http://127.0.0.1:${toString cfg.server.port}/";
+        proxyWebsockets = true;
       };
     })
   ];
