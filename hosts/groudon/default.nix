@@ -45,7 +45,15 @@
 
   # === HOMELAB
   homelab = {
-    hosting.silph-collector.internal = "groudon.silph-collector";
+    hosting = {
+      silph-collector.internal = "groudon.silph-collector";
+      laya.internal = "laya";
+    };
+    laya = {
+      enable = true;
+      port = 8000;
+      threads = 8;
+    };
     silph-collector = {
       enable = true;
       port = 9100;

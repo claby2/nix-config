@@ -39,6 +39,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    laya = {
+      url = "github:NandhaKishorM/laya";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
@@ -60,9 +65,6 @@
           inherit system;
           specialArgs = { inherit inputs meta; };
           modules = [
-            {
-              nixpkgs.config.problems.handlers.j.broken = "warn";
-            }
             ./hostclass/${hostclass}.nix
             ./hosts/${hostname}
           ];
