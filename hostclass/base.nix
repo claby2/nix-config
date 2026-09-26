@@ -51,7 +51,6 @@
     environment = {
       variables.HOSTCLASS = lib.last config.hostclasses; # LAST hostclass in list takes precedence
       systemPackages = with pkgs; [
-        j
         git
         vim
         wget
