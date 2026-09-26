@@ -4,7 +4,6 @@ _: {
   tailscaleIPs = {
     cherrim = "100.111.150.115";
     altaria = "100.71.84.105";
-    onix = "100.111.30.114";
     groudon = "100.76.70.106";
   };
   # TLD for homelab-internal DNS; the zone itself is derived from each
@@ -15,7 +14,6 @@ _: {
   sshPublicKeys = {
     altaria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIg8SRUjPyiBA/aucB/p5ZroCQ+peJsdCeQF46LX5S2u";
     applin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIgpfqrD63csQegPzBTBPcNJbzgdsBkJhDm/w1uchE+";
-    onix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID24bidyqgItpGbLThELV454VCtYKZdKGvTIbHsindbK";
     groudon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3YpqPdgTT7obDKwUqyxZMClxcpuFRB6Pl8Kww05jyf";
     cherrim = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWnEbFFp+O3Y+6kmudC9DnmWylgkABxLk2gbXFAT+vK";
     browncs = # Key on Brown CS machine

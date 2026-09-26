@@ -27,7 +27,6 @@
       port = 8080;
       targets = {
         cherrim = "http://cherrim.silph-collector.internal";
-        onix = "http://onix.silph-collector.internal";
         altaria = "http://altaria.silph-collector.internal";
         groudon = "http://groudon.silph-collector.internal";
       };

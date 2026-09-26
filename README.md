@@ -9,7 +9,6 @@ This configuration assumes this repository is cloned into `~/nix-config`.
 ```
 ├── flake.nix              # Main flake configuration
 ├── hosts/                 # Per-host system configurations
-│   ├── onix/
 │   ├── altaria/
 │   ├── groudon/
 │   ├── cherrim/

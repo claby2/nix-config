@@ -10,7 +10,7 @@ in
       type = lib.types.attrsOf lib.types.str;
       default = { };
       example = {
-        onix = "http://onix.silph-collector.internal";
+        altaria = "http://altaria.silph-collector.internal";
       };
       description = "Collector base URLs to scrape, keyed by display name.";
     };
