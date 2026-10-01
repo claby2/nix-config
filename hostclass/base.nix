@@ -1,6 +1,7 @@
 # Base hostclass should be cross-platform!
 {
   inputs,
+  meta,
   pkgs,
   lib,
   config,
@@ -47,6 +48,11 @@
     # --configuration-revision` on darwin.
     system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or "unknown";
     nixpkgs.config.allowUnfree = true;
+
+    # Trust the homelab CA (see meta/ca). On darwin this only reaches
+    # Nix-built tools via NIX_SSL_CERT_FILE; macOS apps read the Keychain,
+    # which needs a one-time manual `security add-trusted-cert`.
+    security.pki.certificateFiles = [ meta.ca.root ];
 
     environment = {
       variables.HOSTCLASS = lib.last config.hostclasses; # LAST hostclass in list takes precedence

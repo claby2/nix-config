@@ -11,6 +11,12 @@ _: {
   # split DNS in the admin console routes this TLD to the dns server
   # host's tailnet IP — update it there too if this ever changes.
   internalTld = "internal";
+  # Private CA for the internal TLD (keys in agenix; see secrets.nix).
+  # The root is name-constrained to the internal TLD and tailnet IPs.
+  ca = {
+    root = ./ca/root_ca.crt;
+    intermediate = ./ca/intermediate_ca.crt;
+  };
   sshPublicKeys = {
     altaria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIg8SRUjPyiBA/aucB/p5ZroCQ+peJsdCeQF46LX5S2u";
     applin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIgpfqrD63csQegPzBTBPcNJbzgdsBkJhDm/w1uchE+";

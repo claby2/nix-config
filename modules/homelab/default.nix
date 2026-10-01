@@ -10,6 +10,7 @@
     # Layers: how services are exposed on this host and found on the tailnet.
     ./hosting.nix
     ./dns.nix
+    ./ca.nix
     # Services: daemon config only; each registers a vhost fragment with
     # hosting.nix and reads its own address back from there.
     ./services/gitea.nix

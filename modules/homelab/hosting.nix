@@ -16,9 +16,11 @@
 #                                  plain HTTP on the tailnet IP and an edge
 #                                  must list it in `homelab.proxy`.
 #   internal = "gatus"             reachable from the tailnet only, as
-#                                  gatus.<internalTld>, plain HTTP bound to
-#                                  the tailnet IP. dns.nix aggregates these
-#                                  names into the internal zone.
+#                                  gatus.<internalTld>, bound to the tailnet
+#                                  IP. HTTPS with a cert from the homelab CA
+#                                  (ca.nix), plain HTTP kept alongside.
+#                                  dns.nix aggregates these names into the
+#                                  internal zone.
 #
 # `homelab.proxy` on an edge maps a public hostname to the non-edge host
 # that runs it: nginx terminates TLS and forwards to that host's tailnet IP,
@@ -36,6 +38,12 @@ let
     listenAddresses = [ meta.tailscaleIPs.${me} ];
   };
   edgeVhost = {
+    addSSL = true;
+    enableACME = true;
+  };
+  # TLS from the homelab CA; addSSL keeps plain HTTP working for clients
+  # that don't trust the root yet.
+  internalVhost = tailnetVhost // {
     addSSL = true;
     enableACME = true;
   };
@@ -87,7 +95,7 @@ in
               url = lib.mkOption {
                 type = lib.types.str;
                 readOnly = true;
-                default = if config.public != null then "https://${config.public}" else "http://${config.fqdn}";
+                default = "https://${config.fqdn}";
                 description = "Primary URL of the service, for services that need to know their own address.";
               };
             };
@@ -155,9 +163,21 @@ in
     # Internal (tailnet-only) vhosts for services this host runs.
     {
       services.nginx.virtualHosts = lib.mapAttrs' (
-        _: s: lib.nameValuePair "${s.internal}.${tld}" (mkVhost s tailnetVhost)
+        _: s: lib.nameValuePair "${s.internal}.${tld}" (mkVhost s internalVhost)
       ) internalEntries;
     }
+    (lib.mkIf (internalEntries != { }) {
+      assertions = [
+        {
+          assertion = cfg.ca.acmeServer != null;
+          message = "homelab.hosting: ${me} has internal names but no host enables homelab.ca.server";
+        }
+      ];
+      security.acme.certs = lib.mapAttrs' (
+        _: s: lib.nameValuePair "${s.internal}.${tld}" { server = cfg.ca.acmeServer; }
+      ) internalEntries;
+      networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 443 ];
+    })
 
     # Let nginx bind the tailnet IP even if tailscale0 is not up yet at
     # start, and admit tailnet HTTP.
