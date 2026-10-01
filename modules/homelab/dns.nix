@@ -32,15 +32,8 @@ let
   );
 in
 {
-  options.homelab.dns = {
-    server.enable = lib.mkEnableOption "authoritative dnsmasq server for the .${tld} zone";
-    names = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      readOnly = true;
-      default = lib.unique names;
-      description = "Every name in the internal zone, across all hosts.";
-    };
-  };
+  options.homelab.dns.server.enable =
+    lib.mkEnableOption "authoritative dnsmasq server for the .${tld} zone";
 
   config = lib.mkIf cfg.server.enable {
     assertions = [

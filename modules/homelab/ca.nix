@@ -79,11 +79,10 @@ in
           dataSource = "/var/lib/step-ca/db";
         };
         authority = {
-          policy.x509.allow = {
-            dns = config.homelab.dns.names;
-            # step-ca's own serving cert.
-            ip = [ ip ];
-          };
+          # No issuance policy: the root's name constraints already limit
+          # certs to the internal TLD and tailnet IPs, and HTTP-01 only
+          # passes for names the internal DNS server resolves. An exact
+          # allowlist would force redeploying this host before any new name.
           provisioners = [
             {
               type = "ACME";
