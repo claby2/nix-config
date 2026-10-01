@@ -357,11 +357,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788627119,
-        "narHash": "sha256-3E4txDYqE9eIt1jriaduRt0EJdVb1liZeJABu8LRjas=",
+        "lastModified": 1790830464,
+        "narHash": "sha256-4vcE/68pHQ+0eHurjaY7Bx8katmb+ED3D5vINuIt73k=",
         "owner": "claby2",
         "repo": "silph",
-        "rev": "e4dd8bf0085c9b4f729dac038555d561d1aca8c9",
+        "rev": "5c98ab8f597c5f297674a7348f1dc4b83fca6479",
         "type": "github"
       },
       "original": {
