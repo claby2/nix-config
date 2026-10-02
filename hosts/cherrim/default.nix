@@ -1,4 +1,13 @@
-{ config, ... }: {
+{ config, pkgs, ... }:
+let
+  artwork =
+    name: hash:
+    pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${name}.png";
+      inherit hash;
+    };
+in
+{
   imports = [
     ./hardware.nix
   ];
@@ -36,9 +45,18 @@
       enable = true;
       port = 8080;
       targets = {
-        cherrim = "http://cherrim.silph-collector.internal";
-        altaria = "http://altaria.silph-collector.internal";
-        groudon = "http://groudon.silph-collector.internal";
+        cherrim = {
+          url = "http://cherrim.silph-collector.internal";
+          icon = artwork "421-sunshine" "sha256-PkiAjynFO1ce3DWbVQyaa13SLj060zIoK61UFJFGYnM=";
+        };
+        altaria = {
+          url = "http://altaria.silph-collector.internal";
+          icon = artwork "334" "sha256-F+FW5MIA0o+TGZVQ+gt+FadJ9nunFBgpb1Gb5nmijF0=";
+        };
+        groudon = {
+          url = "http://groudon.silph-collector.internal";
+          icon = artwork "383" "sha256-v2pDNNakmvMjlsnRVehnoWmUOf9zwou22tFd1GhLRGE=";
+        };
       };
     };
   };
