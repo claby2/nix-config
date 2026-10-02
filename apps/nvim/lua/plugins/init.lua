@@ -20,6 +20,7 @@ return {
 			keywords = {
 				REVIEW = { icon = " ", color = "info" },
 				CLAUDE = { icon = " ", color = "#FFA759", alt = { "REVIEW claude" } },
+				AUGGIE = { icon = " ", color = "#1AA049", alt = { "REVIEW auggie" } },
 			},
 		},
 	},
