@@ -89,7 +89,6 @@ in
       port = 3001;
       endpoints = [
         (endpoint "personal" "https://edwardwibowo.com")
-        (endpoint "freshrss" "https://freshrss.edwardwibowo.com")
         (endpoint "git" "https://git.edwardwibowo.com")
       ];
       sshEndpoints = [
