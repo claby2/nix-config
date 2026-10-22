@@ -57,7 +57,7 @@ in
     edge = true;
     hosting = {
       personal.public = "edwardwibowo.com";
-      freshrss.public = "freshrss.edwardwibowo.com";
+      freshrss.internal = "freshrss";
       gitea.public = "git.edwardwibowo.com";
       silph-collector.internal = "altaria.silph-collector";
       gatus.internal = "gatus";
