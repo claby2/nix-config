@@ -8,6 +8,7 @@
     ../../modules/homelab
   ];
   system.stateVersion = "25.11";
+  time.timeZone = "America/Los_Angeles";
   users.motd = builtins.readFile ./groudon;
 
   services.snapper = {
