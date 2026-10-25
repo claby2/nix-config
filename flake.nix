@@ -45,6 +45,12 @@
     };
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
@@ -85,7 +91,7 @@
       nixosConfigurations = {
         cherrim = mkNixosHost "aarch64-linux" "server" "cherrim";
         altaria = mkNixosHost "x86_64-linux" "server" "altaria";
-        groudon = mkNixosHost "x86_64-linux" "nixos" "groudon";
+        groudon = mkNixosHost "x86_64-linux" "desktop" "groudon";
       };
 
       ## Darwin Hosts

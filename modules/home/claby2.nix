@@ -68,6 +68,8 @@ in
           "nvim".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/nvim";
           "rift".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/rift";
           "kitty".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/kitty";
+          "qtile".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/qtile";
+          "fuzzel".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/fuzzel";
         };
 
         programs.git = {
