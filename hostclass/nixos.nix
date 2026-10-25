@@ -59,7 +59,10 @@
         "wheel"
         "networkmanager"
       ];
-      openssh.authorizedKeys.keys = [ meta.sshPublicKeys.applin ];
+      openssh.authorizedKeys.keys = [
+        meta.sshPublicKeys.applin
+        meta.sshPublicKeys.groudon-claby2
+      ];
     };
   };
 }

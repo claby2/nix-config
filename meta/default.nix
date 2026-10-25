@@ -21,6 +21,8 @@ _: {
     altaria = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIg8SRUjPyiBA/aucB/p5ZroCQ+peJsdCeQF46LX5S2u";
     applin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIgpfqrD63csQegPzBTBPcNJbzgdsBkJhDm/w1uchE+";
     groudon = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3YpqPdgTT7obDKwUqyxZMClxcpuFRB6Pl8Kww05jyf";
+    groudon-claby2 = # claby2 user key on groudon
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL2MrXHUTfjSzJbwHsm6kz+ZZBB0kdJ4D/8Jp1HK5kR6";
     cherrim = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWnEbFFp+O3Y+6kmudC9DnmWylgkABxLk2gbXFAT+vK";
     browncs = # Key on Brown CS machine
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGF7r6WW7gCyUSPbPHFTOrqWZyCTd+h+DFkkKgs6jeWa";
