@@ -6,7 +6,16 @@
   hostclasses = [ "desktop" ];
 
   # Launched from a TTY with `qtile start -b wayland`.
-  services.xserver.windowManager.qtile.enable = true;
+  services.xserver.windowManager.qtile = {
+    enable = true;
+    # Fixes a crash after all outputs disappear, e.g. turning off the only
+    # monitor: https://github.com/qtile/qtile/issues/6041. Drop once fixed.
+    # `overrideAttrs` rather than `overridePythonAttrs`, which drops the
+    # `.override` the module calls on this.
+    package = pkgs.python3.pkgs.qtile.overrideAttrs (old: {
+      patches = (old.patches or [ ]) ++ [ ../patches/qtile-zero-outputs.patch ];
+    });
+  };
   hardware.graphics.enable = true;
 
   # Pair devices with `bluetoothctl`.

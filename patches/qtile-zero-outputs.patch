@@ -1,0 +1,26 @@
+--- a/libqtile/core/manager.py
++++ b/libqtile/core/manager.py
+@@ -446,8 +446,13 @@
+         return self.config.screens
+ 
+     def _process_screens(self, reloading: bool = False) -> None:
+-        current_groups = [s.group for s in self.screens]
+         output_info = self.get_output_info()
++        # With no outputs (e.g. the only monitor was turned off), keep the
++        # existing screens so their groups and bars survive until one returns.
++        if not output_info and self.screens and not reloading:
++            return
++        # A placeholder screen (see below) has no group.
++        current_groups = [getattr(s, "group", None) for s in self.screens]
+         config_screens = self.get_screens_from_config(output_info)
+         new_screens: list[Screen] = []
+ 
+@@ -465,7 +470,7 @@
+                 reloading = False
+ 
+             grp = None
+-            if i < len(current_groups):
++            if i < len(current_groups) and current_groups[i] is not None:
+                 grp = current_groups[i]
+             else:
+                 # We need to assign a new group

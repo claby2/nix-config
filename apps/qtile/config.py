@@ -17,12 +17,18 @@ margin = gap // 2
 bar_height = 26
 
 
-# Set the refresh rate on startup.
-# The monitor (ASUS VG249QML5A on groudon) defaults to 60Hz.
+# The monitor (ASUS VG249QML5A on groudon) defaults to 60Hz, including when it
+# is turned back on. Only set the mode when it isn't already current, since
+# setting it fires screen_change again.
 @hook.subscribe.startup_once
-def set_refresh_rate():
-    qtile.spawn(
-        ["wlr-randr", "--output", "DP-2", "--mode", "1920x1080@240.005997Hz"])
+@hook.subscribe.screen_change
+def set_refresh_rate(*_):
+    mode = "1920x1080@240.005997Hz"
+    qtile.spawn([
+        "sh", "-c",
+        f"wlr-randr | grep -q '240.005997 Hz (current' || "
+        f"wlr-randr --output DP-2 --mode {mode}"
+    ])
 
 
 @hook.subscribe.startup_once
