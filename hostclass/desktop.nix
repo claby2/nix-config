@@ -48,6 +48,7 @@
       libnotify
       wlr-randr
       swayosd
+      xdg-utils
       discord
       # Spotify's wrapper unsets DISPLAY under NIXOS_OZONE_WL but never selects
       # the Wayland backend itself, so it exits immediately without this flag.
