@@ -15,6 +15,17 @@
     powerOnBoot = true;
   };
 
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
+
+  services.dbus.packages = [ pkgs.swayosd ];
+  systemd.packages = [ pkgs.swayosd ];
+  systemd.services.swayosd-libinput-backend.wantedBy = [ "multi-user.target" ];
+
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     noto-fonts
@@ -26,8 +37,18 @@
       kitty
       fuzzel
       wlr-randr
+      swayosd
       discord
-      spotify
+      # Spotify's wrapper unsets DISPLAY under NIXOS_OZONE_WL but never selects
+      # the Wayland backend itself, so it exits immediately without this flag.
+      (symlinkJoin {
+        name = "spotify";
+        paths = [ spotify ];
+        nativeBuildInputs = [ makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/spotify --add-flags "--ozone-platform=wayland"
+        '';
+      })
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 

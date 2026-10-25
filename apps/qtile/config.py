@@ -26,6 +26,11 @@ def set_refresh_rate():
         ["wlr-randr", "--output", "DP-2", "--mode", "1920x1080@240.005997Hz"])
 
 
+@hook.subscribe.startup_once
+def start_swayosd():
+    qtile.spawn("swayosd-server")
+
+
 keys = [
     Key([mod], "h", lazy.layout.left(), desc="Move focus left"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -62,6 +67,18 @@ keys = [
     Key([mod], "d", lazy.spawncmd(), desc="Run a command"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload config"),
     Key([mod, "shift"], "e", lazy.shutdown(), desc="Quit qtile"),
+    Key([],
+        "XF86AudioRaiseVolume",
+        lazy.spawn("swayosd-client --output-volume raise"),
+        desc="Raise volume"),
+    Key([],
+        "XF86AudioLowerVolume",
+        lazy.spawn("swayosd-client --output-volume lower"),
+        desc="Lower volume"),
+    Key([],
+        "XF86AudioMute",
+        lazy.spawn("swayosd-client --output-volume mute-toggle"),
+        desc="Toggle mute"),
 ]
 
 # Ctrl+Alt+Fn switches VTs on Wayland.
