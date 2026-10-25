@@ -22,6 +22,12 @@
     pulse.enable = true;
   };
 
+  programs.steam.enable = true;
+  # Prefix a game's Steam launch options with `gamemoderun %command%`.
+  programs.gamemode.enable = true;
+  # Required for gamemode to renice games.
+  users.users.claby2.extraGroups = [ "gamemode" ];
+
   services.dbus.packages = [ pkgs.swayosd ];
   systemd.packages = [ pkgs.swayosd ];
   systemd.services.swayosd-libinput-backend.wantedBy = [ "multi-user.target" ];
@@ -29,6 +35,8 @@
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
     noto-fonts-color-emoji
   ];
 
