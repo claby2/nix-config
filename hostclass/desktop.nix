@@ -36,6 +36,8 @@
     systemPackages = with pkgs; [
       kitty
       fuzzel
+      mako
+      libnotify
       wlr-randr
       swayosd
       discord

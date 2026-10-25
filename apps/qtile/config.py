@@ -12,10 +12,9 @@ fg = "#d9d7ce"
 accent = "#ffcc66"
 muted = "#686868"
 
-# Each window gets `margin` on every side, so two adjacent windows are
-# 2 * margin apart. The extra screen gap brings the outer edge up to match.
 gap = 10
 margin = gap // 2
+bar_height = 26
 
 
 # Set the refresh rate on startup.
@@ -29,6 +28,16 @@ def set_refresh_rate():
 @hook.subscribe.startup_once
 def start_swayosd():
     qtile.spawn("swayosd-server")
+
+
+@hook.subscribe.startup_once
+def start_mako():
+    top = gap + bar_height + gap
+    qtile.spawn([
+        "mako",
+        f"--outer-margin={top},{gap},0,{gap}",
+        f"--margin=0,0,{gap},0",
+    ])
 
 
 keys = [
@@ -148,7 +157,7 @@ screens = [
                 widget.WindowName(),
                 widget.Clock(format="%a %b %-d  %H:%M"),
             ],
-            26,
+            bar_height,
             background=bg,
             # [top, right, bottom, left]; the bottom combines with the window
             # margin to give a full gap below the bar.

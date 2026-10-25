@@ -70,6 +70,7 @@ in
           "kitty".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/kitty";
           "qtile".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/qtile";
           "fuzzel".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/fuzzel";
+          "mako".source = config.lib.file.mkOutOfStoreSymlink "${cfg.nixConfigDirectory}/apps/mako";
         };
 
         programs.git = {
