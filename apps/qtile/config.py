@@ -193,6 +193,7 @@ auto_minimize = True
 # Faster than the defaults (25/s after 600ms), closer to macOS.
 wl_input_rules = {
     "type:keyboard": InputConfig(kb_repeat_rate=50, kb_repeat_delay=250),
+    "type:pointer": InputConfig(natural_scroll=True),
 }
 wl_xcursor_theme = None
 wl_xcursor_size = 24
