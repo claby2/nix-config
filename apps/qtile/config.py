@@ -1,3 +1,5 @@
+import subprocess
+
 from libqtile import bar, hook, layout, qtile, widget
 from libqtile.backend.wayland import InputConfig
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
@@ -5,14 +7,15 @@ from libqtile.lazy import lazy
 
 mod = "mod1"
 terminal = "kitty"
-font = "JetBrainsMono Nerd Font"
+font = "Inter"
 
 bg = "#000000"
+bar_bg = "#212733cc"
 fg = "#d9d7ce"
 accent = "#ffcc66"
 muted = "#686868"
 
-gap = 10
+gap = 12
 margin = gap // 2
 bar_height = 26
 
@@ -25,10 +28,27 @@ bar_height = 26
 def set_refresh_rate(*_):
     mode = "1920x1080@240.005997Hz"
     qtile.spawn([
-        "sh", "-c",
-        f"wlr-randr | grep -q '240.005997 Hz (current' || "
+        "sh", "-c", f"wlr-randr | grep -q '240.005997 Hz (current' || "
         f"wlr-randr --output DP-2 --mode {mode}"
     ])
+
+
+# Portals are user services that only run within graphical-session.target and
+# don't inherit the environment of a session launched from a TTY. Pass the
+# display along, then start qtile-session.target (hostclass/desktop.nix), which
+# brings up graphical-session.target until qtile exits.
+@hook.subscribe.startup_once
+def start_session():
+    qtile.spawn([
+        "sh", "-c",
+        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY && "
+        "systemctl --user start qtile-session.target"
+    ])
+
+
+@hook.subscribe.shutdown
+def stop_session():
+    subprocess.run(["systemctl", "--user", "stop", "qtile-session.target"])
 
 
 @hook.subscribe.startup_once
@@ -38,12 +58,18 @@ def start_swayosd():
 
 @hook.subscribe.startup_once
 def start_mako():
-    top = gap + bar_height + gap
+    top = bar_height + gap
     qtile.spawn([
         "mako",
         f"--outer-margin={top},{gap},0,{gap}",
         f"--margin=0,0,{gap},0",
     ])
+
+
+# Restore the wallpaper last set with waytrogen.
+@hook.subscribe.startup_once
+def restore_wallpaper():
+    qtile.spawn("waytrogen --restore")
 
 
 # macOS-style screenshots: Cmd+Shift+3 captures the screen and Cmd+Shift+4 a
@@ -99,11 +125,16 @@ keys = [
     Key(["mod4"], "space", lazy.spawn("fuzzel"),
         desc="Search and launch apps"),
     Key(["mod4", "shift"], "3", screenshot(), desc="Screenshot screen"),
-    Key(["mod4", "shift"], "4", screenshot(region=True),
+    Key(["mod4", "shift"],
+        "4",
+        screenshot(region=True),
         desc="Screenshot region"),
-    Key(["mod4", "shift", "control"], "3", screenshot(clipboard=True),
+    Key(["mod4", "shift", "control"],
+        "3",
+        screenshot(clipboard=True),
         desc="Screenshot screen to clipboard"),
-    Key(["mod4", "shift", "control"], "4",
+    Key(["mod4", "shift", "control"],
+        "4",
         screenshot(region=True, clipboard=True),
         desc="Screenshot region to clipboard"),
     Key([mod], "d", lazy.spawncmd(), desc="Run a command"),
@@ -172,29 +203,88 @@ floating_layout = layout.Floating(
     ],
 )
 
-widget_defaults = dict(font=font, fontsize=13, padding=6, foreground=fg)
+
+class PulseVolumeIcon(widget.PulseVolume):
+    """PulseVolume showing an icon followed by the percentage.
+
+    The built-in emoji mode shows only the icon. The icon is drawn in the Nerd
+    Font, since the bar font doesn't have the glyphs.
+    """
+
+    def _update_drawer(self):
+        super()._update_drawer()
+        icon = f'<span font_family="JetBrainsMono Nerd Font">{self.text}</span>'
+        if self.is_mute or self.volume < 0:
+            self.text = icon
+        else:
+            self.text = f"{icon} {self.volume}%"
+
+
+class Mpris2Icon(widget.Mpris2):
+    """Mpris2 with a music note icon before the track.
+
+    The icon is added after max_chars truncation so the markup isn't cut off,
+    and is drawn in the Nerd Font, since the bar font doesn't have the glyph.
+    """
+
+    @property
+    def formatted_text(self):
+        text = super().formatted_text
+        if not text:
+            return text
+        return f'<span font_family="JetBrainsMono Nerd Font">\U000f075a </span>{text}'
+
+
+def spacer():
+    """Fixed space separating groups of widgets in the bar."""
+    return widget.Spacer(length=gap)
+
+
+widget_defaults = dict(font=font, fontsize=14, padding=6, foreground=fg)
 extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
         top=bar.Bar(
             [
+                spacer(),
                 widget.GroupBox(
-                    highlight_method="text",
+                    highlight_method="block",
+                    rounded=True,
                     this_current_screen_border=accent,
+                    this_screen_border=accent,
+                    block_highlight_text_color=bg,
                     active=fg,
                     inactive=muted,
                     disable_drag=True,
                 ),
+                spacer(),
                 widget.Prompt(),
                 widget.WindowName(),
-                widget.Clock(format="%a %b %-d  %H:%M"),
+                Mpris2Icon(
+                    format="{xesam:title} - {xesam:artist}",
+                    paused_text="Paused: {track}",
+                    scroll=False,
+                    max_chars=50,
+                ),
+                spacer(),
+                PulseVolumeIcon(
+                    # Nerd Font volume glyphs: muted, low, medium, high.
+                    emoji=True,
+                    emoji_list=[
+                        "\U000f075f", "\U000f057f", "\U000f0580", "\U000f057e"
+                    ],
+                    mute_foreground=muted,
+                ),
+                spacer(),
+                widget.Clock(format="%a %b %-d  %-I:%M:%S %p"),
+                spacer(),
             ],
             bar_height,
-            background=bg,
-            # [top, right, bottom, left]; the bottom combines with the window
-            # margin to give a full gap below the bar.
-            margin=[gap, gap, margin, gap],
+            background=bar_bg,
+            # Flush with the screen edges; the bottom margin combines with the
+            # window margin to give a full gap below the bar.
+            margin=[0, 0, margin, 0],
         ),
         bottom=bar.Gap(margin),
         left=bar.Gap(margin),

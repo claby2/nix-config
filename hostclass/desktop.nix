@@ -18,11 +18,11 @@
   };
   hardware.graphics.enable = true;
 
-  # Pair devices with `bluetoothctl`.
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
   };
+  services.blueman.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -37,11 +37,29 @@
   # Required for gamemode to renice games.
   users.users.claby2.extraGroups = [ "gamemode" ];
 
+  # Provides the file chooser that apps like waytrogen open through D-Bus.
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "gtk";
+  };
+  # Without a display manager nothing starts graphical-session.target, which
+  # can't be started directly, so portals never come up. qtile starts and stops
+  # this target instead (see apps/qtile/config.py), pulling it in for the
+  # session's lifetime.
+  systemd.user.targets.qtile-session = {
+    description = "qtile session";
+    bindsTo = [ "graphical-session.target" ];
+    wants = [ "graphical-session-pre.target" ];
+    after = [ "graphical-session-pre.target" ];
+  };
+
   services.dbus.packages = [ pkgs.swayosd ];
   systemd.packages = [ pkgs.swayosd ];
   systemd.services.swayosd-libinput-backend.wantedBy = [ "multi-user.target" ];
 
   fonts.packages = with pkgs; [
+    inter
     nerd-fonts.jetbrains-mono
     noto-fonts
     noto-fonts-cjk-sans
@@ -61,7 +79,10 @@
       grim
       slurp
       wl-clipboard
+      waytrogen
+      swaybg
       discord
+      obsidian
       # Spotify's wrapper unsets DISPLAY under NIXOS_OZONE_WL but never selects
       # the Wayland backend itself, so it exits immediately without this flag.
       (symlinkJoin {
