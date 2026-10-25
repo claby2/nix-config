@@ -24,7 +24,14 @@
     ];
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-amd" ];
-    kernelParams = [ "nomodeset" ]; # GPU doesn't work right now, so setting this :(
+    # The RX 6650 XT (Navi 23) SMU firmware hangs on PPSMC_MSG_EnableAllSmuFeatures
+    # whenever GFXCLK DPM is requested (any kernel 6.18-7.1, SMU fw 59.49-59.50).
+    # amdgpu then aborts after it has already evicted the firmware framebuffer,
+    # which is why booting without nomodeset gave a black screen with no TTY.
+    # Masking PP_SCLK_DPM_MASK (bit 0) lets the GPU initialize fully; the GFX
+    # clock stays at the VBIOS boot clock while everything else (UCLK/PCIe DPM,
+    # display, compute) works. Drop this once the card enables GFXCLK DPM again.
+    kernelParams = [ "amdgpu.ppfeaturemask=0xfff7bffe" ];
     extraModulePackages = [ ];
   };
 
