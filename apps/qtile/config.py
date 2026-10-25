@@ -46,6 +46,25 @@ def start_mako():
     ])
 
 
+# macOS-style screenshots: Cmd+Shift+3 captures the screen and Cmd+Shift+4 a
+# selected region, saved to a file, or copied to the clipboard with Ctrl added.
+def screenshot(region=False, clipboard=False):
+    # Exit if slurp is cancelled with Escape, rather than capturing the screen.
+    select = 'g=$(slurp) || exit; ' if region else ""
+    geometry = '-g "$g"' if region else ""
+    if clipboard:
+        # Keep a temporary copy so the notification can show a thumbnail.
+        cmd = (f'{select}f=$(mktemp --suffix=.png); '
+               f'grim {geometry} "$f" && wl-copy --type image/png < "$f" && '
+               'notify-send -i "$f" "Screenshot copied" "Copied to clipboard"')
+    else:
+        cmd = (f'{select}dir="$HOME/Pictures/Screenshots"; mkdir -p "$dir"; '
+               'f="$dir/Screenshot $(date \'+%Y-%m-%d at %H.%M.%S\').png"; '
+               f'grim {geometry} "$f" && '
+               'notify-send -i "$f" "Screenshot saved" "$f"')
+    return lazy.spawn(["sh", "-c", cmd])
+
+
 keys = [
     Key([mod], "h", lazy.layout.left(), desc="Move focus left"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -79,6 +98,14 @@ keys = [
     Key(["mod4"], "q", lazy.window.kill(), desc="Close window"),
     Key(["mod4"], "space", lazy.spawn("fuzzel"),
         desc="Search and launch apps"),
+    Key(["mod4", "shift"], "3", screenshot(), desc="Screenshot screen"),
+    Key(["mod4", "shift"], "4", screenshot(region=True),
+        desc="Screenshot region"),
+    Key(["mod4", "shift", "control"], "3", screenshot(clipboard=True),
+        desc="Screenshot screen to clipboard"),
+    Key(["mod4", "shift", "control"], "4",
+        screenshot(region=True, clipboard=True),
+        desc="Screenshot region to clipboard"),
     Key([mod], "d", lazy.spawncmd(), desc="Run a command"),
     Key([mod, "shift"], "r", lazy.reload_config(), desc="Reload config"),
     Key([mod, "shift"], "e", lazy.shutdown(), desc="Quit qtile"),
