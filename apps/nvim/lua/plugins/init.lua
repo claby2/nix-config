@@ -132,9 +132,11 @@ return {
 		ft = "typst",
 		version = "1.*",
 		opts = {
-			-- Typst preview is weird on safari, so use chrome
-			-- NOTE: I think this only works on mac, should probably make it more general
-			open_cmd = 'open -a "Google Chrome" %s',
+			-- Typst preview is weird on safari, so use chrome on mac
+			open_cmd = vim.fn.has("mac") == 1 and 'open -a "Google Chrome" %s' or nil,
+			-- Use tinymist from PATH (e.g. nix shell); the plugin's downloaded
+			-- binary is dynamically linked and won't run on NixOS
+			dependencies_bin = { ["tinymist"] = "tinymist" },
 		},
 	},
 	{
