@@ -39,6 +39,7 @@ vim.lsp.enable({
 	"rust_analyzer",
 	"tinymist",
 	"nil_ls",
+	"buf",
 })
 vim.diagnostic.config({
 	signs = {
@@ -57,3 +58,11 @@ vim.diagnostic.config({
 		},
 	},
 })
+
+vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+  if result.message:match("overly long loop turn") then
+    return -- Suppress the notification
+  end
+  -- Fallback to default handler behavior
+  return vim.lsp.handlers["window/showMessage"](_, result, ctx)
+end

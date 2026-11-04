@@ -13,6 +13,9 @@ map("n", "<leader>T", "<cmd>NvimTreeFindFileToggle<cr>", { desc = "Toggle NvimTr
 -- Restart LSP
 map("n", "<leader>rr", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
 
+-- Review Comment Bind
+map("n", "<leader>rc", require("config.review").quickfix, { desc = "Quickfix list of REVIEW comment chains" })
+
 -- LSP mappings
 map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 map("n", "K", vim.lsp.buf.hover, { desc = "Show hover info" })
