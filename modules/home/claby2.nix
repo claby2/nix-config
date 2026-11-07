@@ -42,7 +42,6 @@ in
             pyright
             yapf
             ruff
-            patdiff
             mutagen
             nodejs # Need node so copilot works (via nvim)... and other stuff I guess.
             comma
