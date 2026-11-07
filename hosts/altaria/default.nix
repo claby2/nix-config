@@ -92,7 +92,6 @@ in
         (endpoint "git" "https://git.edwardwibowo.com")
       ];
       sshEndpoints = [
-        (endpoint "groudon tailscale ssh" "ssh://groudon:22")
         (endpoint "cherrim tailscale ssh" "ssh://cherrim:22")
       ];
       environmentFile = config.age.secrets.gatus-environment.path;

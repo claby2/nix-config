@@ -39,11 +39,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    laya = {
-      url = "github:NandhaKishorM/laya";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     zen-browser = {
@@ -91,7 +86,6 @@
       nixosConfigurations = {
         cherrim = mkNixosHost "aarch64-linux" "server" "cherrim";
         altaria = mkNixosHost "x86_64-linux" "server" "altaria";
-        groudon = mkNixosHost "x86_64-linux" "desktop" "groudon";
       };
 
       ## Darwin Hosts

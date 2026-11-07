@@ -61,7 +61,6 @@
       ];
       openssh.authorizedKeys.keys = [
         meta.sshPublicKeys.applin
-        meta.sshPublicKeys.groudon-claby2
       ];
     };
   };

@@ -1,4 +1,4 @@
-group servers altaria groudon cherrim
-group all applin altaria groudon cherrim
+group servers altaria cherrim
+group all applin altaria cherrim
 group local localhost
 default all

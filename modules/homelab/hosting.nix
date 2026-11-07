@@ -113,7 +113,7 @@ in
       type = lib.types.attrsOf lib.types.str;
       default = { };
       example = {
-        "git.example.com" = "groudon";
+        "git.example.com" = "altaria";
       };
       description = "Public hostnames this edge fronts, mapped to the non-edge host that runs them.";
     };

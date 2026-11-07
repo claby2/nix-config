@@ -20,9 +20,7 @@
     ./services/gatus.nix
     ./services/silph-collector.nix
     ./services/silph-server.nix
-    ./services/laya.nix
     inputs.silph.nixosModules.default
-    inputs.laya.nixosModules.default
   ];
   services.nginx = {
     enable = true;

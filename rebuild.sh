@@ -12,21 +12,18 @@ for arg in "$@"; do
     esac
 done
 
+if [ "$REMOTE" = "1" ]; then
+    echo "Error: --remote is no longer supported (its build host, groudon, was retired)" >&2
+    exit 1
+fi
+
 if command -v nixos-rebuild >/dev/null; then
-    BUILD_HOST_FLAG=""
-    if [ "$REMOTE" = "1" ]; then
-        BUILD_HOST_FLAG="--build-host root@groudon"
-    fi
     if [ "$BUILD_ONLY" = "1" ]; then
-        nh os build . $BUILD_HOST_FLAG
+        nh os build .
     else
-        nh os switch . $BUILD_HOST_FLAG
+        nh os switch .
     fi
 elif command -v darwin-rebuild >/dev/null; then
-    if [ "$REMOTE" = "1" ]; then
-        echo "Error: --remote is not supported on darwin" >&2
-        exit 1
-    fi
     if [ "$BUILD_ONLY" = "1" ]; then
         nh darwin build .
     else

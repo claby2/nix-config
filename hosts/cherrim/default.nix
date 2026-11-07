@@ -53,10 +53,6 @@ in
           url = "http://altaria.silph-collector.internal";
           icon = artwork "334" "sha256-F+FW5MIA0o+TGZVQ+gt+FadJ9nunFBgpb1Gb5nmijF0=";
         };
-        groudon = {
-          url = "http://groudon.silph-collector.internal";
-          icon = artwork "383" "sha256-v2pDNNakmvMjlsnRVehnoWmUOf9zwou22tFd1GhLRGE=";
-        };
       };
     };
   };
