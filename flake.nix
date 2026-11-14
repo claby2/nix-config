@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    # Last nixpkgs with wpa_supplicant 2.11; used by cherrim only (see
+    # hosts/cherrim/hardware.nix). Drop once 2.12 works with brcmfmac.
+    nixpkgs-wpa-supplicant.url = "github:NixOS/nixpkgs/20b1ddd1aa5ace70c9468305030aa4f9ef79671b";
+
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
